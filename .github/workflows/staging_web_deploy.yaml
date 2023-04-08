@@ -1,0 +1,11 @@
+name: Staging - deploy website
+
+on:
+  push:
+    branches:
+      - "staging"
+    paths:
+      - "web/**"
+
+concurrency:
+  group: web_deploy_staging

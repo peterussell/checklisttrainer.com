@@ -1,0 +1,11 @@
+name: Staging - preview infra
+
+on:
+  pull_request:
+    branches:
+      - "staging"
+    paths:
+      - "iac/**"
+
+concurrency:
+  group: iac_preview_staging
