@@ -1,0 +1,7 @@
+.container {
+  @apply bg-blue-900;
+}
+
+p.text {
+  @apply text-white;
+}
