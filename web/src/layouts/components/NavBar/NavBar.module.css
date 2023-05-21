@@ -1,7 +1,13 @@
-.container {
-  @apply bg-blue-900;
+.navbarContainer {
+  @apply
+    bg-cltBlueDark
+    w-full
+    px-4 py-3;
 }
 
-p.text {
+/* tmp */
+.links { @apply text-white; }
+
+.sitename {
   @apply text-white;
 }
