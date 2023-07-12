@@ -9,4 +9,5 @@ public class ChecklistTrainerContext : DbContext
     }
 
     public DbSet<Aircraft> Aircraft { get; set; } = null!;
+    public DbSet<User> Users { get; set; } = null!;
 }
