@@ -8,13 +8,6 @@ module.exports = {
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
-    colors: {
-      ...colors,
-      cltWhiteDark: '#efefef',
-      cltBlack: '#333',
-      cltBlueDark: '#15354e',
-      cltGrey: '#a9a9a9'
-    },
     fontFamily: {
       barlowCondensed: ['var(--font-barlow-condensed)'],
       lato: ['var(--font-lato)'],
@@ -31,6 +24,12 @@ module.exports = {
     extend: {
       backgroundImage: {
       },
+      colors: {
+        cltWhiteDark: '#efefef',
+        cltBlack: '#333',
+        cltBlueDark: '#15354e',
+        cltGrey: '#a9a9a9'
+      }
     },
   },
   plugins: [],
