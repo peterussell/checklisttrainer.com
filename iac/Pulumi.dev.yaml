@@ -1,3 +1,8 @@
 encryptionsalt: v1:wqdn2yGRs7I=:v1:NDu14JJY3oNiivEb:6IwwLrVC2qtCv1YRuxi8k2LknRvS/g==
 config:
+  azure-native:clientId: 9d23aea4-2d3c-4b1d-8b7e-a8d476ca7c5b
+  azure-native:clientSecret:
+    secure: v1:HrqNPDwYOi3YZh3l:4gLYxUrCQuHUVc/4lvo3+7EAzsJfYgmmA1U42FSoacQEAnWLUEe8fyf4R0hZgkw/A6SRVObST94=
   azure-native:location: centralus
+  azure-native:subscriptionId: 5fc36ade-86fb-449f-908f-f0337fc0ffb3
+  azure-native:tenantId: 807ce5e5-8868-4847-bf22-ffa962867f5e
