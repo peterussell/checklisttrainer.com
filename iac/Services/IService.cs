@@ -1,4 +1,4 @@
-﻿namespace checklisttrainer;
+﻿namespace checklisttrainer.Services;
 
 internal interface IService
 {
