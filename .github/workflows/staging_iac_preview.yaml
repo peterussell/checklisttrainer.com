@@ -26,7 +26,10 @@ jobs:
         env:
           AZURE_STORAGE_ACCOUNT: ${{ secrets.PULUMI_STATE_STORAGE_ACCOUNT }}
           AZURE_STORAGE_KEY: ${{ secrets.PULUMI_STATE_STORAGE_ACCOUNT_KEY }}
-          AZURE_KEYVAULT_AUTH_VIA_CLI: true
+          AZURE_KEYVAULT_AUTH_VIA_CLI: false
+          AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+          AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
 
 concurrency:
   group: iac_preview_staging
