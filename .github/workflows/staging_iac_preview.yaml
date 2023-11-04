@@ -21,7 +21,7 @@ jobs:
       - uses: pulumi/actions@v3
         with:
           command: preview
-          stack-name: checklisttrainer/staging
+          stack-name: staging
           cloud-url: ${{ secrets.PULUMI_STATE_BLOB_URL }}
         env:
           AZURE_STORAGE_ACCOUNT: ${{ secrets.PULUMI_STATE_STORAGE_ACCOUNT }}
