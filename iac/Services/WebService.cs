@@ -16,7 +16,7 @@ internal class WebService : IService
     public void Build()
     {
         var rg = createResourceGroup("ct-web-001");
-        var app = createWebApp("ct-react-app", rg.Name);
+        createWebApp("ct-react-app", rg.Name);
     }
 
     private ResourceGroup createResourceGroup(string name)
@@ -42,4 +42,3 @@ internal class WebService : IService
         return new WebApp(name, args);
     }
 }
-
