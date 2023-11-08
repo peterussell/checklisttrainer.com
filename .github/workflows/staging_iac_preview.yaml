@@ -27,14 +27,14 @@ jobs:
           # AZURE_STORAGE_ACCOUNT: ${{ secrets.PULUMI_STATE_STORAGE_ACCOUNT }}
           AZURE_STORAGE_ACCOUNT: cltpulumistatest0
           AZURE_STORAGE_KEY: ${{ secrets.PULUMI_STATE_STORAGE_ACCOUNT_KEY }}
-          AZURE_KEYVAULT_AUTH_VIA_CLI: true
+          AZURE_KEYVAULT_AUTH_VIA_CLI: false
           AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
           AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
           AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
           AZURE_SUBSCRIPTION_ID: '5fc36ade-86fb-449f-908f-f0337fc0ffb3'
 
           # try ARM credentials
-          # ARM_USE_OIDC: true
+          ARM_USE_OIDC: false
           ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
           ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
           ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
