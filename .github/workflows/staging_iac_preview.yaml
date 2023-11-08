@@ -22,21 +22,12 @@ jobs:
         with:
           command: preview
           stack-name: dev
-          # cloud-url: ${{ secrets.PULUMI_STATE_BLOB_URL }}
-          cloud-url: azblob://pulumistate
           work-dir: iac
+          cloud-url: ${{ secrets.PULUMI_STATE_BLOB_URL }}
         env:
-          # PULUMI_BACKEND_URL: ${{ secrets.PULUMI_STATE_BLOB_URL }} # same as cloud-url above, required due to https://github.com/pulumi/actions/issues/1010
-          # PULUMI_BACKEND_URL: azblob://pulumistate
-          PULUMI_CONFIG_PASSPHRASE: ${{ secrets.PULUMI_CONFIG_PASSPHRASE }}
-          # AZURE_STORAGE_ACCOUNT: ${{ secrets.PULUMI_STATE_STORAGE_ACCOUNT }}
-          AZURE_STORAGE_ACCOUNT: cltpulumistatest0
+          AZURE_STORAGE_ACCOUNT: ${{ secrets.PULUMI_STATE_STORAGE_ACCOUNT }}
           AZURE_STORAGE_KEY: ${{ secrets.PULUMI_STATE_STORAGE_ACCOUNT_KEY }}
-          # AZURE_KEYVAULT_AUTH_VIA_CLI: true
-          # AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
-          # AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
-          # AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-          # AZURE_SUBSCRIPTION_ID: '5fc36ade-86fb-449f-908f-f0337fc0ffb3'
+          PULUMI_CONFIG_PASSPHRASE: ${{ secrets.PULUMI_CONFIG_PASSPHRASE }}
 
 concurrency:
   group: iac_preview_staging
