@@ -3,7 +3,7 @@ name: Staging - deploy website
 on:
   push:
     branches:
-      - "staging"
+      - "dev"
     paths:
       - "web/**"
 
