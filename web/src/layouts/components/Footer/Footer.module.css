@@ -1,0 +1,11 @@
+.footerContainer {
+  @apply
+    bg-cltBlueDark
+    w-full
+    absolute
+    bottom-0;
+}
+
+p.text {
+  @apply text-white;
+}
