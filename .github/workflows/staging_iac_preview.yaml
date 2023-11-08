@@ -22,23 +22,25 @@ jobs:
         with:
           command: preview
           stack-name: staging
-          cloud-url: ${{ secrets.PULUMI_STATE_BLOB_URL }}
+          # cloud-url: ${{ secrets.PULUMI_STATE_BLOB_URL }}
+          cloud-url: azblob://pulumistate
           work-dir: iac
         env:
-          PULUMI_BACKEND_URL: ${{ secrets.PULUMI_STATE_BLOB_URL }} # same as cloud-url above, required due to issue https://github.com/pulumi/actions/issues/1010
+          # PULUMI_BACKEND_URL: ${{ secrets.PULUMI_STATE_BLOB_URL }} # same as cloud-url above, required due to https://github.com/pulumi/actions/issues/1010
+          PULUMI_BACKEND_URL: azblob://pulumistate
           # AZURE_STORAGE_ACCOUNT: ${{ secrets.PULUMI_STATE_STORAGE_ACCOUNT }}
           AZURE_STORAGE_ACCOUNT: cltpulumistatest0
           AZURE_STORAGE_KEY: ${{ secrets.PULUMI_STATE_STORAGE_ACCOUNT_KEY }}
-          AZURE_KEYVAULT_AUTH_VIA_CLI: false
+          AZURE_KEYVAULT_AUTH_VIA_CLI: true
           AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
           AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
           AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
           AZURE_SUBSCRIPTION_ID: '5fc36ade-86fb-449f-908f-f0337fc0ffb3'
-          ARM_USE_OIDC: false
-          ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
-          ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
-          ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-          ARM_SUBSCRIPTION_ID: '5fc36ade-86fb-449f-908f-f0337fc0ffb3'
+          # ARM_USE_OIDC: false
+          # ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          # ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+          # ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+          # ARM_SUBSCRIPTION_ID: '5fc36ade-86fb-449f-908f-f0337fc0ffb3'
 
 concurrency:
   group: iac_preview_staging
