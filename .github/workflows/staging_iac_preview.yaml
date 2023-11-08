@@ -18,7 +18,7 @@ jobs:
         with:
           dotnet-version: 6.0.x
 
-      - uses: pulumi/actions@v3
+      - uses: pulumi/actions@v4
         with:
           command: preview
           stack-name: staging
