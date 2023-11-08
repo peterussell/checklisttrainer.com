@@ -23,6 +23,7 @@ jobs:
           command: preview
           stack-name: staging
           cloud-url: ${{ secrets.PULUMI_STATE_BLOB_URL }}
+          work-dir: iac
         env:
           PULUMI_BACKEND_URL: ${{ secrets.PULUMI_STATE_BLOB_URL }} # same as cloud-url above, required due to issue https://github.com/pulumi/actions/issues/1010
           # AZURE_STORAGE_ACCOUNT: ${{ secrets.PULUMI_STATE_STORAGE_ACCOUNT }}
