@@ -30,6 +30,14 @@ jobs:
           AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
           AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
           AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+
+          # try ARM credentials
+          ARM_USE_OIDC: true
+          ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+          ARM_SUBSCRIPTION_ID: '5fc36ade-86fb-449f-908f-f0337fc0ffb3'
+
+          # same as cloud-url above, required due to issue https://github.com/pulumi/actions/issues/1010
           PULUMI_BACKEND_URL: ${{ secrets.PULUMI_STATE_BLOB_URL }}
 
 concurrency:
