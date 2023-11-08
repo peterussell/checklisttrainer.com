@@ -21,7 +21,7 @@ jobs:
       - uses: pulumi/actions@v4
         with:
           command: preview
-          stack-name: staging
+          stack-name: dev
           # cloud-url: ${{ secrets.PULUMI_STATE_BLOB_URL }}
           cloud-url: azblob://pulumistate
           work-dir: iac
