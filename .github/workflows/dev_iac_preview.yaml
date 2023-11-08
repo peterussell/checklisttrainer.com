@@ -1,0 +1,33 @@
+name: Dev - preview infra
+
+on:
+  pull_request:
+    branches:
+      - "dev"
+    paths:
+      - "iac/**"
+
+jobs:
+  preview:
+    name: Pulumi preview (dev)
+    runs-on: ubuntu-latest
+    environment: dev
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 6.0.x
+
+      - uses: pulumi/actions@v4
+        with:
+          command: preview
+          stack-name: dev
+          work-dir: iac
+          cloud-url: ${{ secrets.PULUMI_STATE_BLOB_URL }}
+        env:
+          AZURE_STORAGE_ACCOUNT: ${{ secrets.PULUMI_STATE_STORAGE_ACCOUNT }}
+          AZURE_STORAGE_KEY: ${{ secrets.PULUMI_STATE_STORAGE_ACCOUNT_KEY }}
+          PULUMI_CONFIG_PASSPHRASE: ${{ secrets.PULUMI_CONFIG_PASSPHRASE }}
+
+concurrency:
+  group: iac_preview_dev
