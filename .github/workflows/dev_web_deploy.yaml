@@ -50,4 +50,4 @@ jobs:
         uses: azure/webapps-deploy@v2
         with:
           app-name: ct-react-app10535090 # todo: should come from environment (ideally from Pulumi output)
-          package: .next
+          package: ./web/.next
