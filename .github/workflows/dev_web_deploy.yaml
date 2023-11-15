@@ -20,13 +20,6 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v3
-
-      # - name: Configure AWS credentials
-      #   uses: aws-actions/configure-aws-credentials@v1
-      #   with:
-      #     aws-access-key-id: ${{ secrets.STAGING_DEPLOYER_ACCESS_KEY_ID }}
-      #     aws-secret-access-key: ${{ secrets.STAGING_DEPLOYER_SECRET_ACCESS_KEY }}
-      #     aws-region: ap-southeast-2
       
       - name: Set up node.js
         uses: actions/setup-node@v3
@@ -41,14 +34,20 @@ jobs:
       #   run: ???
 
       - name: Build
-        run: CI=false && yarn run build   # CI=false: don't treat warnings as errors
+        id: build
+        run: CI=false && yarn run build   # CI=false means don't treat warnings as errors
 
-      # https://github.com/Azure/login#configure-a-service-principal-with-a-secret
       - name: Authenticate with Azure
+        id: auth
+        if: steps.build.outcome == 'success'
         uses: azure/login@v1
         with:
           creds: '{"clientId":"${{ secrets.AZURE_CLIENT_ID }}","clientSecret":"${{ secrets.AZURE_CLIENT_SECRET }}","subscriptionId":"${{ secrets.AZURE_SUBSCRIPTION_ID }}","tenantId":"${{ secrets.AZURE_TENANT_ID }}"}'
+          # Building credentials from separate parts: https://github.com/Azure/login#configure-a-service-principal-with-a-secret
 
-      # - name: Deploy
-      #   if: success()
-      #   run: aws s3 sync ./build s3://stage.groundschool.co.nz/ --acl public-read
+      - name: Deploy
+        if: steps.auth.outcome == 'success'
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: ${{ env.AZURE_WEB_APP_NAME }}
+          package: .next
