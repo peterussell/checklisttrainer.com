@@ -49,5 +49,5 @@ jobs:
         if: steps.auth.outcome == 'success'
         uses: azure/webapps-deploy@v2
         with:
-          app-name: ${{ env.AZURE_WEB_APP_NAME }}
+          app-name: ct-react-app10535090 # todo: should come from environment (ideally from Pulumi output)
           package: .next
