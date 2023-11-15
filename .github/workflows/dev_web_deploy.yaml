@@ -43,6 +43,12 @@ jobs:
       - name: Build
         run: CI=false && yarn run build   # CI=false: don't treat warnings as errors
 
+      # https://github.com/Azure/login#configure-a-service-principal-with-a-secret
+      - name: Authenticate with Azure
+        uses: azure/login@v1
+        with:
+          creds: '{"clientId":"${{ secrets.AZURE_CLIENT_ID }}","clientSecret":"${{ secrets.AZURE_CLIENT_SECRET }}","subscriptionId":"${{ secrets.AZURE_SUBSCRIPTION_ID }}","tenantId":"${{ secrets.AZURE_TENANT_ID }}"}'
+
       # - name: Deploy
       #   if: success()
       #   run: aws s3 sync ./build s3://stage.groundschool.co.nz/ --acl public-read

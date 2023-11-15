@@ -4,7 +4,7 @@ using Pulumi.AzureNative.Web;
 
 namespace checklisttrainer.Services;
 
-internal class WebService : IService
+internal class WebService
 {
     Config _config;
 
@@ -13,10 +13,10 @@ internal class WebService : IService
         _config = config;
     }
 
-    public void Build()
+    public WebApp CreateWebApp()
     {
         var rg = createResourceGroup("ct-web-001");
-        createWebApp("ct-react-app", rg.Name);
+        return createWebApp("ct-react-app", rg.Name);
     }
 
     private ResourceGroup createResourceGroup(string name)

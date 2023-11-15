@@ -5,5 +5,6 @@ return await Deployment.RunAsync(() =>
 {
     var config = new Config();
     var webService = new WebService(config);
-    webService.Build();
+
+    var webApp = webService.CreateWebApp();
 });
