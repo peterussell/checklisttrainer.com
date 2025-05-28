@@ -14,6 +14,7 @@ import { Route as rootRoute } from './routes/__root'
 import { Route as DashboardImport } from './routes/dashboard'
 import { Route as AboutImport } from './routes/about'
 import { Route as IndexImport } from './routes/index'
+import { Route as AircraftAircraftIdChecklistImport } from './routes/aircraft.$aircraftId.$checklist'
 
 // Create/Update Routes
 
@@ -34,6 +35,13 @@ const IndexRoute = IndexImport.update({
   path: '/',
   getParentRoute: () => rootRoute,
 } as any)
+
+const AircraftAircraftIdChecklistRoute =
+  AircraftAircraftIdChecklistImport.update({
+    id: '/aircraft/$aircraftId/$checklist',
+    path: '/aircraft/$aircraftId/$checklist',
+    getParentRoute: () => rootRoute,
+  } as any)
 
 // Populate the FileRoutesByPath interface
 
@@ -60,6 +68,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardImport
       parentRoute: typeof rootRoute
     }
+    '/aircraft/$aircraftId/$checklist': {
+      id: '/aircraft/$aircraftId/$checklist'
+      path: '/aircraft/$aircraftId/$checklist'
+      fullPath: '/aircraft/$aircraftId/$checklist'
+      preLoaderRoute: typeof AircraftAircraftIdChecklistImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -69,12 +84,14 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/dashboard': typeof DashboardRoute
+  '/aircraft/$aircraftId/$checklist': typeof AircraftAircraftIdChecklistRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/dashboard': typeof DashboardRoute
+  '/aircraft/$aircraftId/$checklist': typeof AircraftAircraftIdChecklistRoute
 }
 
 export interface FileRoutesById {
@@ -82,14 +99,20 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/dashboard': typeof DashboardRoute
+  '/aircraft/$aircraftId/$checklist': typeof AircraftAircraftIdChecklistRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/dashboard'
+  fullPaths: '/' | '/about' | '/dashboard' | '/aircraft/$aircraftId/$checklist'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/dashboard'
-  id: '__root__' | '/' | '/about' | '/dashboard'
+  to: '/' | '/about' | '/dashboard' | '/aircraft/$aircraftId/$checklist'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/dashboard'
+    | '/aircraft/$aircraftId/$checklist'
   fileRoutesById: FileRoutesById
 }
 
@@ -97,12 +120,14 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   DashboardRoute: typeof DashboardRoute
+  AircraftAircraftIdChecklistRoute: typeof AircraftAircraftIdChecklistRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   DashboardRoute: DashboardRoute,
+  AircraftAircraftIdChecklistRoute: AircraftAircraftIdChecklistRoute,
 }
 
 export const routeTree = rootRoute
@@ -117,7 +142,8 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/about",
-        "/dashboard"
+        "/dashboard",
+        "/aircraft/$aircraftId/$checklist"
       ]
     },
     "/": {
@@ -128,6 +154,9 @@ export const routeTree = rootRoute
     },
     "/dashboard": {
       "filePath": "dashboard.tsx"
+    },
+    "/aircraft/$aircraftId/$checklist": {
+      "filePath": "aircraft.$aircraftId.$checklist.tsx"
     }
   }
 }

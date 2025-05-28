@@ -11,19 +11,17 @@ function Index() {
 
   return (
     <Stack>
-      <Typography variant="h3" className="p-2 text-blue-800">
+      <Typography variant="h4">
         Home
       </Typography>
 
-      <Typography variant="h4">User info</Typography>
       {isLoading && (<Typography>Loading...</Typography>)}
 
       {isAuthenticated && user && (
-        <>
-        <img src={user.picture} alt={user.name} width="30px" />
-        <Typography>{user.name}</Typography>
-        <Typography>{user.email}</Typography>
-        </>
+        <Stack direction="row" gap={2} m={2}>
+          <img src={user.picture} alt={user.name} width="30px" />
+          <Typography>Logged in as {user.email}</Typography>
+        </Stack>
       )}
     </Stack>
     

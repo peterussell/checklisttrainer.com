@@ -1,26 +1,29 @@
 import { Link } from "@tanstack/react-router";
-import LoginButton from "../components/LoginButton";
-import LogoutButton from "../components/LogoutButton";
+import LoginButton from "@shared/components/LoginButton";
+import LogoutButton from "@shared/components/LogoutButton";
 import { useAuth0 } from "@auth0/auth0-react";
-import { Box, Divider, Stack, type ButtonProps } from "@mui/material";
+import { Box, Divider, Stack, Typography, type ButtonProps } from "@mui/material";
 
-const loginButtonProps: ButtonProps = { variant: 'outlined', size: "small" };
+const loginButtonProps: ButtonProps = { variant: "contained", size: "small", sx: { textTransform: "none" } };
+
+const activeStyling = "[&.active]:border-b-1 border-solid border-white";
 
 function NavBar() {
-  const { isAuthenticated } = useAuth0();
+  const { isLoading, isAuthenticated } = useAuth0();
 
   return (
     <>
-      <Stack direction="row" gap={2} p={1} alignItems="center">
-        <Link to="/" className="[&.active]:font-bold">Home</Link>{' | '}
-        <Link to="/about" className="[&.active]:font-bold">About</Link>
-
-        {isAuthenticated && <>{' | '}<Link to="/dashboard" className="[&.active]:font-bold">Dashboard</Link></>}
+      <Stack direction="row" gap={4} p={1} pl={4} alignItems="center" className="bg-blue-900 text-white">
+        <Typography sx={{fontWeight: 'bold'}}>ChecklistTrainer.com</Typography>
+        <Link to="/" className={activeStyling}>Home</Link>
+        <Link to="/about" className={activeStyling}>About</Link>
+        <Link to="/dashboard" className={activeStyling}>Dashboard</Link>
 
         <Box sx={{ marginLeft: 'auto' }}>
-        {!isAuthenticated ?
-          <LoginButton slotProps={{button: {...loginButtonProps}}} /> :
-          <LogoutButton slotProps={{button: {...loginButtonProps}}} />}
+        {isLoading ? null : 
+          !isAuthenticated ?
+            <LoginButton slotProps={{button: {...loginButtonProps}}} /> :
+            <LogoutButton slotProps={{button: {...loginButtonProps}}} />}
         </Box>
       </Stack>
       <Divider />

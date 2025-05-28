@@ -7,7 +7,7 @@ export const Route = createFileRoute('/about')({
 
 function About() {
   return (
-    <Typography variant="h3" className="p-2 text-green-800">
+    <Typography variant="h4" className="">
       About
     </Typography>
   );
