@@ -4,6 +4,7 @@ import { RouterProvider } from '@tanstack/react-router'
 import { Auth0Provider, useAuth0 } from '@auth0/auth0-react';
 import { StyledEngineProvider } from '@mui/material/styles';
 import GlobalStyles from '@mui/material/GlobalStyles';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import './index.css'; // Loads tailwindcss
 import { router } from './router';
@@ -13,16 +14,20 @@ function InnerApp() {
   return <RouterProvider router={router} context={{ auth: { isLoading, isAuthenticated, loginWithRedirect }}} />
 }
 
+const queryClient = new QueryClient();
+
 export function App() {
   return (
     <Auth0Provider
-        domain="dev-sha0v78b1jbu5odf.us.auth0.com"
-        clientId="1jXikjei6o8wKTtDKYPFfcI0IjAo1fk9"
-        authorizationParams={{
-          redirect_uri: window.location.origin // TODO: should go to dashboard
-        }}
-      >
-      <InnerApp />
+      domain="dev-sha0v78b1jbu5odf.us.auth0.com"
+      clientId="1jXikjei6o8wKTtDKYPFfcI0IjAo1fk9"
+      authorizationParams={{
+        redirect_uri: window.location.origin // TODO: should go to dashboard
+      }}
+    >
+      <QueryClientProvider client={queryClient}>
+        <InnerApp />
+      </QueryClientProvider>
     </Auth0Provider>
   )
 }

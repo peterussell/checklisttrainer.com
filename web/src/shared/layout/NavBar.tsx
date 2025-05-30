@@ -13,7 +13,7 @@ function NavBar() {
 
   return (
     <>
-      <Stack direction="row" gap={4} p={1} pl={4} alignItems="center" className="bg-blue-900 text-white">
+      <Stack direction="row" gap={4} p={1} pl={4} alignItems="center" className="bg-ct-blue text-white">
         <Typography sx={{fontWeight: 'bold'}}>ChecklistTrainer.com</Typography>
         <Link to="/" className={activeStyling}>Home</Link>
         <Link to="/about" className={activeStyling}>About</Link>
