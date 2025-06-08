@@ -1,7 +1,6 @@
-import type { Aircraft } from "@models/Aircraft";
 import AircraftSelectorCard from "./AircraftSelectorCard";
 import { useQuery } from "@tanstack/react-query";
-import { Typography } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 
 function AircraftSelector() {
   const { isPending, error, data, isFetching } = useQuery({
@@ -17,7 +16,9 @@ function AircraftSelector() {
   if (!data) return <Typography>No aircraft found</Typography>
 
   return (
-    Object.entries(data).map(([key, value]) => <AircraftSelectorCard key={key} aircraft={value} />)
+    <Stack direction="row">
+      {Object.entries(data).map(([key, value]) => <AircraftSelectorCard key={key} aircraft={value} />)}
+    </Stack>
   );
 }
 

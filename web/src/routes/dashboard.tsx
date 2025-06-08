@@ -19,10 +19,7 @@ function Dashboard() {
 
   return (
     <Stack>
-      <Typography variant="h4">
-        Dashboard
-      </Typography>
-
+      <Typography variant="h4">Aircraft</Typography>
       <AircraftSelector />
     </Stack>
   );
