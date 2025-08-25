@@ -6,7 +6,12 @@ import { StyledEngineProvider } from '@mui/material/styles';
 import GlobalStyles from '@mui/material/GlobalStyles';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-import './index.css'; // Loads tailwindcss
+import './index.css'; // Loads tailwind
+
+// Fonts
+import "@fontsource/roboto-condensed/400.css";
+import "@fontsource/roboto-condensed/700.css";
+
 import { router } from './router';
 
 function InnerApp() {

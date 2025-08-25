@@ -3,8 +3,8 @@ import { Box, Stack, Typography } from '@mui/material';
 import { createFileRoute } from '@tanstack/react-router'
 import AircraftSelector from '@features/Aircraft/AircraftSelector';
 
-export const Route = createFileRoute('/dashboard')({
-  component: Dashboard,
+export const Route = createFileRoute('/authenticated/aircraft')({
+  component: Aircraft,
   beforeLoad: async ({ context }) => {
     if (!context.auth.isAuthenticated) {
       context.auth.loginWithRedirect();
@@ -12,10 +12,10 @@ export const Route = createFileRoute('/dashboard')({
   }
 })
 
-function Dashboard() {
+function Aircraft() {
   const {isAuthenticated} = useAuth0();
 
-  if (!isAuthenticated) return <Box p={2}><Typography>Authencating...</Typography></Box>;
+  if (!isAuthenticated) return <Box p={2}><Typography>Authenticating...</Typography></Box>;
 
   return (
     <Stack>

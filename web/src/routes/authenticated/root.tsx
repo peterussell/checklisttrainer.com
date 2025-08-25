@@ -1,6 +1,6 @@
 import { createRootRouteWithContext, Outlet } from '@tanstack/react-router'
-import { TanStackRouterDevtools } from '@tanstack/react-router-devtools'
-import NavBar from '../shared/layout/NavBar'
+// import { TanStackRouterDevtools } from '@tanstack/react-router-devtools' // TODO: move to root
+import NavBar from '../../shared/layout/NavBar'
 import { Container } from '@mui/material';
 
 type RouterContext = {
@@ -14,8 +14,10 @@ type RouterContext = {
 export const Route = createRootRouteWithContext<RouterContext>()({
   component: () => (
     <>
-      <Outlet />
-      <TanStackRouterDevtools position="bottom-right" initialIsOpen={false} />
+      <NavBar />
+      <Container>
+        <Outlet />
+      </Container>
     </>
   ),
 })

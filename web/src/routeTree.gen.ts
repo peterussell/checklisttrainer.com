@@ -11,24 +11,12 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as DashboardImport } from './routes/dashboard'
-import { Route as AboutImport } from './routes/about'
 import { Route as IndexImport } from './routes/index'
-import { Route as AircraftAircraftIdImport } from './routes/aircraft.$aircraftId'
+import { Route as AuthenticatedRootImport } from './routes/authenticated/root'
+import { Route as AuthenticatedAircraftImport } from './routes/authenticated/aircraft'
+import { Route as AuthenticatedAircraftAircraftIdImport } from './routes/authenticated/aircraft.$aircraftId'
 
 // Create/Update Routes
-
-const DashboardRoute = DashboardImport.update({
-  id: '/dashboard',
-  path: '/dashboard',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const AboutRoute = AboutImport.update({
-  id: '/about',
-  path: '/about',
-  getParentRoute: () => rootRoute,
-} as any)
 
 const IndexRoute = IndexImport.update({
   id: '/',
@@ -36,11 +24,24 @@ const IndexRoute = IndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const AircraftAircraftIdRoute = AircraftAircraftIdImport.update({
-  id: '/aircraft/$aircraftId',
-  path: '/aircraft/$aircraftId',
+const AuthenticatedRootRoute = AuthenticatedRootImport.update({
+  id: '/authenticated/root',
+  path: '/authenticated/root',
   getParentRoute: () => rootRoute,
 } as any)
+
+const AuthenticatedAircraftRoute = AuthenticatedAircraftImport.update({
+  id: '/authenticated/aircraft',
+  path: '/authenticated/aircraft',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AuthenticatedAircraftAircraftIdRoute =
+  AuthenticatedAircraftAircraftIdImport.update({
+    id: '/$aircraftId',
+    path: '/$aircraftId',
+    getParentRoute: () => AuthenticatedAircraftRoute,
+  } as any)
 
 // Populate the FileRoutesByPath interface
 
@@ -53,75 +54,99 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
-    '/about': {
-      id: '/about'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof AboutImport
+    '/authenticated/aircraft': {
+      id: '/authenticated/aircraft'
+      path: '/authenticated/aircraft'
+      fullPath: '/authenticated/aircraft'
+      preLoaderRoute: typeof AuthenticatedAircraftImport
       parentRoute: typeof rootRoute
     }
-    '/dashboard': {
-      id: '/dashboard'
-      path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof DashboardImport
+    '/authenticated/root': {
+      id: '/authenticated/root'
+      path: '/authenticated/root'
+      fullPath: '/authenticated/root'
+      preLoaderRoute: typeof AuthenticatedRootImport
       parentRoute: typeof rootRoute
     }
-    '/aircraft/$aircraftId': {
-      id: '/aircraft/$aircraftId'
-      path: '/aircraft/$aircraftId'
-      fullPath: '/aircraft/$aircraftId'
-      preLoaderRoute: typeof AircraftAircraftIdImport
-      parentRoute: typeof rootRoute
+    '/authenticated/aircraft/$aircraftId': {
+      id: '/authenticated/aircraft/$aircraftId'
+      path: '/$aircraftId'
+      fullPath: '/authenticated/aircraft/$aircraftId'
+      preLoaderRoute: typeof AuthenticatedAircraftAircraftIdImport
+      parentRoute: typeof AuthenticatedAircraftImport
     }
   }
 }
 
 // Create and export the route tree
 
+interface AuthenticatedAircraftRouteChildren {
+  AuthenticatedAircraftAircraftIdRoute: typeof AuthenticatedAircraftAircraftIdRoute
+}
+
+const AuthenticatedAircraftRouteChildren: AuthenticatedAircraftRouteChildren = {
+  AuthenticatedAircraftAircraftIdRoute: AuthenticatedAircraftAircraftIdRoute,
+}
+
+const AuthenticatedAircraftRouteWithChildren =
+  AuthenticatedAircraftRoute._addFileChildren(
+    AuthenticatedAircraftRouteChildren,
+  )
+
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
-  '/dashboard': typeof DashboardRoute
-  '/aircraft/$aircraftId': typeof AircraftAircraftIdRoute
+  '/authenticated/aircraft': typeof AuthenticatedAircraftRouteWithChildren
+  '/authenticated/root': typeof AuthenticatedRootRoute
+  '/authenticated/aircraft/$aircraftId': typeof AuthenticatedAircraftAircraftIdRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
-  '/dashboard': typeof DashboardRoute
-  '/aircraft/$aircraftId': typeof AircraftAircraftIdRoute
+  '/authenticated/aircraft': typeof AuthenticatedAircraftRouteWithChildren
+  '/authenticated/root': typeof AuthenticatedRootRoute
+  '/authenticated/aircraft/$aircraftId': typeof AuthenticatedAircraftAircraftIdRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
-  '/dashboard': typeof DashboardRoute
-  '/aircraft/$aircraftId': typeof AircraftAircraftIdRoute
+  '/authenticated/aircraft': typeof AuthenticatedAircraftRouteWithChildren
+  '/authenticated/root': typeof AuthenticatedRootRoute
+  '/authenticated/aircraft/$aircraftId': typeof AuthenticatedAircraftAircraftIdRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/dashboard' | '/aircraft/$aircraftId'
+  fullPaths:
+    | '/'
+    | '/authenticated/aircraft'
+    | '/authenticated/root'
+    | '/authenticated/aircraft/$aircraftId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/dashboard' | '/aircraft/$aircraftId'
-  id: '__root__' | '/' | '/about' | '/dashboard' | '/aircraft/$aircraftId'
+  to:
+    | '/'
+    | '/authenticated/aircraft'
+    | '/authenticated/root'
+    | '/authenticated/aircraft/$aircraftId'
+  id:
+    | '__root__'
+    | '/'
+    | '/authenticated/aircraft'
+    | '/authenticated/root'
+    | '/authenticated/aircraft/$aircraftId'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AboutRoute: typeof AboutRoute
-  DashboardRoute: typeof DashboardRoute
-  AircraftAircraftIdRoute: typeof AircraftAircraftIdRoute
+  AuthenticatedAircraftRoute: typeof AuthenticatedAircraftRouteWithChildren
+  AuthenticatedRootRoute: typeof AuthenticatedRootRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AboutRoute: AboutRoute,
-  DashboardRoute: DashboardRoute,
-  AircraftAircraftIdRoute: AircraftAircraftIdRoute,
+  AuthenticatedAircraftRoute: AuthenticatedAircraftRouteWithChildren,
+  AuthenticatedRootRoute: AuthenticatedRootRoute,
 }
 
 export const routeTree = rootRoute
@@ -135,22 +160,25 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/about",
-        "/dashboard",
-        "/aircraft/$aircraftId"
+        "/authenticated/aircraft",
+        "/authenticated/root"
       ]
     },
     "/": {
       "filePath": "index.tsx"
     },
-    "/about": {
-      "filePath": "about.tsx"
+    "/authenticated/aircraft": {
+      "filePath": "authenticated/aircraft.tsx",
+      "children": [
+        "/authenticated/aircraft/$aircraftId"
+      ]
     },
-    "/dashboard": {
-      "filePath": "dashboard.tsx"
+    "/authenticated/root": {
+      "filePath": "authenticated/root.tsx"
     },
-    "/aircraft/$aircraftId": {
-      "filePath": "aircraft.$aircraftId.tsx"
+    "/authenticated/aircraft/$aircraftId": {
+      "filePath": "authenticated/aircraft.$aircraftId.tsx",
+      "parent": "/authenticated/aircraft"
     }
   }
 }

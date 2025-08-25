@@ -17,7 +17,7 @@ function NavBar() {
         <Typography sx={{fontWeight: 'bold'}}>ChecklistTrainer.com</Typography>
         <Link to="/" className={activeStyling}>Home</Link>
         <Link to="/about" className={activeStyling}>About</Link>
-        <Link to="/dashboard" className={activeStyling}>Dashboard</Link>
+        <Link to="/aircraft" className={activeStyling}>Aircraft</Link>
 
         <Box sx={{ marginLeft: 'auto' }}>
         {isLoading ? null : 
