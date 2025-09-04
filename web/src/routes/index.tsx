@@ -10,7 +10,7 @@ export const Route = createFileRoute('/')({
 })
 
 function Index() {
-  const {user, isAuthenticated, isLoading} = useAuth0();
+  const {loginWithRedirect, user, isAuthenticated, isLoading} = useAuth0();
 
   return (
     <Container maxWidth={false} className="
@@ -30,7 +30,19 @@ function Index() {
 
         {isLoading && (<Typography variant="h5" className="font-thin pt-4">Loading...</Typography>)}
 
-        <Button variant="outlined" className="mt-10 text-ct-blue border-ct-blue py-2">Get started</Button>
+        <Button
+          variant="outlined"
+          className="mt-10 text-ct-blue border-ct-blue py-2 mb-2"
+          onClick={() => loginWithRedirect()}>Log In</Button>
+
+        <Stack direction="row" className="flex items-center justify-center">
+          <Typography variant="overline">
+            Don't have an account?
+          </Typography>
+          <Button variant="text" onClick={() => loginWithRedirect({authorizationParams: { screen_hint: 'signup' }})}>
+            <Typography variant="overline">Sign up</Typography>
+          </Button>
+        </Stack>
       </Stack>
 
       </Container>
