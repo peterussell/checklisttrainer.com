@@ -36,7 +36,7 @@ function Index() {
         <Button
           variant="outlined"
           className="mt-10 text-ct-blue border-ct-blue py-2 mb-2"
-          onClick={() => loginWithRedirect()}>Log In</Button>
+          onClick={() => loginWithRedirect({authorizationParams: {redirect_uri: 'http://localhost:5173/aircraft'}})}>Log In</Button>
 
         <Stack direction="row" className="flex items-center justify-center">
           <Typography variant="overline">

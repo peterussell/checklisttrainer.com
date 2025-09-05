@@ -6,16 +6,16 @@ import AircraftSelector from '@features/Aircraft/AircraftSelector';
 export const Route = createFileRoute('/_authenticated/aircraft')({
   component: Aircraft,
   beforeLoad: async ({ context }) => {
-    if (!context.auth.isAuthenticated) {
+    if (!context.auth.isLoading && !context.auth.isAuthenticated) {
       context.auth.loginWithRedirect();
     }
   }
 })
 
 function Aircraft() {
-  const {isAuthenticated} = useAuth0();
+  const {isLoading} = useAuth0();
 
-  if (!isAuthenticated) return <Box p={2}><Typography>Authenticating...</Typography></Box>;
+  if (isLoading) return <Box className="p2"><Typography>Loading...</Typography></Box>
 
   return (
     <Stack>
