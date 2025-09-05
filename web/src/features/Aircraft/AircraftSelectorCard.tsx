@@ -1,11 +1,12 @@
-import type { Aircraft } from "@models/Aircraft";
 import { Card, CardActionArea, CardContent, CardMedia, Chip, Stack, Typography } from "@mui/material";
 
-function AircraftSelectorCard ({aircraft}: {aircraft: Aircraft}) {
+import type { AircraftSummary } from "../../../../core/models/AircraftSummary"; // TODO: import from @ct
+
+function AircraftSelectorCard ({aircraft}: {aircraft: AircraftSummary}) {
   return (
     <Card className="p0 m0">
       <CardActionArea href={`/aircraft/${aircraft.id}`}>
-        <CardMedia component="img" image={aircraft.img} sx={{width: '360px', height: '280px'}}/>
+        <CardMedia component="img" image={`/${aircraft.img}`} sx={{width: '360px', height: '280px'}}/>
 
         <CardContent>
 

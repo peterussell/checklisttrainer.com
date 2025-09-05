@@ -1,24 +1,10 @@
-// TODO: share with web
-export type Aircraft = {
-  id: string,
-  registration: string,
-  description: string,
-  img: string,
-  checklists: AircraftChecklist[]
-};
+import type { Aircraft } from '../../core/models/Aircraft.js';
 
-// TODO: share with web
-export type AircraftChecklist = {
-  name: string,
-  category: string,
-  slug: string,
-  type: string
-};
-
-export const aircraft: Record<string, Aircraft> = {
-  'C172S': {
+export const aircraftDetail: Aircraft[] = [
+  {
     id: '1',
-    name: 'Cessna 172S Skyhawk',
+    registration: 'N519ER',
+    description: 'Cessna 172S Skyhawk',
     img: 'c172s.jpg',
     checklists: [
       // Emergency
@@ -40,4 +26,4 @@ export const aircraft: Record<string, Aircraft> = {
       { name: 'Left wing, trailing edge', category: 'Preflight inspection', slug: 'left-wing-trailing-edge', type: 'normal' },
     ]
   }
-}
+];

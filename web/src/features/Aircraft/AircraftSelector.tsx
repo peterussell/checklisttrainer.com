@@ -1,6 +1,7 @@
 import AircraftSelectorCard from "./AircraftSelectorCard";
 import { useQuery } from "@tanstack/react-query";
 import { Box, Stack, Typography } from "@mui/material";
+import type { AircraftSummary } from "../../../../core/models/AircraftSummary"; // TODO: move to @ct
 
 function AircraftSelector() {
   const { isPending, error, data, isFetching } = useQuery({
@@ -17,9 +18,9 @@ function AircraftSelector() {
 
   return (
     <Stack direction="row" gap={3} className="w-full flex flex-wrap">
-      {Object.entries(data).map(([key, value]) => (
+      {(data as AircraftSummary[]).map((aircraft, i) => (
         <Box className="xs:min-w-full sm:min-w-1/2 md:min-w-1/4">
-          <AircraftSelectorCard key={key} aircraft={value} />
+          <AircraftSelectorCard key={i} aircraft={aircraft} />
         </Box>
       ))}
     </Stack>

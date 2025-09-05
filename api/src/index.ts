@@ -3,6 +3,7 @@ import { Hono } from 'hono';
 import { cors } from 'hono/cors';
 
 import { aircraft } from '../sample-data/getAircraft.js';
+import { aircraftDetail } from '../sample-data/getAircraftDetail.js';
 
 const app = new Hono()
 
@@ -15,12 +16,13 @@ app.use('/*', cors({
   // credentials: true
 }))
 
-app.get('/', (c) => {
-  return c.text('Hello Hono!')
-})
-
 app.get('/aircraft', (c) => {
   return c.json(aircraft);
+})
+
+app.get('/aircraft/:id', (c) => {
+  const id = c.req.param('id');
+  return c.json(aircraftDetail.filter(a => a.id === id));
 })
 
 serve({
