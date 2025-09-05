@@ -31,8 +31,6 @@ function Index() {
         <Typography variant="h4">Checklist Trainer</Typography>
         <Typography variant="h5" className="font-thin text-2xl">Master your memory items</Typography>
 
-        {isLoading && (<Typography variant="h5" className="font-thin pt-4">Loading...</Typography>)}
-
         <Button
           variant="outlined"
           className="mt-10 text-ct-blue border-ct-blue py-2 mb-2"

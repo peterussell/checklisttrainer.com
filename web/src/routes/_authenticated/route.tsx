@@ -1,19 +1,17 @@
 import { createRootRouteWithContext, Outlet } from '@tanstack/react-router'
 import NavBar from '../../shared/layout/NavBar'
 import { Container } from '@mui/material';
-
-type RouterContext = {
-  auth: {
-    isLoading: boolean,
-    isAuthenticated: boolean,
-    loginWithRedirect: () => void
-  }
-};
+import type { RouterContext } from '../__root';
 
 /*
  * Layout route for authenticated pages
  */
 export const Route = createRootRouteWithContext<RouterContext>()({
+  beforeLoad: async ({ context }) => {
+    if (!context.auth.isAuthenticated) {
+      context.auth.loginWithRedirect();
+    }
+  },
   component: () => (
     <>
       <NavBar />

@@ -1,6 +1,6 @@
 import AircraftSelectorCard from "./AircraftSelectorCard";
 import { useQuery } from "@tanstack/react-query";
-import { Stack, Typography } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 
 function AircraftSelector() {
   const { isPending, error, data, isFetching } = useQuery({
@@ -16,8 +16,12 @@ function AircraftSelector() {
   if (!data) return <Typography>No aircraft found</Typography>
 
   return (
-    <Stack direction="row" gap={3}>
-      {Object.entries(data).map(([key, value]) => <AircraftSelectorCard key={key} aircraft={value} />)}
+    <Stack direction="row" gap={3} className="w-full flex flex-wrap">
+      {Object.entries(data).map(([key, value]) => (
+        <Box className="xs:min-w-full sm:min-w-1/2 md:min-w-1/4">
+          <AircraftSelectorCard key={key} aircraft={value} />
+        </Box>
+      ))}
     </Stack>
   );
 }

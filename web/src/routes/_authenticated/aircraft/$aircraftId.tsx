@@ -2,10 +2,10 @@ import { Typography } from '@mui/material';
 import { createFileRoute } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/_authenticated/aircraft/$aircraftId')({
-  component: Aircraft,
+  component: AircraftDetail,
 })
 
-function Aircraft() {
+function AircraftDetail() {
   const { aircraftId } = Route.useParams()
 
   return (

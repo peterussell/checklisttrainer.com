@@ -5,11 +5,6 @@ import AircraftSelector from '@features/Aircraft/AircraftSelector';
 
 export const Route = createFileRoute('/_authenticated/aircraft')({
   component: Aircraft,
-  beforeLoad: async ({ context }) => {
-    if (!context.auth.isLoading && !context.auth.isAuthenticated) {
-      context.auth.loginWithRedirect();
-    }
-  }
 })
 
 function Aircraft() {

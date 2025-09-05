@@ -1,9 +1,7 @@
 import { createRootRouteWithContext, Outlet } from '@tanstack/react-router'
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools'
-import NavBar from '../shared/layout/NavBar'
-import { Container } from '@mui/material';
 
-type RouterContext = {
+export type RouterContext = {
   auth: {
     isLoading: boolean,
     isAuthenticated: boolean,
