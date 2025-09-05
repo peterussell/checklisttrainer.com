@@ -8,7 +8,7 @@ import type { RouterContext } from '../__root';
  */
 export const Route = createRootRouteWithContext<RouterContext>()({
   beforeLoad: async ({ context }) => {
-    if (!context.auth.isAuthenticated) {
+    if (!context.auth.isLoading && !context.auth.isAuthenticated) {
       context.auth.loginWithRedirect();
     }
   },
