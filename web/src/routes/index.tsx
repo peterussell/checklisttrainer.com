@@ -42,7 +42,11 @@ function Index() {
           <Typography variant="overline">
             Don't have an account?
           </Typography>
-          <Button variant="text" onClick={() => loginWithRedirect({authorizationParams: { screen_hint: 'signup' }})}>
+          <Button
+            variant="text"
+            size="small"
+            className="py-0"
+            onClick={() => loginWithRedirect({authorizationParams: { screen_hint: 'signup' }})}>
             <Typography variant="overline">Sign up</Typography>
           </Button>
         </Stack>
