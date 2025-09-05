@@ -5,6 +5,8 @@ import { Auth0Provider, useAuth0 } from '@auth0/auth0-react';
 import { StyledEngineProvider } from '@mui/material/styles';
 import GlobalStyles from '@mui/material/GlobalStyles';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ThemeProvider } from '@mui/material/styles';
+import { theme } from './mui-theme'
 
 import './index.css'; // Loads tailwind
 
@@ -31,7 +33,9 @@ export function App() {
       }}
     >
       <QueryClientProvider client={queryClient}>
-        <InnerApp />
+        <ThemeProvider theme={theme}>
+          <InnerApp />
+        </ThemeProvider>
       </QueryClientProvider>
     </Auth0Provider>
   )

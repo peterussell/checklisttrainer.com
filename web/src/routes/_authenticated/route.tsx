@@ -1,5 +1,4 @@
 import { createRootRouteWithContext, Outlet } from '@tanstack/react-router'
-// import { TanStackRouterDevtools } from '@tanstack/react-router-devtools' // TODO: move to root
 import NavBar from '../../shared/layout/NavBar'
 import { Container } from '@mui/material';
 
@@ -11,11 +10,14 @@ type RouterContext = {
   }
 };
 
+/*
+ * Layout route for authenticated pages
+ */
 export const Route = createRootRouteWithContext<RouterContext>()({
   component: () => (
     <>
       <NavBar />
-      <Container>
+      <Container className="mt-4">
         <Outlet />
       </Container>
     </>

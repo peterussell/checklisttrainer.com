@@ -16,7 +16,7 @@ function AircraftSelector() {
   if (!data) return <Typography>No aircraft found</Typography>
 
   return (
-    <Stack direction="row">
+    <Stack direction="row" gap={3}>
       {Object.entries(data).map(([key, value]) => <AircraftSelectorCard key={key} aircraft={value} />)}
     </Stack>
   );

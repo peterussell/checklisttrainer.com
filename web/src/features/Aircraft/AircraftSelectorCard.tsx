@@ -1,21 +1,28 @@
 import type { Aircraft } from "@models/Aircraft";
-import { Card, CardContent, CardMedia, Stack, Typography } from "@mui/material";
-import { Link } from "@tanstack/react-router";
+import { Card, CardActionArea, CardContent, CardMedia, Chip, Stack, Typography } from "@mui/material";
 
 function AircraftSelectorCard ({aircraft}: {aircraft: Aircraft}) {
   return (
-    <Card className="m-6 pr-4">
-      <Stack direction="row">
-      <CardMedia component="img" image={aircraft.img} sx={{height: '200px', width: '300px', m: 1, borderRadius: 1}}/>
-      <CardContent>
-        <Typography variant="h5">
-          <Link to={`/aircraft/${aircraft.id}`}>{aircraft.registration}</Link>
-          </Typography>
-        <Typography>{aircraft.description ?? '-'}</Typography>
-        <Typography>Normal checklists: {aircraft.normalChecklistCount ?? '-'}</Typography>
-        <Typography>Emergency checklists: {aircraft.emergencyChecklistCount ?? '-'}</Typography>
-      </CardContent>
-      </Stack>
+    <Card className="p0 m0">
+      <CardActionArea href={`/aircraft/${aircraft.id}`}>
+        <CardMedia component="img" image={aircraft.img} sx={{width: '360px', height: '280px'}}/>
+
+        <CardContent>
+
+          <Typography variant="h5">{aircraft.registration}</Typography>
+          <Typography variant="body2" sx={{marginBottom: '16px !important'}}>{aircraft.description ?? '-'}</Typography>
+
+          <Stack direction="row" gap={1}>
+            <Typography>Normal checklists:</Typography>
+            <Chip className="bg-green-700 text-white p-0" size="small" label={aircraft.normalChecklistCount ?? '0'} />
+          </Stack>
+
+          <Stack direction="row" gap={1}>
+            <Typography>Emergency checklists:</Typography>
+            <Chip className="bg-red-700 text-white p-0" size="small" label={aircraft.normalChecklistCount ?? '0'} />
+          </Stack>
+        </CardContent>
+      </CardActionArea>
     </Card>
   )
 }

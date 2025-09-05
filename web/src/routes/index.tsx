@@ -1,7 +1,6 @@
 import { useAuth0 } from '@auth0/auth0-react'
 import { Button, Container, Stack, Typography } from '@mui/material'
-import { useQuery } from '@tanstack/react-query';
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
 
 import logo200 from '/logo-image-blue-200x200.png';
 
@@ -10,8 +9,12 @@ export const Route = createFileRoute('/')({
 })
 
 function Index() {
-  const {loginWithRedirect, user, isAuthenticated, isLoading} = useAuth0();
+  const {loginWithRedirect, isAuthenticated, isLoading} = useAuth0();
+  const navigate = useNavigate();
 
+  if (isAuthenticated) {
+    navigate({ to: '/aircraft'});
+  }
   return (
     <Container maxWidth={false} className="
       flex

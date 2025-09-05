@@ -3,7 +3,7 @@ import { Box, Stack, Typography } from '@mui/material';
 import { createFileRoute } from '@tanstack/react-router'
 import AircraftSelector from '@features/Aircraft/AircraftSelector';
 
-export const Route = createFileRoute('/authenticated/aircraft')({
+export const Route = createFileRoute('/_authenticated/aircraft')({
   component: Aircraft,
   beforeLoad: async ({ context }) => {
     if (!context.auth.isAuthenticated) {
