@@ -7,8 +7,11 @@
 
 @layer base {
   h4 {
-    font-family: "Roboto Condensed", sans-serif;
     padding: 10px 0 16px 0;
+    @apply text-ct-blue;
+  }
+  h5 {
+    padding: 10px 0;
     @apply text-ct-blue;
   }
 }

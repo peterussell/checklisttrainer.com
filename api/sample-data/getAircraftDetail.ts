@@ -8,22 +8,47 @@ export const aircraftDetail: Aircraft[] = [
     img: 'c172s.jpg',
     checklists: [
       // Emergency
-      { name: 'Engine failure during takeoff roll', category: 'Engine failures', slug: 'engine-failure-during-takeoff-roll', type: 'emergency' },
-      { name: 'Engine failure immediately after takeoff', category: 'Engine failures', slug: 'engine-failure-immediately after takeoff', type: 'emergency' },
-      { name: 'Engine failure during flight', category: 'Engine failures', slug: 'engine-failure-during-flight', type: 'emergency' },
-      { name: 'Emergency landing without engine power', category: 'Forced landings', slug: 'emergency-landing-without-engine-power', type: 'emergency' },
-      { name: 'Precautionary landing with engine power', category: 'Forced landings', slug: 'precautionary-landing-with-engine-power', type: 'emergency' },
-      { name: 'Ditching', category: 'Forced landings', slug: 'ditching', type: 'emergency' },
+      { name: 'Engine failure during takeoff roll', slug: 'engine-failure-during-takeoff-roll', type: 'emergency' },
+      { name: 'Engine failure immediately after takeoff', slug: 'engine-failure-immediately after takeoff', type: 'emergency' },
+      { name: 'Engine failure during flight', slug: 'engine-failure-during-flight', type: 'emergency' },
+      { name: 'Emergency landing without engine power', slug: 'emergency-landing-without-engine-power', type: 'emergency' },
+      { name: 'Precautionary landing with engine power', slug: 'precautionary-landing-with-engine-power', type: 'emergency' },
+      { name: 'Ditching', slug: 'ditching', type: 'emergency' },
 
       // Normal
-      { name: 'Cabin', category: 'Preflight inspection', slug: 'cabin', type: 'normal' },
-      { name: 'Empennage', category: 'Preflight inspection', slug: 'empennage', type: 'normal' },
-      { name: 'Right wing, trailing edge', category: 'Preflight inspection', slug: 'right-wing-trailing-edge', type: 'normal' },
-      { name: 'Right wing', category: 'Preflight inspection', slug: 'right-wing', type: 'normal' },
-      { name: 'Nose', category: 'Preflight inspection', slug: 'nose', type: 'normal' },
-      { name: 'Left wing', category: 'Preflight inspection', slug: 'left-wing', type: 'normal' },
-      { name: 'Left wing, leading edge', category: 'Preflight inspection', slug: 'left-wing-leading-edge', type: 'normal' },
-      { name: 'Left wing, trailing edge', category: 'Preflight inspection', slug: 'left-wing-trailing-edge', type: 'normal' },
+      { name: 'Pre-start', slug: 'pre-start', type: 'normal' },
+      { name: 'Starting engine', slug: 'starting-engine', type: 'normal' },
+      { name: 'Pre-taxi', slug: 'pre-taxi', type: 'normal' },
+      { name: 'Taxi', slug: 'taxi', type: 'normal' },
+      { name: 'Run-up', slug: 'run-up', type: 'normal' },
+      { name: 'Pre-takeoff', slug: 'pre-takeoff', type: 'normal' },
+      { name: 'Normal takeoff', slug: 'normal-takeoff', type: 'normal' },
+      { name: 'Short field takeoff', slug: 'short-field-takeoff', type: 'normal' },
+    ]
+  },
+  {
+    id: '2',
+    registration: 'N2481T',
+    description: 'Piper Warrior II',
+    img: 'pa28-161.jpg',
+    checklists: [
+      // Emergency
+      { name: 'Engine failure during takeoff roll', slug: 'engine-failure-during-takeoff-roll', type: 'emergency' },
+      { name: 'Engine failure immediately after takeoff', slug: 'engine-failure-immediately after takeoff', type: 'emergency' },
+      { name: 'Engine failure during flight', slug: 'engine-failure-during-flight', type: 'emergency' },
+      { name: 'Emergency landing without engine power', slug: 'emergency-landing-without-engine-power', type: 'emergency' },
+      { name: 'Precautionary landing with engine power', slug: 'precautionary-landing-with-engine-power', type: 'emergency' },
+      { name: 'Ditching', slug: 'ditching', type: 'emergency' },
+
+      // Normal
+      { name: 'Pre-start', slug: 'pre-start', type: 'normal' },
+      { name: 'Starting engine', slug: 'starting-engine', type: 'normal' },
+      { name: 'Pre-taxi', slug: 'pre-taxi', type: 'normal' },
+      { name: 'Taxi', slug: 'taxi', type: 'normal' },
+      { name: 'Run-up', slug: 'run-up', type: 'normal' },
+      { name: 'Pre-takeoff', slug: 'pre-takeoff', type: 'normal' },
+      { name: 'Normal takeoff', slug: 'normal-takeoff', type: 'normal' },
+      { name: 'Short field takeoff', slug: 'short-field-takeoff', type: 'normal' },
     ]
   }
 ];
