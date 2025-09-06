@@ -64,8 +64,8 @@ function ChecklistsCard({checklists, title, aircraftId}: ChecklistsCardProps) {
     <Card className="my-4">
         <CardContent>
           <Typography variant="h5" className="pt-0">{title}</Typography>
-          {checklists.map((c: Checklist) => (
-            <Stack direction="row" gap={1} className="flex items-center py-4 border-b border-b-gray-200">
+          {checklists.map((c: Checklist, i: number) => (
+            <Stack key={i} direction="row" gap={1} className="flex items-center py-4 border-b border-b-gray-200">
               {/* Chips stack */}
               <Stack
                 className="align-self-right"
