@@ -4,6 +4,12 @@ export type Aircraft = {
   id: string,
   registration: string,
   description: string,
-  img: string,
+  images: AircraftImage[],
   checklists: Checklist[]
 };
+
+export type AircraftImage = {
+  src: string,
+  isDefault?: boolean,
+  description: string
+}

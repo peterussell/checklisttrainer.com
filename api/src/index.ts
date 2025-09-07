@@ -22,7 +22,7 @@ app.get('/aircraft', (c) => {
 
 app.get('/aircraft/:id', (c) => {
   const id = c.req.param('id');
-  return c.json(aircraftDetail.filter(a => a.id === id));
+  return c.json(aircraftDetail.filter(a => a.id === id)[0]); // TODO: better error checking
 })
 
 serve({

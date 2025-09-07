@@ -1,34 +1,25 @@
-import { Box, Card, CardContent, Chip, Stack, Typography } from '@mui/material';
+import { Card, CardContent, Chip, Stack, Typography } from '@mui/material';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import { useQuery } from '@tanstack/react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
-import type { Aircraft } from '../../../../../core/models/Aircraft'; // TODO: move to @ct
-import type { Checklist } from '../../../../../core/models/Checklist'; // TODO: move to @ct
+import type { Aircraft } from '../../../../../../core/models/Aircraft'; // TODO: move to @ct
+import type { Checklist } from '../../../../../../core/models/Checklist'; // TODO: move to @ct
+import { aircraftDetailQuery } from '../../../../queries/aircraftDetailQuery';
 
-export const Route = createFileRoute('/_authenticated/aircraft/$aircraftId')({
+export const Route = createFileRoute('/_authenticated/aircraft/$aircraftId/')({
   component: AircraftDetail,
 })
 
-// TODO: working here - fetch aircraft detail and display
-
 function AircraftDetail() {
   const { aircraftId } = Route.useParams()
-  
-  const { isPending, error, data, isFetching } = useQuery({
-    queryKey: ['aircraft'],
-    queryFn: async () => {
-      if (aircraftId === null) return;
-      const response = await fetch(`http://localhost:3000/aircraft/${aircraftId}`); // FIXME: env variable!
-      return await response.json();
-    }
+  const { data } = useSuspenseQuery<Aircraft | null>({
+    queryKey: ['aircraft', aircraftId],
+    queryFn: () => aircraftDetailQuery(aircraftId)
   });
 
-  if (isPending || isFetching) return <Typography>Loading...</Typography>;
-  if (error) return <Typography>Failed to load aircraft. Please try refreshing the page.</Typography>
-  if (!data?.length) return <Typography>Aircraft not found.</Typography>
-  if (data.length > 1) return <Typography>Failed to load aircraft.</Typography>
-
-  const aircraft: Aircraft = data[0];
+  // Also handled at parent, but repeat here to be safe
+  if (!data) return <Typography>Failed to load aircraft</Typography>
+  const aircraft: Aircraft = data;
 
   return (
     <>
@@ -84,14 +75,14 @@ function ChecklistsCard({checklists, title, aircraftId}: ChecklistsCardProps) {
                     label="Practice"
                     size="small"
                     className="bg-green-600/30 hover:bg-green-600/50 text-green-800 px-2"
-                    onClick={() => navigate({to: `/aircraft/${aircraftId}/learn`})} />
+                    onClick={() => navigate({to: `/aircraft/${aircraftId}/practice`})} />
 
                   {/* Test */}
                   <Chip
                     label="Test"
                     size="small"
                     className="bg-amber-100 hover:bg-amber-200 text-amber-800 px-2"
-                    onClick={() => navigate({to: `/aircraft/${aircraftId}/learn`})} />
+                    onClick={() => navigate({to: `/aircraft/${aircraftId}/test`})} />
                 </Stack>
 
                 <ChevronRightIcon className="text-lg" />

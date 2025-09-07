@@ -15,19 +15,18 @@ import "@fontsource/roboto-condensed/400.css";
 import "@fontsource/roboto-condensed/700.css";
 
 import { router } from './router';
+import { queryClient } from './queryClient';
 
 function InnerApp() {
   const { isAuthenticated, isLoading, loginWithRedirect } = useAuth0();
   return <RouterProvider router={router} context={{ auth: { isLoading, isAuthenticated, loginWithRedirect }}} />
 }
 
-const queryClient = new QueryClient();
-
 export function App() {
   return (
     <Auth0Provider
-      domain="dev-sha0v78b1jbu5odf.us.auth0.com"
-      clientId="1jXikjei6o8wKTtDKYPFfcI0IjAo1fk9"
+      domain="dev-sha0v78b1jbu5odf.us.auth0.com" // TODO: secrets(?)
+      clientId="1jXikjei6o8wKTtDKYPFfcI0IjAo1fk9" // TODO: secrets(?)
       authorizationParams={{
         redirect_uri: window.location.origin // TODO: should go to dashboard
       }}

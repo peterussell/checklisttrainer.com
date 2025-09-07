@@ -5,7 +5,10 @@ export const aircraftDetail: Aircraft[] = [
     id: '1',
     registration: 'N519ER',
     description: 'Cessna 172S Skyhawk',
-    img: 'c172s.jpg',
+    images: [
+      { src: 'c172s.jpg', isDefault: true, description: "Forward view" },
+      { src: 'c172s-pedestal.jpg', description: "Pedestal" },
+    ],
     checklists: [
       // Emergency
       { name: 'Engine failure during takeoff roll', slug: 'engine-failure-during-takeoff-roll', type: 'emergency' },
@@ -30,7 +33,9 @@ export const aircraftDetail: Aircraft[] = [
     id: '2',
     registration: 'N2481T',
     description: 'Piper Warrior II',
-    img: 'pa28-161.jpg',
+    images: [
+      { src: 'pa28-161.jpg', isDefault: true, description: "Forward view" }
+    ],
     checklists: [
       // Emergency
       { name: 'Engine failure during takeoff roll', slug: 'engine-failure-during-takeoff-roll', type: 'emergency' },
