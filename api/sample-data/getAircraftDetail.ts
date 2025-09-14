@@ -5,9 +5,25 @@ export const aircraftDetail: Aircraft[] = [
     id: '1',
     registration: 'N519ER',
     description: 'Cessna 172S Skyhawk',
-    images: [
-      { src: 'c172s.jpg', isDefault: true, description: "Forward view" },
-      { src: 'c172s-pedestal.jpg', description: "Pedestal" },
+    views: [
+      {
+        isDefault: true,
+        src: 'c172s.jpg',
+        description: "Forward view",
+        controls: [
+          {
+            title: "Magnetos",
+            xPos: 10.5,
+            yPos: 56,
+            options: ["Off", "Left", "Right", "Both", "Start"]
+          }
+        ]
+      },
+      {
+        src: 'c172s-pedestal.jpg',
+        description: "Pedestal",
+        controls: []
+      },
     ],
     checklists: [
       // Emergency
@@ -33,7 +49,7 @@ export const aircraftDetail: Aircraft[] = [
     id: '2',
     registration: 'N2481T',
     description: 'Piper Warrior II',
-    images: [
+    views: [
       { src: 'pa28-161.jpg', isDefault: true, description: "Forward view" }
     ],
     checklists: [

@@ -1,44 +1,63 @@
 import { IconButton, Stack, Typography } from "@mui/material";
+import Add from '@mui/icons-material/Add';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import Add from '@mui/icons-material/Add';
-import Remove from '@mui/icons-material/Remove';
+import PlaceIcon from '@mui/icons-material/Place';
 import Refresh from '@mui/icons-material/Refresh';
-import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
+import Remove from '@mui/icons-material/Remove';
+import { KeepScale, TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import type { AircraftView } from "../../../../core/models/Aircraft";
 import { useEffect, useRef, useState } from "react";
 
 export function FlightDeckViewer({ views }: { views: AircraftView[] }) {
   const [selectedIdx, setSelectedIdx] = useState<number | null>(null);
 
-  // Used to display chevron if thumbnails are scrollable
-  const containerRef = useRef<HTMLDivElement | null>(null);
+  // Thumbnails - display left/right thumbnail overflow scroll indicators
+  const thumbnailContainerRef = useRef<HTMLDivElement | null>(null);
   const [isOverflowing, setIsOverflowing] = useState(false);
-  
-  useEffect(() => {
-    setSelectedIdx(views.findIndex(i => i.isDefault) ?? 0);
-  }, [views])
 
   useEffect(() => {
-    const el = containerRef.current;
-    if (el) {
-      setIsOverflowing(el.scrollWidth > el.clientWidth);
+    if (thumbnailContainerRef.current) {
+      const { scrollWidth, clientWidth } = thumbnailContainerRef.current;
+      setIsOverflowing(scrollWidth > clientWidth);
     }
+  }, [views]);
+
+  // Track the selected thumbnail
+  useEffect(() => {
+    setSelectedIdx(views.findIndex(i => i.isDefault) ?? 0);
   }, [views]);
 
   if (!views?.length) return null;
 
   return (
     <Stack gap={1}>
-      {/* Hero view */}
+      {/* Active view */}
       {selectedIdx === null ? (
         <Typography>No view selected</Typography>
       ) : (
-        <TransformWrapper>
-          {({ zoomIn, zoomOut, resetTransform }) => (
+        <TransformWrapper maxScale={2.5}>
+          {({ zoomIn, zoomOut, resetTransform, }) => (
             <>
               <TransformComponent>
-                <img src={`/${views[selectedIdx].src}`} className="rounded-md" />
+                <div className="relative">
+                  <img src={`/${views[selectedIdx].src}`}/>
+
+                  {views[selectedIdx].controls.map((c, i) => {
+                    const yPosFromBottom = 100 - c.yPos;
+
+                    return (
+                      <KeepScale key={i} className="absolute" style={{ bottom: `${yPosFromBottom}%`, left: `${c.xPos}%` }}>
+                        <IconButton
+                          onClick={() => console.log(`Clicked ${c.title}`)} // TODO
+                        >
+                          <PlaceIcon className="fill-blue-800 hover:fill-blue-500 stroke-white stroke-[0.5]" />
+                        </IconButton>
+                      </KeepScale>
+                      );
+                    }
+                  )}
+                </div>
               </TransformComponent>
 
               {/* Zoom controls */}
@@ -59,16 +78,15 @@ export function FlightDeckViewer({ views }: { views: AircraftView[] }) {
 
         {/* Internal thumbnail stack */}
         <Stack
-          ref={containerRef}
+          ref={thumbnailContainerRef}
           direction="row"
           gap={1}
           className="overflow-x-auto flex-nowrap pb-4"
         >
           
           {views.map((view, i) => (
-            <Stack className="items-center">
+            <Stack className="items-center" key={i}>
               <img
-                key={i}
                 src={`/${view.src}`}
                 className={`
                   cursor-pointer
