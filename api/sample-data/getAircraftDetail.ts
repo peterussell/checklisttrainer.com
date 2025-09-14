@@ -15,7 +15,7 @@ export const aircraftDetail: Aircraft[] = [
             title: "Magnetos",
             xPos: 10.5,
             yPos: 56,
-            options: ["Off", "Left", "Right", "Both", "Start"]
+            actions: ["Off", "Left", "Right", "Both", "Start"]
           }
         ]
       },

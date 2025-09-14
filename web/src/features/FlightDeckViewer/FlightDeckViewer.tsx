@@ -1,4 +1,4 @@
-import { IconButton, Stack, Typography } from "@mui/material";
+import { IconButton, Menu, MenuItem, MenuList, Stack, Typography } from "@mui/material";
 import Add from '@mui/icons-material/Add';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
@@ -6,7 +6,7 @@ import PlaceIcon from '@mui/icons-material/Place';
 import Refresh from '@mui/icons-material/Refresh';
 import Remove from '@mui/icons-material/Remove';
 import { KeepScale, TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
-import type { AircraftView } from "../../../../core/models/Aircraft";
+import type { AircraftControl, AircraftView } from "../../../../core/models/Aircraft";
 import { useEffect, useRef, useState } from "react";
 
 export function FlightDeckViewer({ views }: { views: AircraftView[] }) {
@@ -28,6 +28,19 @@ export function FlightDeckViewer({ views }: { views: AircraftView[] }) {
     setSelectedIdx(views.findIndex(i => i.isDefault) ?? 0);
   }, [views]);
 
+  const [menuAnchor, setMenuAnchor] = useState<HTMLElement | null>(null);
+  const [selectedControl, setSelectedControl] = useState<AircraftControl | null>(null);
+
+  function handleControlClick(event: React.MouseEvent<HTMLElement>, control: AircraftControl) {
+    setMenuAnchor(event.currentTarget);
+    setSelectedControl(control);
+  };
+
+  function handleActionsMenuClose() {
+    setMenuAnchor(null);
+    setSelectedControl(null);
+  };
+
   if (!views?.length) return null;
 
   return (
@@ -48,9 +61,8 @@ export function FlightDeckViewer({ views }: { views: AircraftView[] }) {
 
                     return (
                       <KeepScale key={i} className="absolute" style={{ bottom: `${yPosFromBottom}%`, left: `${c.xPos}%` }}>
-                        <IconButton
-                          onClick={() => console.log(`Clicked ${c.title}`)} // TODO
-                        >
+                        {/* Control icon */}
+                        <IconButton onClick={(e: React.MouseEvent<HTMLElement>) => handleControlClick(e, c)}>
                           <PlaceIcon className="fill-blue-800 hover:fill-blue-500 stroke-white stroke-[0.5]" />
                         </IconButton>
                       </KeepScale>
@@ -59,6 +71,27 @@ export function FlightDeckViewer({ views }: { views: AircraftView[] }) {
                   )}
                 </div>
               </TransformComponent>
+
+              {/* Actions menu */}
+              {menuAnchor && (
+                <Menu
+                  anchorEl={menuAnchor}
+                  open={menuAnchor !== null}
+                  onClose={handleActionsMenuClose}
+                  slotProps={{ root: { sx: { '.MuiList-root': { padding: 0 }}} }}
+                >
+                  <MenuList dense>
+                    {selectedControl?.actions?.map((a: string, i: number) => (
+                      <MenuItem
+                        key={i}
+                        onClick={() => {
+                          console.log(`Action: ${selectedControl.title} - ${a}`);
+                          handleActionsMenuClose();
+                        }}>{a}</MenuItem>
+                    ))}
+                  </MenuList>
+                </Menu>
+              )}
 
               {/* Zoom controls */}
               <Stack direction="row" className="z-10 flex justify-end">

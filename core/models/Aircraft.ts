@@ -12,10 +12,12 @@ export type AircraftView = {
   src: string,
   isDefault?: boolean,
   description: string,
-  controls: {
-    title: string,
-    xPos: number, // Percent of image width
-    yPos: number, // Percent of image height
-    options: string[]
-  }[]
-}
+  controls: AircraftControl[]
+};
+
+export type AircraftControl = {
+  title: string,
+  xPos: number, // Percent of image width
+  yPos: number, // Percent of image height
+  actions: string[]
+};
