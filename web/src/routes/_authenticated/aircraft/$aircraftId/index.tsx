@@ -24,7 +24,10 @@ function AircraftDetail() {
   return (
     <>
       <Stack direction="row" gap={2} className="flex items-center">
-        <img src={`/${aircraft.img}`} className="w-32 h-32 rounded-full object-cover" />
+        <img
+          src={`/${aircraft.images.find(i => i.isDefault)?.src ?? aircraft.images[0]?.src}`}
+          className="w-32 h-32 rounded-full object-cover"
+        />
         <Stack>
           <Typography variant="h4" className="pb-0">{aircraft.registration}</Typography>
           <Typography variant="body2">{aircraft.description}</Typography>

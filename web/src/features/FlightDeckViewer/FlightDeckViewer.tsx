@@ -1,6 +1,10 @@
-import { Box, Stack, Typography } from "@mui/material";
+import { IconButton, Stack, Typography } from "@mui/material";
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import Add from '@mui/icons-material/Add';
+import Remove from '@mui/icons-material/Remove';
+import Refresh from '@mui/icons-material/Refresh';
+import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import type { AircraftImage } from "../../../../core/models/Aircraft";
 import { useEffect, useRef, useState } from "react";
 
@@ -30,7 +34,22 @@ export function FlightDeckViewer({ images }: { images: AircraftImage[] }) {
       {selectedIdx === null ? (
         <Typography>No image selected</Typography>
       ) : (
-        <img src={`/${images[selectedIdx].src}`} className="rounded-md" />
+        <TransformWrapper>
+          {({ zoomIn, zoomOut, resetTransform }) => (
+            <>
+              <TransformComponent>
+                <img src={`/${images[selectedIdx].src}`} className="rounded-md" />
+              </TransformComponent>
+
+              {/* Zoom controls */}
+              <Stack direction="row" className="z-10 flex justify-end">
+                <IconButton onClick={() => zoomIn()}><Add /></IconButton>
+                <IconButton onClick={() => zoomOut()}><Remove /></IconButton>
+                <IconButton onClick={() => resetTransform()}><Refresh /></IconButton>
+              </Stack>
+            </>
+          )}
+        </TransformWrapper>
       )}
 
       {/* Scrollable thumbnails */}
