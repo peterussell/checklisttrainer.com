@@ -5,10 +5,10 @@ import Add from '@mui/icons-material/Add';
 import Remove from '@mui/icons-material/Remove';
 import Refresh from '@mui/icons-material/Refresh';
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
-import type { AircraftImage } from "../../../../core/models/Aircraft";
+import type { AircraftView } from "../../../../core/models/Aircraft";
 import { useEffect, useRef, useState } from "react";
 
-export function FlightDeckViewer({ images }: { images: AircraftImage[] }) {
+export function FlightDeckViewer({ views }: { views: AircraftView[] }) {
   const [selectedIdx, setSelectedIdx] = useState<number | null>(null);
 
   // Used to display chevron if thumbnails are scrollable
@@ -16,29 +16,29 @@ export function FlightDeckViewer({ images }: { images: AircraftImage[] }) {
   const [isOverflowing, setIsOverflowing] = useState(false);
   
   useEffect(() => {
-    setSelectedIdx(images.findIndex(i => i.isDefault) ?? 0);
-  }, [images])
+    setSelectedIdx(views.findIndex(i => i.isDefault) ?? 0);
+  }, [views])
 
   useEffect(() => {
     const el = containerRef.current;
     if (el) {
       setIsOverflowing(el.scrollWidth > el.clientWidth);
     }
-  }, [images]);
+  }, [views]);
 
-  if (!images?.length) return null;
+  if (!views?.length) return null;
 
   return (
     <Stack gap={1}>
-      {/* Hero image */}
+      {/* Hero view */}
       {selectedIdx === null ? (
-        <Typography>No image selected</Typography>
+        <Typography>No view selected</Typography>
       ) : (
         <TransformWrapper>
           {({ zoomIn, zoomOut, resetTransform }) => (
             <>
               <TransformComponent>
-                <img src={`/${images[selectedIdx].src}`} className="rounded-md" />
+                <img src={`/${views[selectedIdx].src}`} className="rounded-md" />
               </TransformComponent>
 
               {/* Zoom controls */}
@@ -65,11 +65,11 @@ export function FlightDeckViewer({ images }: { images: AircraftImage[] }) {
           className="overflow-x-auto flex-nowrap pb-4"
         >
           
-          {images.map((image, i) => (
+          {views.map((view, i) => (
             <Stack className="items-center">
               <img
                 key={i}
-                src={`/${image.src}`}
+                src={`/${view.src}`}
                 className={`
                   cursor-pointer
                   rounded-md
@@ -80,7 +80,7 @@ export function FlightDeckViewer({ images }: { images: AircraftImage[] }) {
                   max-w-[200px]
                   border-2 border-gray-500 ${(i !== selectedIdx) ? 'border-transparent' : ''}`}
                 onClick={() => setSelectedIdx(i)}/>
-              <Typography variant="caption">{image.description}</Typography>
+              <Typography variant="caption">{view.description}</Typography>
             </Stack>
           ))}
         </Stack>

@@ -4,11 +4,11 @@ export type Aircraft = {
   id: string,
   registration: string,
   description: string,
-  images: AircraftImage[],
+  views: AircraftView[],
   checklists: Checklist[]
 };
 
-export type AircraftImage = {
+export type AircraftView = {
   src: string,
   isDefault?: boolean,
   description: string

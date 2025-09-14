@@ -50,7 +50,7 @@ function LearnMode() {
 
       {/* Flight deck viewer. TODO: add left column before this */}
       <Box className="max-w-2/3 py-8">
-        <FlightDeckViewer images={aircraft.images} />
+        <FlightDeckViewer views={aircraft.views} />
       </Box>
     </>
   )
