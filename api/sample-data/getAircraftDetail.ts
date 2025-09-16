@@ -12,11 +12,80 @@ export const aircraftDetail: Aircraft[] = [
         description: "Forward view",
         controls: [
           {
+            title: "Annunciator lights",
+            xPos: 32,
+            yPos: 16,
+            actions: ["Test"]
+          },
+          {
+            title: "Avionics",
+            xPos: 18,
+            yPos: 54,
+            actions: ["On", "Off"]
+          },
+          {
+            title: "Control lock",
+            xPos: 25,
+            yPos: 47,
+            actions: ["Remove", "Replace"]
+          },
+          {
+            title: "Circuit breakers",
+            xPos: 14,
+            yPos: 50,
+            actions: ["All in"]
+          },
+          {
+            title: "Flaps",
+            xPos: 62,
+            yPos: 59,
+            actions: ["Up", "10°", "20°", "30°"]
+          },
+          {
+            title: "Fuel guages",
+            xPos: 12,
+            yPos: 31,
+            actions: ["Check"]
+          },
+          {
+            title: "Fuel selector",
+            xPos: 45.5,
+            yPos: 94,
+            actions: ["Left", "Right", "Both"]
+          },
+          {
+            title: "Fuel shut-off valve",
+            xPos: 49,
+            yPos: 89,
+            actions: ["On", "Off"]
+          },
+          {
+            title: "Lights",
+            xPos: 22,
+            yPos: 64,
+            markerRotation: 180,
+            actions: ["On", "Off", "As required"],
+          },
+          {
             title: "Magnetos",
             xPos: 10.5,
             yPos: 56,
             actions: ["Off", "Left", "Right", "Both", "Start"]
-          }
+          },
+          {
+            title: "Master switch",
+            xPos: 14.5,
+            yPos: 62,
+            markerRotation: 180,
+            actions: ["On", "Off", "Alt on", "Alt off", "Battery on", "Battery off"]
+          },
+          {
+            title: "Parking brake",
+            xPos: 24,
+            yPos: 71,
+            markerRotation: 180,
+            actions: ["Set", "Off"]
+          },
         ]
       },
       {
@@ -50,7 +119,7 @@ export const aircraftDetail: Aircraft[] = [
     registration: 'N2481T',
     description: 'Piper Warrior II',
     views: [
-      { src: 'pa28-161.jpg', isDefault: true, description: "Forward view" }
+      { src: 'pa28-161.jpg', isDefault: true, description: "Forward view", controls: [] }
     ],
     checklists: [
       // Emergency

@@ -1,4 +1,4 @@
-import { IconButton, Menu, MenuItem, MenuList, Stack, Typography } from "@mui/material";
+import { IconButton, Menu, MenuItem, MenuList, Stack, Tooltip, Typography } from "@mui/material";
 import Add from '@mui/icons-material/Add';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
@@ -60,12 +60,19 @@ export function FlightDeckViewer({ views }: { views: AircraftView[] }) {
                     const yPosFromBottom = 100 - c.yPos;
 
                     return (
-                      <KeepScale key={i} className="absolute" style={{ bottom: `${yPosFromBottom}%`, left: `${c.xPos}%` }}>
+                      <>
                         {/* Control icon */}
-                        <IconButton onClick={(e: React.MouseEvent<HTMLElement>) => handleControlClick(e, c)}>
-                          <PlaceIcon className="fill-blue-800 hover:fill-blue-500 stroke-white stroke-[0.5]" />
-                        </IconButton>
-                      </KeepScale>
+                        <KeepScale key={i} className="absolute" style={{ bottom: `${yPosFromBottom}%`, left: `${c.xPos}%` }}>
+                          <Tooltip title={c.title}>
+                            <IconButton onClick={(e: React.MouseEvent<HTMLElement>) => handleControlClick(e, c)}>
+                              <PlaceIcon
+                                className="fill-blue-800 hover:fill-blue-500 stroke-white stroke-[0.5]"
+                                style={{ transform: `rotate(${c.markerRotation ?? 0}deg)`}}
+                              />
+                            </IconButton>
+                          </Tooltip>
+                        </KeepScale>
+                      </>
                       );
                     }
                   )}
@@ -80,6 +87,7 @@ export function FlightDeckViewer({ views }: { views: AircraftView[] }) {
                   onClose={handleActionsMenuClose}
                   slotProps={{ root: { sx: { '.MuiList-root': { padding: 0 }}} }}
                 >
+                  <Typography variant="caption" className="px-2 pb-1 border-b border-gray-300">{selectedControl?.title}</Typography>
                   <MenuList dense>
                     {selectedControl?.actions?.map((a: string, i: number) => (
                       <MenuItem
@@ -87,7 +95,7 @@ export function FlightDeckViewer({ views }: { views: AircraftView[] }) {
                         onClick={() => {
                           console.log(`Action: ${selectedControl.title} - ${a}`);
                           handleActionsMenuClose();
-                        }}>{a}</MenuItem>
+                        }}><Typography variant="caption">{a}</Typography></MenuItem>
                     ))}
                   </MenuList>
                 </Menu>

@@ -19,5 +19,6 @@ export type AircraftControl = {
   title: string,
   xPos: number, // Percent of image width
   yPos: number, // Percent of image height
+  markerRotation?: number,
   actions: string[]
 };
