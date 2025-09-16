@@ -1,4 +1,4 @@
-import { IconButton, Menu, MenuItem, MenuList, Stack, Tooltip, Typography } from "@mui/material";
+import { Box, IconButton, Menu, MenuItem, MenuList, Stack, Tooltip, Typography } from "@mui/material";
 import Add from '@mui/icons-material/Add';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
@@ -60,7 +60,7 @@ export function FlightDeckViewer({ views }: { views: AircraftView[] }) {
                     const yPosFromBottom = 100 - c.yPos;
 
                     return (
-                      <>
+                      <Box key={i}>
                         {/* Control icon */}
                         <KeepScale key={i} className="absolute" style={{ bottom: `${yPosFromBottom}%`, left: `${c.xPos}%` }}>
                           <Tooltip title={c.title}>
@@ -72,7 +72,7 @@ export function FlightDeckViewer({ views }: { views: AircraftView[] }) {
                             </IconButton>
                           </Tooltip>
                         </KeepScale>
-                      </>
+                      </Box>
                       );
                     }
                   )}
