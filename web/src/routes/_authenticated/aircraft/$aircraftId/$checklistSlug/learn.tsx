@@ -1,4 +1,4 @@
-import { Box, Card, CardContent, CardMedia, Checkbox, Dialog, DialogContent, DialogContentText, DialogTitle, List, ListItem, ListItemIcon, ListItemText, Stack, Typography } from '@mui/material';
+import { Box, Card, CardActionArea, CardContent, CardMedia, Checkbox, Dialog, DialogContent, DialogContentText, DialogTitle, List, ListItem, ListItemIcon, ListItemText, Stack, Typography } from '@mui/material';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { useSuspenseQuery } from '@tanstack/react-query';
@@ -129,17 +129,21 @@ function LearnMode() {
           {/* TODO: WORKING HERE - add card links */}
           <Stack direction="row" gap={2} className="w-full">
             <Card className="w-60">
-              <CardMedia sx={{ height: 140 }} image={logo200} title="Practice mode" />
-              <CardContent>
-                <Typography variant="h5">Practice mode</Typography>
-              </CardContent>
+              <CardActionArea href={`/aircraft/${aircraftId}/${checklist?.slug ?? ''}/practice`}>
+                <CardMedia sx={{ height: 140 }} image={logo200} title="Practice mode" />
+                <CardContent>
+                  <Typography variant="h5">Practice mode</Typography>
+                </CardContent>
+              </CardActionArea>
             </Card>
 
             <Card className="w-60">
-              <CardMedia sx={{ height: 140 }} image={logo200} title="Practice mode" />
-              <CardContent>
-                <Typography variant="h5">Test mode</Typography>
-              </CardContent>
+              <CardActionArea href={`/aircraft/${aircraftId}/${checklist?.slug ?? ''}/test`}>
+                <CardMedia sx={{ height: 140 }} image={logo200} title="Test mode" />
+                <CardContent>
+                  <Typography variant="h5">Test mode</Typography>
+                </CardContent>
+              </CardActionArea>
             </Card>
           </Stack>
         </DialogContent>
