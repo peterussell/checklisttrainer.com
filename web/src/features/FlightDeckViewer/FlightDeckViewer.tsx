@@ -6,10 +6,15 @@ import PlaceIcon from '@mui/icons-material/Place';
 import Refresh from '@mui/icons-material/Refresh';
 import Remove from '@mui/icons-material/Remove';
 import { KeepScale, TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
-import type { ChecklistItem, AircraftView } from "../../../../core/models/Aircraft";
+import type { AircraftControl, AircraftView } from "../../../../core/models/Aircraft";
 import { useEffect, useRef, useState } from "react";
 
-export function FlightDeckViewer({ views }: { views: AircraftView[] }) {
+type FlightDeckViewerProps = {
+  views: AircraftView[],
+  onActionSelected: (control: string, action: string) => void;
+};
+
+export function FlightDeckViewer({ views, onActionSelected }: FlightDeckViewerProps) {
   const [selectedIdx, setSelectedIdx] = useState<number | null>(null);
 
   // Thumbnails - display left/right thumbnail overflow scroll indicators
@@ -29,16 +34,16 @@ export function FlightDeckViewer({ views }: { views: AircraftView[] }) {
   }, [views]);
 
   const [menuAnchor, setMenuAnchor] = useState<HTMLElement | null>(null);
-  const [selectedItem, setSelectedItem] = useState<ChecklistItem | null>(null);
+  const [selectedControl, setSelectedControl] = useState<AircraftControl | null>(null);
 
-  function handleControlClick(event: React.MouseEvent<HTMLElement>, item: ChecklistItem) {
+  function handleControlClick(event: React.MouseEvent<HTMLElement>, control: AircraftControl) {
     setMenuAnchor(event.currentTarget);
-    setSelectedItem(item);
+    setSelectedControl(control);
   };
 
   function handleActionsMenuClose() {
     setMenuAnchor(null);
-    setSelectedItem(null);
+    setSelectedControl(null);
   };
 
   if (!views?.length) return null;
@@ -87,13 +92,13 @@ export function FlightDeckViewer({ views }: { views: AircraftView[] }) {
                   onClose={handleActionsMenuClose}
                   slotProps={{ root: { sx: { '.MuiList-root': { padding: 0 }}} }}
                 >
-                  <Typography variant="caption" className="px-2 pb-1 border-b border-gray-300">{selectedItem?.title}</Typography>
+                  <Typography variant="caption" className="px-2 pb-1 border-b border-gray-300">{selectedControl?.title}</Typography>
                   <MenuList dense>
-                    {selectedItem?.actions?.map((a: string, i: number) => (
+                    {selectedControl?.actions?.map((a: string, i: number) => (
                       <MenuItem
                         key={i}
                         onClick={() => {
-                          console.log(`Action: ${selectedItem.title} - ${a}`);
+                          onActionSelected(selectedControl.title, a);
                           handleActionsMenuClose();
                         }}><Typography variant="caption">{a}</Typography></MenuItem>
                     ))}

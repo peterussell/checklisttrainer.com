@@ -12,6 +12,12 @@ export const aircraftDetail: Aircraft[] = [
         description: "Forward view",
         controls: [
           {
+            title: "Airspeed",
+            xPos: 17,
+            yPos: 22,
+            actions: ["70 KIAS"]
+          },
+          {
             title: "Annunciator lights",
             xPos: 32,
             yPos: 16,
@@ -39,7 +45,7 @@ export const aircraftDetail: Aircraft[] = [
             title: "Flaps",
             xPos: 62,
             yPos: 59,
-            actions: ["Up", "10°", "20°", "30°"]
+            actions: ["Up", "10°", "20°", "30°", "Down"]
           },
           {
             title: "Fuel guages",
@@ -54,7 +60,7 @@ export const aircraftDetail: Aircraft[] = [
             actions: ["Left", "Right", "Both"]
           },
           {
-            title: "Fuel shut-off valve",
+            title: "Fuel shutoff valve",
             xPos: 49,
             yPos: 89,
             actions: ["On", "Off"]
@@ -79,11 +85,17 @@ export const aircraftDetail: Aircraft[] = [
             actions: ["Off", "Left", "Right", "Both", "Start"]
           },
           {
-            title: "Master switch",
+            title: "Master",
             xPos: 14.5,
             yPos: 62,
             markerRotation: 180,
             actions: ["On", "Off", "Alt on", "Alt off", "Battery on", "Battery off"]
+          },
+          {
+            title: "Mixture",
+            xPos: 52,
+            yPos: 58,
+            actions: ["Rich", "Enrichen", "Lean", "Full lean / idle cutoff"]
           },
           {
             title: "Parking brake",
@@ -108,12 +120,13 @@ export const aircraftDetail: Aircraft[] = [
         slug: 'efato-no-restart',
         type: 'emergency',
         steps: [
-          { item: 'Maintain aircraft control' },
+          // { item: 'Maintain aircraft control' }, // FIXME: add 'other items' lists (and uncomment this)
           { item: 'Airspeed', action: '70 KIAS' },
           { item: 'Fuel shutoff valve', action: 'Off' },
           { item: 'Mixture', action: 'Full lean / idle cutoff' },
           { item: 'Flaps', action: 'Down', condition: '64 KIAS' },
-          { item: 'Master & mags', action: 'Off' },
+          { item: 'Master', action: 'Off' },
+          { item: 'Magnetos', action: 'Off' },
           { item: 'Doors', action: 'Unlatch' }
         ]
       },

@@ -23,7 +23,8 @@ function LearnMode() {
     queryFn: () => aircraftDetailQuery(aircraftId),
   });
 
-  const [stepIndex, setStepIndex] = useState(6);
+  const [stepIndex, setStepIndex] = useState(0);
+  const [feedback, setFeedback] = useState<string | null>(null);
 
   // Also handled at parent, but repeat here to be safe
   if (!data) return <Typography>Failed to load aircraft</Typography>
@@ -31,13 +32,26 @@ function LearnMode() {
   const aircraft: Aircraft = data;
   const checklist: Checklist | undefined = aircraft.checklists.find((c: Checklist) => c.slug === checklistSlug);
 
+  function handleActionSelected(control: string, action: string) {
+    if (!checklist) return;
+
+    setFeedback(null);
+    const currentStep = checklist.steps[stepIndex];
+
+    if (currentStep.item === control && currentStep.action === action) {
+      setStepIndex(stepIndex+1);
+    } else {
+      setFeedback(`Expected "${getStepText(currentStep, false)}". Selected "${getStepText({item: control, action}, false)}". Please try again.`);
+    }
+  }
+
   // TODO: tests
-  function getStepText(step: ChecklistStep): string {
+  function getStepText(step: ChecklistStep, includeCondition = true): string {
     if (!step) return '';
 
     let stepText = step.item;
     if (step.action) stepText += ` - ${step.action}`;
-    if (step.condition) stepText += ` - ${step.condition}`;
+    if (includeCondition && step.condition) stepText += ` - ${step.condition}`;
     
     return stepText;
   }
@@ -68,21 +82,26 @@ function LearnMode() {
       <Stack direction="row" gap={3} className="py-8">
         <Stack>
           <Typography variant="h5" className="pt-0">Tasks</Typography>
-          <List disablePadding className="w-70">
+          <List disablePadding className="w-70 mb-6">
             {!checklist?.steps?.length ? (
               <Typography variant="h5">No checklists found</Typography>
             ) : (
               checklist.steps.map((step, i) => ( // TODO: need to store this as local state with completion status
                 <ListItem disablePadding key={i} className={i === stepIndex ? "border-2 border-gray-400" : ''}> {/* TODO: dynamic */}
-                  <ListItemIcon><Checkbox checked={i < stepIndex} disableRipple color="success" /></ListItemIcon>
+                  <ListItemIcon>
+                    <Checkbox checked={i < stepIndex} disableRipple color="success" className="cursor-default" />
+                  </ListItemIcon>
                   <ListItemText primary={getStepText(step)} />
                 </ListItem>
               ))
             )}
           </List>
+
+          <Typography variant="h5" className="pt-0">Feedback</Typography>
+          <Typography className="italic">{feedback}</Typography>
         </Stack>
         <Box className="max-w-2/3">
-          <FlightDeckViewer views={aircraft.views} />
+          <FlightDeckViewer views={aircraft.views} onActionSelected={handleActionSelected}/>
         </Box>
       </Stack>
     </>
