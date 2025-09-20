@@ -84,7 +84,7 @@ function LearnMode() {
           <Typography variant="h5" className="pt-0">Tasks</Typography>
           <List disablePadding className="w-70 mb-6">
             {!checklist?.steps?.length ? (
-              <Typography variant="h5">No checklists found</Typography>
+              <Typography className="italic">No checklist tasks found</Typography>
             ) : (
               checklist.steps.map((step, i) => ( // TODO: need to store this as local state with completion status
                 <ListItem disablePadding key={i} className={i === stepIndex ? "border-2 border-gray-400" : ''}> {/* TODO: dynamic */}

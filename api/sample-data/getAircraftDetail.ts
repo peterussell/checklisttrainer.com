@@ -179,6 +179,7 @@ export const aircraftDetail: Aircraft[] = [
         type: 'emergency',
         steps: []
       },
+
       // Normal
       {
         id: '9',
@@ -278,26 +279,110 @@ export const aircraftDetail: Aircraft[] = [
     registration: 'N2481T',
     description: 'Piper Warrior II',
     views: [
-      { src: 'pa28-161.jpg', isDefault: true, description: "Forward view", items: [] }
+      { src: 'pa28-161.jpg', isDefault: true, description: "Forward view", controls: [] }
     ],
     checklists: [
       // Emergency
-      { name: 'Engine failure during takeoff roll', slug: 'engine-failure-during-takeoff-roll', type: 'emergency' },
-      { name: 'Engine failure immediately after takeoff', slug: 'engine-failure-immediately after takeoff', type: 'emergency' },
-      { name: 'Engine failure during flight', slug: 'engine-failure-during-flight', type: 'emergency' },
-      { name: 'Emergency landing without engine power', slug: 'emergency-landing-without-engine-power', type: 'emergency' },
-      { name: 'Precautionary landing with engine power', slug: 'precautionary-landing-with-engine-power', type: 'emergency' },
-      { name: 'Ditching', slug: 'ditching', type: 'emergency' },
+      {
+        id: '1',
+        name: 'Engine failure during takeoff roll',
+        slug: 'engine-failure-during-takeoff-roll',
+        type: 'emergency',
+        steps: []
+      },
+      {
+        id: '2',
+        name: 'Engine failure immediately after takeoff',
+        slug: 'engine-failure-immediately after takeoff',
+        type: 'emergency',
+        steps: []
+      },
+      {
+        id: '3',
+        name: 'Engine failure during flight',
+        slug: 'engine-failure-during-flight',
+        type: 'emergency',
+        steps: []
+      },
+      {
+        id: '4',
+        name: 'Emergency landing without engine power',
+        slug: 'emergency-landing-without-engine-power',
+        type: 'emergency',
+        steps: []
+      },
+      {
+        id: '5',
+        name: 'Precautionary landing with engine power',
+        slug: 'precautionary-landing-with-engine-power',
+        type: 'emergency',
+        steps: []
+      },
+      {
+        id: '6',
+        name: 'Ditching',
+        slug: 'ditching',
+        type: 'emergency',
+        steps: []
+      },
 
       // Normal
-      { name: 'Pre-start', slug: 'pre-start', type: 'normal' },
-      { name: 'Starting engine', slug: 'starting-engine', type: 'normal' },
-      { name: 'Pre-taxi', slug: 'pre-taxi', type: 'normal' },
-      { name: 'Taxi', slug: 'taxi', type: 'normal' },
-      { name: 'Run-up', slug: 'run-up', type: 'normal' },
-      { name: 'Pre-takeoff', slug: 'pre-takeoff', type: 'normal' },
-      { name: 'Normal takeoff', slug: 'normal-takeoff', type: 'normal' },
-      { name: 'Short field takeoff', slug: 'short-field-takeoff', type: 'normal' },
+      {
+        id: '7',
+        name: 'Pre-start',
+        slug: 'pre-start',
+        type: 'normal',
+        steps: []
+      },
+      {
+        id: '8',
+        name: 'Starting engine',
+        slug: 'starting-engine',
+        type: 'normal',
+        steps: []
+      },
+      {
+        id: '9',
+        name: 'Pre-taxi',
+        slug: 'pre-taxi',
+        type: 'normal',
+        steps: []
+      },
+      {
+        id: '10',
+        name: 'Taxi',
+        slug: 'taxi',
+        type: 'normal',
+        steps: []
+      },
+      {
+        id: '11',
+        name: 'Run-up',
+        slug: 'run-up',
+        type: 'normal',
+        steps: []
+      },
+      {
+        id: '12',
+        name: 'Pre-takeoff',
+        slug: 'pre-takeoff',
+        type: 'normal',
+        steps: []
+      },
+      {
+        id: '13',
+        name: 'Normal takeoff',
+        slug: 'normal-takeoff',
+        type: 'normal',
+        steps: []
+      },
+      {
+        id: '14',
+        name: 'Short field takeoff',
+        slug: 'short-field-takeoff',
+        type: 'normal',
+        steps: []
+      },
     ]
   }
 ];
