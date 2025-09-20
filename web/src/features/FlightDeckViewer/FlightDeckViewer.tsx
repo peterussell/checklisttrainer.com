@@ -6,7 +6,7 @@ import PlaceIcon from '@mui/icons-material/Place';
 import Refresh from '@mui/icons-material/Refresh';
 import Remove from '@mui/icons-material/Remove';
 import { KeepScale, TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
-import type { AircraftControl, AircraftView } from "../../../../core/models/Aircraft";
+import type { ChecklistItem, AircraftView } from "../../../../core/models/Aircraft";
 import { useEffect, useRef, useState } from "react";
 
 export function FlightDeckViewer({ views }: { views: AircraftView[] }) {
@@ -29,16 +29,16 @@ export function FlightDeckViewer({ views }: { views: AircraftView[] }) {
   }, [views]);
 
   const [menuAnchor, setMenuAnchor] = useState<HTMLElement | null>(null);
-  const [selectedControl, setSelectedControl] = useState<AircraftControl | null>(null);
+  const [selectedItem, setSelectedItem] = useState<ChecklistItem | null>(null);
 
-  function handleControlClick(event: React.MouseEvent<HTMLElement>, control: AircraftControl) {
+  function handleControlClick(event: React.MouseEvent<HTMLElement>, item: ChecklistItem) {
     setMenuAnchor(event.currentTarget);
-    setSelectedControl(control);
+    setSelectedItem(item);
   };
 
   function handleActionsMenuClose() {
     setMenuAnchor(null);
-    setSelectedControl(null);
+    setSelectedItem(null);
   };
 
   if (!views?.length) return null;
@@ -56,18 +56,18 @@ export function FlightDeckViewer({ views }: { views: AircraftView[] }) {
                 <div className="relative">
                   <img src={`/${views[selectedIdx].src}`}/>
 
-                  {views[selectedIdx].controls.map((c, i) => {
-                    const yPosFromBottom = 100 - c.yPos;
+                  {views[selectedIdx].controls.map((control, i) => {
+                    const yPosFromBottom = 100 - control.yPos;
 
                     return (
                       <Box key={i}>
-                        {/* Control icon */}
-                        <KeepScale key={i} className="absolute" style={{ bottom: `${yPosFromBottom}%`, left: `${c.xPos}%` }}>
-                          <Tooltip title={c.title}>
-                            <IconButton onClick={(e: React.MouseEvent<HTMLElement>) => handleControlClick(e, c)}>
+                        {/* Checklist control icon */}
+                        <KeepScale key={i} className="absolute" style={{ bottom: `${yPosFromBottom}%`, left: `${control.xPos}%` }}>
+                          <Tooltip title={control.title}>
+                            <IconButton onClick={(e: React.MouseEvent<HTMLElement>) => handleControlClick(e, control)}>
                               <PlaceIcon
                                 className="fill-blue-800 hover:fill-blue-500 stroke-white stroke-[0.5]"
-                                style={{ transform: `rotate(${c.markerRotation ?? 0}deg)`}}
+                                style={{ transform: `rotate(${control.markerRotation ?? 0}deg)`}}
                               />
                             </IconButton>
                           </Tooltip>
@@ -87,13 +87,13 @@ export function FlightDeckViewer({ views }: { views: AircraftView[] }) {
                   onClose={handleActionsMenuClose}
                   slotProps={{ root: { sx: { '.MuiList-root': { padding: 0 }}} }}
                 >
-                  <Typography variant="caption" className="px-2 pb-1 border-b border-gray-300">{selectedControl?.title}</Typography>
+                  <Typography variant="caption" className="px-2 pb-1 border-b border-gray-300">{selectedItem?.title}</Typography>
                   <MenuList dense>
-                    {selectedControl?.actions?.map((a: string, i: number) => (
+                    {selectedItem?.actions?.map((a: string, i: number) => (
                       <MenuItem
                         key={i}
                         onClick={() => {
-                          console.log(`Action: ${selectedControl.title} - ${a}`);
+                          console.log(`Action: ${selectedItem.title} - ${a}`);
                           handleActionsMenuClose();
                         }}><Typography variant="caption">{a}</Typography></MenuItem>
                     ))}

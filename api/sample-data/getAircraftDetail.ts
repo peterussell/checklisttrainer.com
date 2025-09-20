@@ -60,6 +60,12 @@ export const aircraftDetail: Aircraft[] = [
             actions: ["On", "Off"]
           },
           {
+            title: "Doors",
+            xPos: 0,
+            yPos: 65,
+            actions: ["Latch", "Unlatch"]
+          },
+          {
             title: "Lights",
             xPos: 22,
             yPos: 64,
@@ -96,22 +102,162 @@ export const aircraftDetail: Aircraft[] = [
     ],
     checklists: [
       // Emergency
-      { name: 'Engine failure during takeoff roll', slug: 'engine-failure-during-takeoff-roll', type: 'emergency' },
-      { name: 'Engine failure immediately after takeoff', slug: 'engine-failure-immediately after takeoff', type: 'emergency' },
-      { name: 'Engine failure during flight', slug: 'engine-failure-during-flight', type: 'emergency' },
-      { name: 'Emergency landing without engine power', slug: 'emergency-landing-without-engine-power', type: 'emergency' },
-      { name: 'Precautionary landing with engine power', slug: 'precautionary-landing-with-engine-power', type: 'emergency' },
-      { name: 'Ditching', slug: 'ditching', type: 'emergency' },
-
+      {
+        id: '1',
+        name: 'Engine failure immediately after takeoff / no restart',
+        slug: 'efato-no-restart',
+        type: 'emergency',
+        steps: [
+          { item: 'Maintain aircraft control' },
+          { item: 'Airspeed', action: '70 KIAS' },
+          { item: 'Fuel shutoff valve', action: 'Off' },
+          { item: 'Mixture', action: 'Full lean / idle cutoff' },
+          { item: 'Flaps', action: 'Down', condition: '64 KIAS' },
+          { item: 'Master & mags', action: 'Off' },
+          { item: 'Doors', action: 'Unlatch' }
+        ]
+      },
+      {
+        id: '2',
+        name: 'Power loss in flight / no restart',
+        slug: 'power-loss-in-flight-no-restart',
+        type: 'emergency',
+        steps: []
+      },
+      {
+        id: '3',
+        name: 'Electrical fire in flight',
+        slug: 'electrical-fire-in-flight',
+        type: 'emergency',
+        steps: []
+      },
+      {
+        id: '4',
+        name: 'Engine fire in flight',
+        slug: 'engine-fire-in-flight',
+        type: 'emergency',
+        steps: []
+      },
+      {
+        id: '5',
+        name: 'Engine fire during start',
+        slug: 'engine-fire-during-start',
+        type: 'emergency',
+        steps: []
+      },
+      {
+        id: '6',
+        name: 'Icing',
+        slug: 'icing',
+        type: 'emergency',
+        steps: []
+      },
+      {
+        id: '7',
+        name: 'Excessive rate of charge',
+        slug: 'excessive-rate-of-charge',
+        type: 'emergency',
+        steps: []
+      },
+      {
+        id: '8',
+        name: 'Insufficient rate of charge',
+        slug: 'insufficient-rate-of-charge',
+        type: 'emergency',
+        steps: []
+      },
       // Normal
-      { name: 'Pre-start', slug: 'pre-start', type: 'normal' },
-      { name: 'Starting engine', slug: 'starting-engine', type: 'normal' },
-      { name: 'Pre-taxi', slug: 'pre-taxi', type: 'normal' },
-      { name: 'Taxi', slug: 'taxi', type: 'normal' },
-      { name: 'Run-up', slug: 'run-up', type: 'normal' },
-      { name: 'Pre-takeoff', slug: 'pre-takeoff', type: 'normal' },
-      { name: 'Normal takeoff', slug: 'normal-takeoff', type: 'normal' },
-      { name: 'Short field takeoff', slug: 'short-field-takeoff', type: 'normal' },
+      {
+        id: '9',
+        name: 'Interior',
+        slug: 'interior',
+        type: 'normal',
+        steps: []
+      },
+      {
+        id: '10',
+        name: 'Start',
+        slug: 'start',
+        type: 'normal',
+        steps: []
+      },
+      {
+        id: '11',
+        name: 'Pre-taxi / taxi',
+        slug: 'pre-taxi-taxi',
+        type: 'normal',
+        steps: []
+      },
+      {
+        id: '12',
+        name: 'Run-up',
+        slug: 'run-up',
+        type: 'normal',
+        steps: []
+      },
+      {
+        id: '13',
+        name: 'Pre-takeoff',
+        slug: 'pre-takeoff',
+        type: 'normal',
+        steps: []
+      },
+      {
+        id: '14',
+        name: 'Takeoff',
+        slug: 'takeoff',
+        type: 'normal',
+        steps: []
+      },
+      {
+        id: '15',
+        name: 'Climb',
+        slug: 'climb',
+        type: 'normal',
+        steps: []
+      },
+      {
+        id: '16',
+        name: 'Cruis',
+        slug: 'cruise',
+        type: 'normal',
+        steps: []
+      },
+      {
+        id: '17',
+        name: 'Descent',
+        slug: 'descent',
+        type: 'normal',
+        steps: []
+      },
+      {
+        id: '18',
+        name: 'Pre-landing',
+        slug: 'pre-landing',
+        type: 'normal',
+        steps: []
+      },
+      {
+        id: '19',
+        name: 'Landing',
+        slug: 'landing',
+        type: 'normal',
+        steps: []
+      },
+      {
+        id: '20',
+        name: 'After landing',
+        slug: 'after-landing',
+        type: 'normal',
+        steps: []
+      },
+      {
+        id: '21',
+        name: 'Securing',
+        slug: 'securing',
+        type: 'normal',
+        steps: []
+      },
     ]
   },
   {
@@ -119,7 +265,7 @@ export const aircraftDetail: Aircraft[] = [
     registration: 'N2481T',
     description: 'Piper Warrior II',
     views: [
-      { src: 'pa28-161.jpg', isDefault: true, description: "Forward view", controls: [] }
+      { src: 'pa28-161.jpg', isDefault: true, description: "Forward view", items: [] }
     ],
     checklists: [
       // Emergency
