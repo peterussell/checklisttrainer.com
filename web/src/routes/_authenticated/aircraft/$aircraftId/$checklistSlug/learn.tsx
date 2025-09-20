@@ -1,4 +1,4 @@
-import { Box, Checkbox, List, ListItem, ListItemIcon, ListItemText, Stack, Typography } from '@mui/material';
+import { Box, Card, CardContent, CardMedia, Checkbox, Dialog, DialogContent, DialogContentText, DialogTitle, List, ListItem, ListItemIcon, ListItemText, Stack, Typography } from '@mui/material';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { useSuspenseQuery } from '@tanstack/react-query';
@@ -8,6 +8,8 @@ import type { Aircraft } from '../../../../../../../core/models/Aircraft';
 import { FlightDeckViewer } from '../../../../../features/FlightDeckViewer/FlightDeckViewer';
 import type { Checklist, ChecklistStep } from '../../../../../../../core/models/Checklist';
 import { useState } from 'react';
+
+import logo200 from '/logo-image-blue-200x200.png';
 
 export const Route = createFileRoute(
   '/_authenticated/aircraft/$aircraftId/$checklistSlug/learn',
@@ -25,6 +27,7 @@ function LearnMode() {
 
   const [stepIndex, setStepIndex] = useState(0);
   const [feedback, setFeedback] = useState<string | null>(null);
+  const [isCompletionModalOpen, setIsCompletionModalOpen] = useState(false);
 
   // Also handled at parent, but repeat here to be safe
   if (!data) return <Typography>Failed to load aircraft</Typography>
@@ -40,6 +43,11 @@ function LearnMode() {
 
     if (currentStep.item === control && currentStep.action === action) {
       setStepIndex(stepIndex+1);
+
+      // Handle checklist complete
+      if (stepIndex === checklist.steps.length-1) {
+        setIsCompletionModalOpen(true);
+      }
     } else {
       setFeedback(`Expected "${getStepText(currentStep, false)}". Selected "${getStepText({item: control, action}, false)}". Please try again.`);
     }
@@ -104,6 +112,38 @@ function LearnMode() {
           <FlightDeckViewer views={aircraft.views} onActionSelected={handleActionSelected}/>
         </Box>
       </Stack>
+
+      <Dialog open={isCompletionModalOpen} onClose={() => setIsCompletionModalOpen(false)}>
+        <DialogTitle>
+          <Typography variant="h5" className="p-0 m-0">Checklist complete</Typography>
+        </DialogTitle>
+
+        <DialogContent>
+          <DialogContentText>
+            <Typography className="mb-4">
+              <Link to="/aircraft/$aircraftId/$checklistSlug/learn" params={{ aircraftId, checklistSlug: checklist?.slug ?? '' }} reloadDocument>
+                Learn again
+              </Link>? Or try...</Typography>
+          </DialogContentText>
+
+          {/* TODO: WORKING HERE - add card links */}
+          <Stack direction="row" gap={2} className="w-full">
+            <Card className="w-60">
+              <CardMedia sx={{ height: 140 }} image={logo200} title="Practice mode" />
+              <CardContent>
+                <Typography variant="h5">Practice mode</Typography>
+              </CardContent>
+            </Card>
+
+            <Card className="w-60">
+              <CardMedia sx={{ height: 140 }} image={logo200} title="Practice mode" />
+              <CardContent>
+                <Typography variant="h5">Test mode</Typography>
+              </CardContent>
+            </Card>
+          </Stack>
+        </DialogContent>
+      </Dialog>
     </>
   )
 }
