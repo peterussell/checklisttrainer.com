@@ -1,17 +1,18 @@
-import { Card, CardActionArea, CardContent, CardMedia, Checkbox, Dialog, DialogContent, DialogContentText, DialogTitle, IconButton, List, ListItem, ListItemIcon, ListItemText, Stack, Typography } from '@mui/material';
+import { Alert, Card, CardActionArea, CardContent, CardMedia, Checkbox, Dialog, DialogContent, DialogContentText, DialogTitle, IconButton, List, ListItem, ListItemIcon, ListItemText, Stack, Typography } from '@mui/material';
+import Close from '@mui/icons-material/Close';
+import InfoOutline from '@mui/icons-material/InfoOutline';
+import { useState } from 'react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { createFileRoute, Link } from '@tanstack/react-router'
-import { aircraftDetailQuery } from '../../../../../queries/aircraftDetailQuery';
-import type { Aircraft } from '../../../../../../../core/models/Aircraft';
-import { FlightDeckViewer } from '../../../../../features/FlightDeckViewer/FlightDeckViewer';
-import type { Checklist } from '../../../../../../../core/models/Checklist';
-import { useState } from 'react';
 
 import logo200 from '/logo-image-blue-200x200.png';
 import { PageHeader } from '../../../../../shared/components/PageHeader';
 import { formatChecklistStep } from '../../../../../shared/utils/checklistFormatUtils';
 import { LeftSidebarLayout } from '../../../../../shared/layout/LeftSidebarLayout';
-import Close from '@mui/icons-material/Close';
+import { aircraftDetailQuery } from '../../../../../queries/aircraftDetailQuery';
+import type { Aircraft } from '../../../../../../../core/models/Aircraft';
+import { FlightDeckViewer } from '../../../../../features/FlightDeckViewer/FlightDeckViewer';
+import type { Checklist } from '../../../../../../../core/models/Checklist';
 
 export const Route = createFileRoute(
   '/_authenticated/aircraft/$aircraftId/$checklistSlug/learn',
@@ -57,12 +58,21 @@ function LearnMode() {
 
   return (
     <>
-      <Stack gap={4}>
+      <Stack gap={3}>
         <PageHeader
           title={[aircraft.registration, "Learn mode"]}
           subtitle={aircraft.description}
           backLink={<Link to="/aircraft/$aircraftId" params={{ aircraftId }}>Back to Checklists</Link>}
         />
+
+        {/* Instructions */}
+        <Alert icon={<InfoOutline fontSize="large" />} severity="info" className="items-center">
+          <Typography>
+            <strong>Learn mode</strong> guides you through the checklist item-by-item. Use the interactive
+            flight deck to complete each highlighted item under <strong>Tasks</strong>. As they're completed the
+            Tasks list indicator will automatically move to the next checklist item.
+          </Typography>
+        </Alert>
 
         <LeftSidebarLayout
           sidebarContent={

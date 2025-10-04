@@ -1,6 +1,8 @@
 import { useState } from 'react';
-import { Box, Button, Card, CardActionArea, CardContent, CardMedia, Checkbox, Dialog, DialogContent, DialogContentText, DialogTitle, IconButton, List, ListItem, ListItemIcon, ListItemText, Stack, Typography } from '@mui/material';
+import { Alert, Button, Card, CardActionArea, CardContent, CardMedia, Checkbox, Dialog, DialogContent, DialogContentText, DialogTitle, IconButton, List, ListItem, ListItemIcon, ListItemText, Stack, Typography } from '@mui/material';
 import Close from "@mui/icons-material/Close";
+import InfoOutline from "@mui/icons-material/InfoOutline";
+import Visibility from "@mui/icons-material/Visibility";
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { useSuspenseQuery } from '@tanstack/react-query';
 
@@ -63,20 +65,13 @@ function PracticeMode() {
         />
 
         {/* Instructions */}
-        <Box>
-          <Typography>Welcome to Practice mode, which provides immediate feedback as each step of the checklist is completed. To get started...</Typography>
-          <List dense={true} className="list-disc pl-10">
-            <ListItem className="list-item py-0">
-              <ListItemText>Complete the checklist by interacting with the the flight deck.</ListItemText>
-            </ListItem>
-            <ListItem className="list-item py-0">
-              <ListItemText>When each correct action is selected it will be shown under&nbsp;<strong>Tasks</strong></ListItemText>
-            </ListItem>
-            <ListItem className="list-item py-0">
-              <ListItemText>Stuck? Click&nbsp;<strong>Hint</strong>&nbsp;to reveal the next item</ListItemText>
-            </ListItem>
-          </List>
-        </Box>
+        <Alert icon={<InfoOutline fontSize="large" />} severity="info" className="items-center">
+          <Typography>
+              <strong>Practice mode</strong> provides immediate feedback as you complete each step of the checklist
+              using the interactive flight deck. If the selected task is correct, it will be revealed under <strong>Tasks</strong>.
+              Stuck? Click <strong>Hint</strong> to show the next checklist item.
+            </Typography>
+        </Alert>
 
         <LeftSidebarLayout
           sidebarContent={
@@ -100,14 +95,14 @@ function PracticeMode() {
               <Typography variant="h5" className="">Hint</Typography>
               {
                 isHintShown ? (
-                  <Button className="w-full h-14 p-2 rounded-sm border border-ct-blue" onClick={() => setIsHintShown(false)}>
+                  <Button className="w-full min-h-10 p-2 rounded-sm border border-ct-blue" onClick={() => setIsHintShown(false)}>
                     <Typography variant="caption" className="text-gray-600">
-                      {checklist && formatChecklistStep(checklist.steps[stepIndex])}<br />
-                      (Click to hide)
+                      {checklist && formatChecklistStep(checklist.steps[stepIndex])}
                     </Typography>
                   </Button>
                 ) : (
-                  <Button className="w-full min-h-14 p-2 rounded-sm bg-gray-200" onClick={() => setIsHintShown(true)}>
+                  <Button className="w-full min-h-10 p-2 rounded-sm bg-gray-200" onClick={() => setIsHintShown(true)}>
+                    <Visibility fontSize="medium" className="text-gray-600 mr-2 -mt-0.5" />
                     <Typography variant="caption" className="text-gray-600">Click to show</Typography>
                   </Button>
                 )
@@ -115,7 +110,12 @@ function PracticeMode() {
             </Stack>
           }
           mainContent={
-            <FlightDeckViewer views={aircraft.views} onActionSelected={handleActionSelected}/>
+            <>
+              <Typography variant="h5" className="pt-0">
+                Checklist: {checklist?.name ?? "Unknown checklist"}
+              </Typography>
+              <FlightDeckViewer views={aircraft.views} onActionSelected={handleActionSelected}/>
+            </>
           }
         />
       </Stack>

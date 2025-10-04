@@ -55,7 +55,7 @@ export function FlightDeckViewer({ views, onActionSelected }: FlightDeckViewerPr
         <Typography>No view selected</Typography>
       ) : (
         <TransformWrapper maxScale={2.5}>
-          {({ zoomIn, zoomOut, resetTransform, }) => (
+          {({ zoomIn, zoomOut, resetTransform }) => (
             <>
               <TransformComponent>
                 <div className="relative">
@@ -92,10 +92,15 @@ export function FlightDeckViewer({ views, onActionSelected }: FlightDeckViewerPr
                   onClose={handleActionsMenuClose}
                   slotProps={{ root: { sx: { '.MuiList-root': { padding: 0 }}} }}
                 >
-                  <Typography variant="caption" className="px-2 pb-1 border-b border-gray-300">{selectedControl?.title}</Typography>
+                  <Box className="w-full px-2 pb-1 bg-blue-800">
+                    <Typography variant="caption" className="text-white">
+                      {selectedControl?.title}
+                    </Typography>
+                  </Box>
                   <MenuList dense>
                     {selectedControl?.actions?.map((a: string, i: number) => (
                       <MenuItem
+                        className="px-2"
                         key={i}
                         onClick={() => {
                           onActionSelected(selectedControl.title, a);
