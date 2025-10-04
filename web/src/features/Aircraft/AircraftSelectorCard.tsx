@@ -1,47 +1,29 @@
-import type { Aircraft } from "@models/Aircraft";
-import type { ChecklistSummary } from "@models/ChecklistSummary";
-import { Box, Card, CardContent, CardMedia, List, ListItem, Stack, Typography } from "@mui/material";
-import { Link } from "@tanstack/react-router";
+import { Card, CardActionArea, CardContent, CardMedia, Chip, Stack, Typography } from "@mui/material";
 
-function AircraftSelectorCard ({aircraft}: {aircraft: Aircraft}) {
+import type { AircraftSummary } from "../../../../core/models/AircraftSummary"; // TODO: import from @ct
+
+function AircraftSelectorCard ({aircraft}: {aircraft: AircraftSummary}) {
   return (
-    <Card className="m-6 flex">
-      <CardMedia component="img" image={aircraft.img} sx={{height: '200px', width: '300px', m: 1, borderRadius: 1}}/>
-      <CardContent sx={{flexGrow: 1}}>
-        <Typography variant="h5">{aircraft.name}</Typography>
+    <Card className="p0 m0">
+      <CardActionArea href={`/aircraft/${aircraft.id}`}>
+        <CardMedia component="img" image={`/${aircraft.img}`} sx={{width: '360px', height: '280px'}}/>
 
-        <Stack direction="row" sx={{flexGrow: 1}} pt={2} gap={4}>
+        <CardContent>
 
-          {/* Emergency checklists */}
-          <Box maxWidth="50%">
-            <Typography variant="h6">Emergency checklists</Typography>
-            <List sx={{paddingTop: 0}}>
-              {aircraft.checklists.filter((checklist: ChecklistSummary) => checklist.type === 'emergency').map((c: ChecklistSummary) => (
-                  <ListItem className="px-0 text-sm hover:bg-slate-100" divider>
-                    <Link to={`/aircraft/${aircraft.id}/${c.slug}`}>
-                      {c.name}
-                    </Link>
-                  </ListItem>
-                ))}
-            </List>
-          </Box>
+          <Typography variant="h5">{aircraft.registration}</Typography>
+          <Typography variant="body2" sx={{marginBottom: '16px !important'}}>{aircraft.description ?? '-'}</Typography>
 
-          {/* Normal checkists */}
-          <Box maxWidth="50%">
-            <Typography variant="h6">Normal checklists</Typography>
-            <List sx={{paddingTop: 0}}>
-              {aircraft.checklists.filter((checklist: ChecklistSummary) => checklist.type === 'normal').map((c: ChecklistSummary) => (
-                  <ListItem className="px-0 text-sm hover:bg-slate-100" divider>
-                    <Link to={`/aircraft/${aircraft.id}/${c.slug}`}>
-                      {c.name}
-                    </Link>
-                  </ListItem>
-                ))}
-            </List>
-          </Box>
-        </Stack>
-        
-      </CardContent>
+          <Stack direction="row" gap={1}>
+            <Typography>Normal checklists:</Typography>
+            <Chip className="bg-green-700 text-white p-0" size="small" label={aircraft.normalChecklistCount ?? '0'} />
+          </Stack>
+
+          <Stack direction="row" gap={1}>
+            <Typography>Emergency checklists:</Typography>
+            <Chip className="bg-red-700 text-white p-0" size="small" label={aircraft.normalChecklistCount ?? '0'} />
+          </Stack>
+        </CardContent>
+      </CardActionArea>
     </Card>
   )
 }

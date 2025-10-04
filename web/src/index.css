@@ -1,5 +1,17 @@
 @import "tailwindcss";
 
 @theme {
-  --color-ct-blue: #364652
+  --font-roboto-condensed: "Roboto Condensed", sans-serif;
+  --color-ct-blue: #364652;
+}
+
+@layer base {
+  h4 {
+    padding: 10px 0 16px 0;
+    @apply text-ct-blue;
+  }
+  h5 {
+    padding: 10px 0;
+    @apply text-ct-blue;
+  }
 }

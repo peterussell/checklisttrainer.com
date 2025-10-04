@@ -1,29 +1,56 @@
 import { useAuth0 } from '@auth0/auth0-react'
-import { Stack, Typography } from '@mui/material'
-import { createFileRoute } from '@tanstack/react-router'
+import { Button, Container, Stack, Typography } from '@mui/material'
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
+
+import logo200 from '/logo-image-blue-200x200.png';
 
 export const Route = createFileRoute('/')({
   component: Index,
 })
 
 function Index() {
-  const { user, isAuthenticated, isLoading } = useAuth0();
+  const {loginWithRedirect, isAuthenticated, isLoading} = useAuth0();
+  const navigate = useNavigate();
 
+  if (isAuthenticated) {
+    navigate({ to: '/aircraft'});
+  }
   return (
-    <Stack>
-      <Typography variant="h4">
-        Home
-      </Typography>
+    <Container maxWidth={false} className="
+      flex
+      h-screen
+      items-center
+      justify-center
+      bg-[url(/cessna-flight-deck.jpg)]
+      bg-cover" sx={{ px: '0 !important'}}>
+      <Container maxWidth={false} className="flex h-screen items-center justify-center bg-ct-blue/60">
 
-      {isLoading && (<Typography>Loading...</Typography>)}
+      <Stack className="px-16 py-20 text-center rounded-md bg-white shadow-lg/90">
+        <img src={logo200} width={200} className="self-center pb-10" />
 
-      {isAuthenticated && user && (
-        <Stack direction="row" gap={2} m={2}>
-          <img src={user.picture} alt={user.name} width="30px" />
-          <Typography>Logged in as {user.email}</Typography>
+        <Typography variant="h4">Checklist Trainer</Typography>
+        <Typography variant="h5" className="font-thin text-2xl">Master your memory items</Typography>
+
+        <Button
+          variant="outlined"
+          className="mt-10 text-ct-blue border-ct-blue py-2 mb-2"
+          onClick={() => loginWithRedirect({authorizationParams: {redirect_uri: 'http://localhost:5173/aircraft'}})}>Log In</Button>
+
+        <Stack direction="row" className="flex items-center justify-center">
+          <Typography variant="overline">
+            Don't have an account?
+          </Typography>
+          <Button
+            variant="text"
+            size="small"
+            className="py-0"
+            onClick={() => loginWithRedirect({authorizationParams: { screen_hint: 'signup' }})}>
+            <Typography variant="overline">Sign up</Typography>
+          </Button>
         </Stack>
-      )}
-    </Stack>
-    
+      </Stack>
+
+      </Container>
+    </Container>
   )
 }

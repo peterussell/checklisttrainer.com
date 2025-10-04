@@ -1,36 +1,29 @@
-import type { Aircraft } from "@models/Aircraft";
 import AircraftSelectorCard from "./AircraftSelectorCard";
-
-const aircraft: Record<string, Aircraft> = {
-  'C172S': {
-    id: '1',
-    name: 'Cessna 172S Skyhawk',
-    img: 'c172s.jpg',
-    checklists: [
-      // Emergency
-      { name: 'Engine failure during takeoff roll', category: 'Engine failures', slug: 'engine-failure-during-takeoff-roll', type: 'emergency' },
-      { name: 'Engine failure immediately after takeoff', category: 'Engine failures', slug: 'engine-failure-immediately after takeoff', type: 'emergency' },
-      { name: 'Engine failure during flight', category: 'Engine failures', slug: 'engine-failure-during-flight', type: 'emergency' },
-      { name: 'Emergency landing without engine power', category: 'Forced landings', slug: 'emergency-landing-without-engine-power', type: 'emergency' },
-      { name: 'Precautionary landing with engine power', category: 'Forced landings', slug: 'precautionary-landing-with-engine-power', type: 'emergency' },
-      { name: 'Ditching', category: 'Forced landings', slug: 'ditching', type: 'emergency' },
-
-      // Normal
-      { name: 'Cabin', category: 'Preflight inspection', slug: 'cabin', type: 'normal' },
-      { name: 'Empennage', category: 'Preflight inspection', slug: 'empennage', type: 'normal' },
-      { name: 'Right wing, trailing edge', category: 'Preflight inspection', slug: 'right-wing-trailing-edge', type: 'normal' },
-      { name: 'Right wing', category: 'Preflight inspection', slug: 'right-wing', type: 'normal' },
-      { name: 'Nose', category: 'Preflight inspection', slug: 'nose', type: 'normal' },
-      { name: 'Left wing', category: 'Preflight inspection', slug: 'left-wing', type: 'normal' },
-      { name: 'Left wing, leading edge', category: 'Preflight inspection', slug: 'left-wing-leading-edge', type: 'normal' },
-      { name: 'Left wing, trailing edge', category: 'Preflight inspection', slug: 'left-wing-trailing-edge', type: 'normal' },
-    ]
-  }
-}
+import { useQuery } from "@tanstack/react-query";
+import { Box, Stack, Typography } from "@mui/material";
+import type { AircraftSummary } from "../../../../core/models/AircraftSummary"; // TODO: move to @ct
 
 function AircraftSelector() {
+  const { isPending, error, data, isFetching } = useQuery({
+    queryKey: ['aircraft'],
+    queryFn: async () => {
+      const response = await fetch('http://localhost:3000/aircraft'); // FIXME: env variable!
+      return await response.json();
+    }
+  });
+
+  if (isPending || isFetching) return <Typography>Loading...</Typography>;
+  if (error) return <Typography>Failed to load aircraft. Please try refreshing the page.</Typography>
+  if (!data) return <Typography>No aircraft found</Typography>
+
   return (
-    Object.entries(aircraft).map(([key, value]) => <AircraftSelectorCard key={key} aircraft={value} />)
+    <Stack direction="row" gap={3} className="w-full flex flex-wrap">
+      {(data as AircraftSummary[]).map((aircraft, i) => (
+        <Box className="xs:min-w-full sm:min-w-1/2 md:min-w-1/4">
+          <AircraftSelectorCard key={i} aircraft={aircraft} />
+        </Box>
+      ))}
+    </Stack>
   );
 }
 
