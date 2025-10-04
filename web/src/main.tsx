@@ -4,7 +4,7 @@ import { RouterProvider } from '@tanstack/react-router'
 import { Auth0Provider, useAuth0 } from '@auth0/auth0-react';
 import { StyledEngineProvider } from '@mui/material/styles';
 import GlobalStyles from '@mui/material/GlobalStyles';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { QueryClientProvider } from '@tanstack/react-query';
 import { ThemeProvider } from '@mui/material/styles';
 import { theme } from './mui-theme'
 
@@ -13,6 +13,7 @@ import './index.css'; // Loads tailwind
 // Fonts
 import "@fontsource/roboto-condensed/400.css";
 import "@fontsource/roboto-condensed/700.css";
+import "@fontsource/oxanium";
 
 import { router } from './router';
 import { queryClient } from './queryClient';

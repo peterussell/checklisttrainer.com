@@ -1,4 +1,4 @@
-import { Alert, Stack, Typography } from '@mui/material';
+import { Alert, Button, Stack, Typography } from '@mui/material';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { createFileRoute, Link } from '@tanstack/react-router'
 import type { Aircraft } from '../../../../../../../core/models/Aircraft';
@@ -7,6 +7,8 @@ import type { Checklist } from '../../../../../../../core/models/Checklist';
 import { LeftSidebarLayout } from '../../../../../shared/layout/LeftSidebarLayout';
 import InfoOutline from '@mui/icons-material/InfoOutline';
 import { PageHeader } from '../../../../../shared/components/PageHeader';
+import { FlightDeckViewer } from '../../../../../features/FlightDeckViewer/FlightDeckViewer';
+import { useEffect, useState } from 'react';
 
 export const Route = createFileRoute(
   '/_authenticated/aircraft/$aircraftId/$checklistSlug/test',
@@ -22,17 +24,37 @@ function TestMode() {
     queryFn: () => aircraftDetailQuery(aircraftId),
   });
 
-    // Also handled at parent, but repeat here to be safe
+  const [isTestRunning, setIsTestRunning] = useState(false);
+  const [timer, setTimer] = useState(0);
+
+  const [actions, setActions] = useState<{control: string, action: string}[]>([]);
+
+  // Timer updates
+  useEffect(() => {
+    if (!isTestRunning) return;
+    const interval = setInterval(() => setTimer((t) => t+1), 100); // update per 1/10s
+    return () => clearInterval(interval);
+  }, [isTestRunning]);
+
+  // Also handled at parent, but repeat here to be safe
   if (!data) return <Typography>Failed to load aircraft</Typography>
 
   const aircraft: Aircraft = data;
   const checklist: Checklist | undefined = aircraft.checklists.find((c: Checklist) => c.slug === checklistSlug);
 
+  function handleToggleTest() {
+    setIsTestRunning(!isTestRunning);
+  }
+
+  function handleActionSelected(control: string, action: string) {
+    if (checklist) setActions([...actions, {control, action}]);
+  }
+
   return (
     <>
       <Stack gap={2}>
         <PageHeader
-          title={[aircraft.registration, "Practice mode"]}
+          title={[aircraft.registration, "Test mode"]}
           subtitle={aircraft.description}
           backLink={<Link to="/aircraft/$aircraftId" params={{ aircraftId }}>Back to Checklists</Link>}
         />
@@ -40,21 +62,30 @@ function TestMode() {
         {/* Instructions */}
         <Alert icon={<InfoOutline fontSize="large" />} severity="info" className="items-center">
           <Typography>
-              <strong>Test mode</strong> provides immediate feedback as you complete each step of the checklist
-              using the interactive flight deck. If the selected task is correct, it will be revealed under <strong>Tasks</strong>.
-              Stuck? Click <strong>Hint</strong> to show the next checklist item.
+              <strong>Test mode</strong> challenges you to complete the checklist from memory using the interactive
+              flight deck. No hints are shown, and tasks are only revealed once you’ve finished the checklist. At the
+              end, you’ll receive feedback on accuracy and missed steps.
             </Typography>
         </Alert>
 
         <LeftSidebarLayout
           sidebarContent={
-            <>
-              <Typography>Left sidebar</Typography>
-            </>
+            <Stack gap={2} className="mt-10">
+              <Button variant="contained" onClick={handleToggleTest}>
+                <Typography>
+                  {!isTestRunning ? 'Start test' : 'Stop test'}
+                </Typography>
+              </Button>
+              {/* TODO: improve stopwatch formatting */}
+              <Typography variant="h5" className="font-oxanium text-4xl text-center">{(timer / 10).toFixed(1) + 's'}</Typography>
+            </Stack>
           }
           mainContent={
             <>
-              <Typography>Main content</Typography>
+              <Typography variant="h5" className="pt-0">
+                Checklist: {checklist?.name ?? "Unknown checklist"}
+              </Typography>
+              <FlightDeckViewer views={aircraft.views} onActionSelected={handleActionSelected}/>
             </>
           }
         />
