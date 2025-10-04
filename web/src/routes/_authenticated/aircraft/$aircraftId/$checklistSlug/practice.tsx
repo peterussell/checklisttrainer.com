@@ -13,7 +13,7 @@ import { PageHeader } from '../../../../../shared/components/PageHeader';
 import { aircraftDetailQuery } from '../../../../../queries/aircraftDetailQuery';
 import { LeftSidebarLayout } from '../../../../../shared/layout/LeftSidebarLayout';
 import { FlightDeckViewer } from '../../../../../features/FlightDeckViewer/FlightDeckViewer';
-import { formatChecklistStep } from '../../../../../shared/utils/checklistFormatUtils';
+import { formatChecklistStep } from '../../../../../shared/utils/formatChecklistStep';
 
 export const Route = createFileRoute(
   '/_authenticated/aircraft/$aircraftId/$checklistSlug/practice',

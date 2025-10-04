@@ -1,4 +1,4 @@
-import { Alert, Button, Stack, Typography } from '@mui/material';
+import { Alert, Button, Dialog, DialogContent, DialogContentText, DialogTitle, IconButton, Stack, Typography } from '@mui/material';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { createFileRoute, Link } from '@tanstack/react-router'
 import type { Aircraft } from '../../../../../../../core/models/Aircraft';
@@ -9,6 +9,8 @@ import InfoOutline from '@mui/icons-material/InfoOutline';
 import { PageHeader } from '../../../../../shared/components/PageHeader';
 import { FlightDeckViewer } from '../../../../../features/FlightDeckViewer/FlightDeckViewer';
 import { useEffect, useState } from 'react';
+import { formatChecklistStep } from '../../../../../shared/utils/formatChecklistStep';
+import Close from '@mui/icons-material/Close';
 
 export const Route = createFileRoute(
   '/_authenticated/aircraft/$aircraftId/$checklistSlug/test',
@@ -26,8 +28,8 @@ function TestMode() {
 
   const [isTestRunning, setIsTestRunning] = useState(false);
   const [timer, setTimer] = useState(0);
-
-  const [actions, setActions] = useState<{control: string, action: string}[]>([]);
+  const [actions, setActions] = useState<{item: string, action: string}[]>([]);
+  const [isCompletionModalOpen, setIsCompletionModalOpen] = useState(false);
 
   // Timer updates
   useEffect(() => {
@@ -43,11 +45,20 @@ function TestMode() {
   const checklist: Checklist | undefined = aircraft.checklists.find((c: Checklist) => c.slug === checklistSlug);
 
   function handleToggleTest() {
-    setIsTestRunning(!isTestRunning);
+    if (!isTestRunning) {
+      setIsTestRunning(true);
+    } else {
+      setIsTestRunning(false);
+      handleFinishTest();
+    }
   }
 
-  function handleActionSelected(control: string, action: string) {
-    if (checklist) setActions([...actions, {control, action}]);
+  function handleFinishTest() {
+    setIsCompletionModalOpen(true);
+  }
+
+  function handleActionSelected(item: string, action: string) {
+    if (checklist) setActions([...actions, {item, action}]);
   }
 
   return (
@@ -73,11 +84,16 @@ function TestMode() {
             <Stack gap={2} className="mt-10">
               <Button variant="contained" onClick={handleToggleTest}>
                 <Typography>
-                  {!isTestRunning ? 'Start test' : 'Stop test'}
+                  {!isTestRunning ? 'Start test' : 'Done'}
                 </Typography>
               </Button>
               {/* TODO: improve stopwatch formatting */}
               <Typography variant="h5" className="font-oxanium text-4xl text-center">{(timer / 10).toFixed(1) + 's'}</Typography>
+              <Stack>
+                {actions.map(a => 
+                  <Typography>{formatChecklistStep(a)}</Typography>
+                )}
+              </Stack>
             </Stack>
           }
           mainContent={
@@ -90,6 +106,24 @@ function TestMode() {
           }
         />
       </Stack>
+
+      {/* Completion dialog */}
+            <Dialog open={isCompletionModalOpen} onClose={() => setIsCompletionModalOpen(false)}>
+              <DialogTitle>
+                <Stack direction="row" className="w-full items-center justify-between">
+                  <Typography variant="h5" className="p-0 m-0">Checklist complete</Typography>
+                  <IconButton onClick={() => setIsCompletionModalOpen(false)}>
+                    <Close />
+                  </IconButton>
+                </Stack>
+              </DialogTitle>
+
+              <DialogContent>
+                <DialogContentText>
+                  <Typography className="mb-4">Yay!</Typography>
+                </DialogContentText>
+              </DialogContent>
+            </Dialog>
     </>
   );
 }

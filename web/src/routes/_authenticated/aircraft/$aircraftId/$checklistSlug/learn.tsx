@@ -7,7 +7,7 @@ import { createFileRoute, Link } from '@tanstack/react-router'
 
 import logo200 from '/logo-image-blue-200x200.png';
 import { PageHeader } from '../../../../../shared/components/PageHeader';
-import { formatChecklistStep } from '../../../../../shared/utils/checklistFormatUtils';
+import { formatChecklistStep } from '../../../../../shared/utils/formatChecklistStep';
 import { LeftSidebarLayout } from '../../../../../shared/layout/LeftSidebarLayout';
 import { aircraftDetailQuery } from '../../../../../queries/aircraftDetailQuery';
 import type { Aircraft } from '../../../../../../../core/models/Aircraft';
