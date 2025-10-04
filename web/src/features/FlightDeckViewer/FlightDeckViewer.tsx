@@ -9,7 +9,12 @@ import { KeepScale, TransformWrapper, TransformComponent } from "react-zoom-pan-
 import type { AircraftControl, AircraftView } from "../../../../core/models/Aircraft";
 import { useEffect, useRef, useState } from "react";
 
-export function FlightDeckViewer({ views }: { views: AircraftView[] }) {
+type FlightDeckViewerProps = {
+  views: AircraftView[],
+  onActionSelected: (control: string, action: string) => void;
+};
+
+export function FlightDeckViewer({ views, onActionSelected }: FlightDeckViewerProps) {
   const [selectedIdx, setSelectedIdx] = useState<number | null>(null);
 
   // Thumbnails - display left/right thumbnail overflow scroll indicators
@@ -50,24 +55,24 @@ export function FlightDeckViewer({ views }: { views: AircraftView[] }) {
         <Typography>No view selected</Typography>
       ) : (
         <TransformWrapper maxScale={2.5}>
-          {({ zoomIn, zoomOut, resetTransform, }) => (
+          {({ zoomIn, zoomOut, resetTransform }) => (
             <>
               <TransformComponent>
                 <div className="relative">
                   <img src={`/${views[selectedIdx].src}`}/>
 
-                  {views[selectedIdx].controls.map((c, i) => {
-                    const yPosFromBottom = 100 - c.yPos;
+                  {views[selectedIdx].controls.map((control, i) => {
+                    const yPosFromBottom = 100 - control.yPos;
 
                     return (
                       <Box key={i}>
-                        {/* Control icon */}
-                        <KeepScale key={i} className="absolute" style={{ bottom: `${yPosFromBottom}%`, left: `${c.xPos}%` }}>
-                          <Tooltip title={c.title}>
-                            <IconButton onClick={(e: React.MouseEvent<HTMLElement>) => handleControlClick(e, c)}>
+                        {/* Checklist control icon */}
+                        <KeepScale key={i} className="absolute" style={{ bottom: `${yPosFromBottom}%`, left: `${control.xPos}%` }}>
+                          <Tooltip title={control.title}>
+                            <IconButton onClick={(e: React.MouseEvent<HTMLElement>) => handleControlClick(e, control)}>
                               <PlaceIcon
                                 className="fill-blue-800 hover:fill-blue-500 stroke-white stroke-[0.5]"
-                                style={{ transform: `rotate(${c.markerRotation ?? 0}deg)`}}
+                                style={{ transform: `rotate(${control.markerRotation ?? 0}deg)`}}
                               />
                             </IconButton>
                           </Tooltip>
@@ -87,13 +92,18 @@ export function FlightDeckViewer({ views }: { views: AircraftView[] }) {
                   onClose={handleActionsMenuClose}
                   slotProps={{ root: { sx: { '.MuiList-root': { padding: 0 }}} }}
                 >
-                  <Typography variant="caption" className="px-2 pb-1 border-b border-gray-300">{selectedControl?.title}</Typography>
+                  <Box className="w-full px-2 pb-1 bg-blue-800">
+                    <Typography variant="caption" className="text-white">
+                      {selectedControl?.title}
+                    </Typography>
+                  </Box>
                   <MenuList dense>
                     {selectedControl?.actions?.map((a: string, i: number) => (
                       <MenuItem
+                        className="px-2"
                         key={i}
                         onClick={() => {
-                          console.log(`Action: ${selectedControl.title} - ${a}`);
+                          onActionSelected(selectedControl.title, a);
                           handleActionsMenuClose();
                         }}><Typography variant="caption">{a}</Typography></MenuItem>
                     ))}

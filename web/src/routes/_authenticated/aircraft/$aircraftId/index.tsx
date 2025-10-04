@@ -71,21 +71,21 @@ function ChecklistsCard({checklists, title, aircraftId}: ChecklistsCardProps) {
                     label="Learn"
                     size="small"
                     className="bg-blue-100 hover:bg-blue-200 text-blue-800 px-2"
-                    onClick={() => navigate({to: `/aircraft/${aircraftId}/learn`})} />
+                    onClick={() => navigate({to: `/aircraft/${aircraftId}/${c.slug}/learn`})} />
 
                   {/* Practice */}
                   <Chip
                     label="Practice"
                     size="small"
                     className="bg-green-600/30 hover:bg-green-600/50 text-green-800 px-2"
-                    onClick={() => navigate({to: `/aircraft/${aircraftId}/practice`})} />
+                    onClick={() => navigate({to: `/aircraft/${aircraftId}/${c.slug}/practice`})} />
 
                   {/* Test */}
                   <Chip
                     label="Test"
                     size="small"
                     className="bg-amber-100 hover:bg-amber-200 text-amber-800 px-2"
-                    onClick={() => navigate({to: `/aircraft/${aircraftId}/test`})} />
+                    onClick={() => navigate({to: `/aircraft/${aircraftId}/${c.slug}/test`})} />
                 </Stack>
 
                 <ChevronRightIcon className="text-lg" />
