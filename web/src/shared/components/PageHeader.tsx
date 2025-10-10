@@ -1,4 +1,4 @@
-import { Stack, Typography } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
@@ -15,10 +15,10 @@ export function PageHeader({ title, subtitle, backLink }: PageHeaderProps) {
         {/* Title */}
         <Typography variant="h4" className="pb-0">
           {title.map((t, i) => (
-            <>
+            <Box component="span" key={i}>
               {t}
               {i !== title.length-1 ? <ChevronRightIcon fontSize="large" className="pb-1" /> : null}
-            </>
+            </Box>
           ))}
         </Typography>
         {subtitle && <Typography variant="body2">{subtitle}</Typography>}
