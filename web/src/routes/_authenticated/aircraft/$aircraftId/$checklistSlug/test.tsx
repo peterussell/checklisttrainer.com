@@ -128,7 +128,7 @@ function TestMode() {
                         <ListItem disablePadding key={i}>
                           <ListItemText primary={`${i+1}. ${formatChecklistStep(action)}`} />
                         </ListItem>
-                      )) : <Typography>(None)</Typography>'}
+                      )) : <Typography>(None)</Typography>}
                   </List>
               </Stack>
             </Stack>
@@ -172,7 +172,7 @@ function TestMode() {
                         <ListItem disablePadding key={i} className="py-1 border-b border-gray-300">
                           <ListItemText primary={formatChecklistStep(step)} />
                         </ListItem>
-                      )) : '(none)'}
+                      )) : '(None)'}
                   </List>
               </Stack>
 
