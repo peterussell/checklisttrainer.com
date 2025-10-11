@@ -1,16 +1,31 @@
-import { Alert, Button, Dialog, DialogContent, DialogContentText, DialogTitle, IconButton, Stack, Typography } from '@mui/material';
+import { useEffect, useState } from 'react';
+import {
+  Alert,
+  Button,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  IconButton,
+  List,
+  ListItem,
+  ListItemText,
+  Stack,
+  Typography
+} from '@mui/material';
+import CancelOutlined from '@mui/icons-material/CancelOutlined';
+import CheckOutlined from '@mui/icons-material/CheckOutlined';
+import Close from '@mui/icons-material/Close';
+import InfoOutline from '@mui/icons-material/InfoOutline';
+import Refresh from '@mui/icons-material/Refresh';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { createFileRoute, Link } from '@tanstack/react-router'
 import type { Aircraft } from '../../../../../../../core/models/Aircraft';
+import type { Checklist, ChecklistStep } from '../../../../../../../core/models/Checklist';
 import { aircraftDetailQuery } from '../../../../../queries/aircraftDetailQuery';
-import type { Checklist } from '../../../../../../../core/models/Checklist';
 import { LeftSidebarLayout } from '../../../../../shared/layout/LeftSidebarLayout';
-import InfoOutline from '@mui/icons-material/InfoOutline';
 import { PageHeader } from '../../../../../shared/components/PageHeader';
 import { FlightDeckViewer } from '../../../../../features/FlightDeckViewer/FlightDeckViewer';
-import { useEffect, useState } from 'react';
 import { formatChecklistStep } from '../../../../../shared/utils/formatChecklistStep';
-import Close from '@mui/icons-material/Close';
 
 export const Route = createFileRoute(
   '/_authenticated/aircraft/$aircraftId/$checklistSlug/test',
@@ -53,12 +68,24 @@ function TestMode() {
     }
   }
 
+  function handleReset() {
+    setIsTestRunning(false);
+    setTimer(0);
+    setActions([]);
+  }
+
   function handleFinishTest() {
     setIsCompletionModalOpen(true);
   }
 
   function handleActionSelected(item: string, action: string) {
-    if (checklist) setActions([...actions, {item, action}]);
+    if (!isTestRunning) return;
+    setActions([...actions, {item, action}]);
+  }
+
+  function areEquivalent(step: ChecklistStep, action: {item: string, action: string}) {
+    if (!step.action || !action) return false;
+    return step.action === action.action && step.item === action.item;
   }
 
   return (
@@ -82,17 +109,27 @@ function TestMode() {
         <LeftSidebarLayout
           sidebarContent={
             <Stack gap={2} className="mt-10">
-              <Button variant="contained" onClick={handleToggleTest}>
+              <Stack gap={1} direction="row">
+              <Button onClick={handleToggleTest} variant="contained" className="flex-grow">
                 <Typography>
                   {!isTestRunning ? 'Start test' : 'Done'}
                 </Typography>
               </Button>
-              {/* TODO: improve stopwatch formatting */}
+              <Button onClick={handleReset} variant="contained" className="px-0">
+                <Refresh />
+              </Button>
+              </Stack>
               <Typography variant="h5" className="font-oxanium text-4xl text-center">{(timer / 10).toFixed(1) + 's'}</Typography>
+
               <Stack>
-                {actions.map(a => 
-                  <Typography>{formatChecklistStep(a)}</Typography>
-                )}
+                  <Typography variant="h5" className="py-0">Completed actions</Typography>
+                  <List disablePadding className="w-70 mb-6">
+                    {actions?.length ? actions.map((action, i) => (
+                        <ListItem disablePadding key={i}>
+                          <ListItemText primary={`${i+1}. ${formatChecklistStep(action)}`} />
+                        </ListItem>
+                      )) : <Typography>(None)</Typography>'}
+                  </List>
               </Stack>
             </Stack>
           }
@@ -101,29 +138,68 @@ function TestMode() {
               <Typography variant="h5" className="pt-0">
                 Checklist: {checklist?.name ?? "Unknown checklist"}
               </Typography>
-              <FlightDeckViewer views={aircraft.views} onActionSelected={handleActionSelected}/>
+              <FlightDeckViewer views={aircraft.views} onActionSelected={handleActionSelected} />
             </>
           }
         />
       </Stack>
 
       {/* Completion dialog */}
-            <Dialog open={isCompletionModalOpen} onClose={() => setIsCompletionModalOpen(false)}>
-              <DialogTitle>
-                <Stack direction="row" className="w-full items-center justify-between">
-                  <Typography variant="h5" className="p-0 m-0">Checklist complete</Typography>
-                  <IconButton onClick={() => setIsCompletionModalOpen(false)}>
-                    <Close />
-                  </IconButton>
-                </Stack>
-              </DialogTitle>
+      <Dialog
+        open={isCompletionModalOpen}
+        onClose={() => {
+          handleReset();
+          setIsCompletionModalOpen(false);
+        }}>
+        <DialogTitle>
+          <Stack direction="row" className="w-full items-center justify-between">
+            <Typography variant="h5" className="p-0 m-0">Checklist complete</Typography>
+            <IconButton onClick={() => {
+              handleReset();
+              setIsCompletionModalOpen(false);
+            }}>
+              <Close />
+            </IconButton>
+          </Stack>
+        </DialogTitle>
 
-              <DialogContent>
-                <DialogContentText>
-                  <Typography className="mb-4">Yay!</Typography>
-                </DialogContentText>
-              </DialogContent>
-            </Dialog>
+        <DialogContent>
+            <Stack gap={2} direction="row">
+              <Stack className="w-400">
+                  <Typography variant="h6" className="py-0">Expected</Typography>
+                  <List disablePadding className="mb-6">
+                    {checklist?.steps?.length ? checklist?.steps?.map((step, i) => (
+                        <ListItem disablePadding key={i} className="py-1 border-b border-gray-300">
+                          <ListItemText primary={formatChecklistStep(step)} />
+                        </ListItem>
+                      )) : '(none)'}
+                  </List>
+              </Stack>
+
+              <Stack className="w-500">
+                  <Typography variant="h6" className="py-0">Selected</Typography>
+                  <List disablePadding className="mb-6">
+                    {actions?.length ? actions.map((action, i) => {
+                      const isCorrect = checklist?.steps && checklist?.steps?.length > i && areEquivalent(checklist.steps[i], action);
+
+                      return (
+                        <ListItem disablePadding key={i} className="py-1 border-b border-gray-300">
+                          <ListItemText primary={
+                            <Stack direction="row" className="w-full">
+                              <Typography component="span" className="flex-grow" color={isCorrect ? "success" : "error"}>
+                                {formatChecklistStep(action)}
+                              </Typography>
+                              {isCorrect ? <CheckOutlined color="success" /> : <CancelOutlined color="error" />}
+                            </Stack>
+                          } />
+                        </ListItem>
+                      );
+                    }) : 'No actions'}
+                  </List>
+              </Stack>
+            </Stack>
+        </DialogContent>
+      </Dialog>
     </>
   );
 }
