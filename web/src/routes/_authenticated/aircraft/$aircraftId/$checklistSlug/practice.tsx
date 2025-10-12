@@ -30,7 +30,7 @@ function PracticeMode() {
   });
 
   const [stepIndex, setStepIndex] = useState(0);
-  const [isCompletionModalOpen, setIsCompletionModalOpen] = useState(false);
+  const [isCompletionDialogOpen, setIsCompletionDialogOpen] = useState(false);
   const [isHintShown, setIsHintShown] = useState(false);
 
   // Also handled at parent, but repeat here to be safe
@@ -50,7 +50,7 @@ function PracticeMode() {
 
       // Handle checklist complete
       if (stepIndex === checklist.steps.length-1) {
-        setIsCompletionModalOpen(true);
+        setIsCompletionDialogOpen(true);
       }
     }
   }
@@ -121,11 +121,11 @@ function PracticeMode() {
       </Stack>
 
       {/* Completion dialog */}
-      <Dialog open={isCompletionModalOpen} onClose={() => setIsCompletionModalOpen(false)}>
+      <Dialog open={isCompletionDialogOpen} onClose={() => setIsCompletionDialogOpen(false)}>
         <DialogTitle>
           <Stack direction="row" className="w-full items-center justify-between">
             <Typography variant="h5" className="p-0 m-0">Checklist complete</Typography>
-            <IconButton onClick={() => setIsCompletionModalOpen(false)}>
+            <IconButton onClick={() => setIsCompletionDialogOpen(false)}>
               <Close />
             </IconButton>
           </Stack>
