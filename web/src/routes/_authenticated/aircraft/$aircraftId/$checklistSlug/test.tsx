@@ -172,7 +172,7 @@ function TestMode() {
               <Typography variant="h5" className="pt-0">
                 Checklist: {checklist?.name ?? "Unknown checklist"}
               </Typography>
-              <FlightDeckViewer views={aircraft.views} onActionSelected={handleActionSelected} />
+              <FlightDeckViewer views={aircraft.views} onActionSelected={handleActionSelected} disabled={!isTestRunning} />
             </>
           }
         />

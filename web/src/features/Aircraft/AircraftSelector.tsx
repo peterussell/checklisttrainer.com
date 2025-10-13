@@ -19,7 +19,7 @@ function AircraftSelector() {
   return (
     <Stack direction="row" gap={3} className="w-full flex flex-wrap">
       {(data as AircraftSummary[]).map((aircraft, i) => (
-        <Box className="xs:min-w-full sm:min-w-1/2 md:min-w-1/4">
+        <Box key={i} className="xs:min-w-full sm:min-w-1/2 md:min-w-1/4">
           <AircraftSelectorCard key={i} aircraft={aircraft} />
         </Box>
       ))}
