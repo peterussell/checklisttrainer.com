@@ -10,11 +10,12 @@ import type { AircraftControl, AircraftView } from "../../../../core/models/Airc
 import { useEffect, useRef, useState } from "react";
 
 type FlightDeckViewerProps = {
+  disabled?: boolean,
   views: AircraftView[],
   onActionSelected: (control: string, action: string) => void;
 };
 
-export function FlightDeckViewer({ views, onActionSelected }: FlightDeckViewerProps) {
+export function FlightDeckViewer({ disabled = false, views, onActionSelected }: FlightDeckViewerProps) {
   const [selectedIdx, setSelectedIdx] = useState<number | null>(null);
 
   // Thumbnails - display left/right thumbnail overflow scroll indicators
@@ -37,6 +38,7 @@ export function FlightDeckViewer({ views, onActionSelected }: FlightDeckViewerPr
   const [selectedControl, setSelectedControl] = useState<AircraftControl | null>(null);
 
   function handleControlClick(event: React.MouseEvent<HTMLElement>, control: AircraftControl) {
+    if (disabled) return;
     setMenuAnchor(event.currentTarget);
     setSelectedControl(control);
   };
@@ -69,9 +71,9 @@ export function FlightDeckViewer({ views, onActionSelected }: FlightDeckViewerPr
                         {/* Checklist control icon */}
                         <KeepScale key={i} className="absolute" style={{ bottom: `${yPosFromBottom}%`, left: `${control.xPos}%` }}>
                           <Tooltip title={control.title}>
-                            <IconButton onClick={(e: React.MouseEvent<HTMLElement>) => handleControlClick(e, control)}>
+                            <IconButton onClick={(e: React.MouseEvent<HTMLElement>) => handleControlClick(e, control)} className={disabled ? 'cursor-not-allowed' : undefined}>
                               <PlaceIcon
-                                className="fill-blue-800 hover:fill-blue-500 stroke-white stroke-[0.5]"
+                                className={`${disabled ? 'fill-gray-500' : 'fill-blue-800'} hover:${disabled ? 'fill-gray-500' : 'fill-blue-500'} stroke-white stroke-[0.5]`}
                                 style={{ transform: `rotate(${control.markerRotation ?? 0}deg)`}}
                               />
                             </IconButton>
