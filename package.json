@@ -4,7 +4,9 @@
   "workspaces": [
     "packages/*"
   ],
-  "scripts": {},
+  "scripts": {
+    "sso": "aws sso login --sso-session=checklisttrainer"
+  },
   "devDependencies": {
     "@tsconfig/node22": "^22",
     "typescript": "^5"

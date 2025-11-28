@@ -4,17 +4,17 @@ export default $config({
   app(input) {
     return {
       name: "checklisttrainer",
+      home: "aws",
+      providers: {
+        aws: {
+          profile: input.stage === "production" ? "checklisttrainer-prod" : "checklisttrainer-dev"
+        }
+      },
       removal: input?.stage === "production" ? "retain" : "remove",
       protect: ["production"].includes(input?.stage),
-      home: "aws",
     };
   },
   async run() {
-    const storage = await import("./infra/storage");
-    await import("./infra/api");
-
-    return {
-      MyBucket: storage.bucket.name,
-    };
+    const web = await import("./infra/web");
   },
 });
