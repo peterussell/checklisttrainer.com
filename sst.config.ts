@@ -8,7 +8,7 @@ export default $config({
       providers: {
         aws: {
           profile: input.stage === "production" ? "checklisttrainer-prod" : "checklisttrainer-dev"
-        }
+        } 
       },
       removal: input?.stage === "production" ? "retain" : "remove",
       protect: ["production"].includes(input?.stage),
@@ -16,5 +16,7 @@ export default $config({
   },
   async run() {
     const web = await import("./infra/web");
+    const backend = await import ("./infra/backend");
+    const api = await import ("./infra/api");
   },
 });

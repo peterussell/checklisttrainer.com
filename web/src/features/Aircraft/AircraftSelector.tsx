@@ -7,7 +7,7 @@ function AircraftSelector() {
   const { isPending, error, data, isFetching } = useQuery({
     queryKey: ['aircraft'],
     queryFn: async () => {
-      const response = await fetch('http://localhost:3000/aircraft'); // FIXME: env variable!
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/aircraft`);
       return await response.json();
     }
   });

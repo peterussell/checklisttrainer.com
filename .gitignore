@@ -1,6 +1,11 @@
 # dev
-.yarn/
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
 !.yarn/releases
+!.yarn/versions
 .vscode/*
 !.vscode/launch.json
 !.vscode/*.code-snippets
@@ -12,8 +17,7 @@
 node_modules/
 
 # env
-.env
-.env.production
+.env*.local
 
 # logs
 logs/
@@ -24,5 +28,45 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# testing
+/coverage
+
+/out/
+
+# production
+/build
+
 # misc
 .DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# typescript
+*.tsbuildinfo
+
+# sst
+.sst
+.sst/*
+sst-env.d.ts
+
+# vite
+.idea
+.pnpm-store
+*.cpuprofile
+*.local
+*.log
+/.vscode/
+/docs/.vitepress/cache
+/docs/.vitepress/.temp
+/packages/vite/LICENSE
+dist
+dist-ssr
+explorations
+playground-temp
+temp
+TODOs.md
+.eslintcache

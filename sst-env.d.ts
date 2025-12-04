@@ -5,7 +5,16 @@
 
 declare module "sst" {
   export interface Resource {
-    "ChecklistTrainer": {
+    "ct-api": {
+      "type": "sst.aws.ApiGatewayV2"
+      "url": string
+    }
+    "ct-backend": {
+      "name": string
+      "type": "sst.aws.Function"
+      "url": string
+    }
+    "ct-web": {
       "type": "sst.aws.StaticSite"
       "url": string
     }
