@@ -4,15 +4,18 @@ Minimize the risk of errors when it matters most with our checklist training app
 
 ## Project layout
 
-### IAC (/iac)
+### Core (`/core`)
 
-Contains all infrastructure as code.
+Shared concerns, eg. models.
 
-### API (/api)
+### Infra (`/infra`)
 
-C#.Net WebAPI project for API endpoints.
+SST infra.
 
-### Web (/web)
+### Backend (`/backend`)
 
-ReactJS for client web app.
+Hono backend server.
 
+### Web (`/web`)
+
+Vite web app.

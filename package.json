@@ -1,0 +1,17 @@
+{
+  "name": "checklisttrainer",
+  "version": "0.0.1",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "sso": "aws sso login --sso-session=checklisttrainer"
+  },
+  "devDependencies": {
+    "@tsconfig/node22": "^22",
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "sst": "^3"
+  }
+}
