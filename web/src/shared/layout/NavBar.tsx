@@ -7,8 +7,6 @@ import logo200 from '/logo-image-blue-200x200.png';
 
 const loginButtonProps: ButtonProps = { variant: "contained", size: "small", sx: { textTransform: "none" } };
 
-const activeStyling = "[&.active]:border border-white/50 rounded-sm p-2";
-
 function NavBar() {
   const { isLoading, isAuthenticated } = useAuth0();
 

@@ -1,8 +1,11 @@
 {
-  "name": "checklisttrainer",
+  "name": "ct",
   "version": "0.0.1",
+  "private": true,
   "workspaces": [
-    "packages/*"
+    "backend",
+    "core",
+    "web"
   ],
   "scripts": {
     "sso": "aws sso login --sso-session=checklisttrainer"

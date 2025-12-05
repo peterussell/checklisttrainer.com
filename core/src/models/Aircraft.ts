@@ -1,4 +1,4 @@
-import type { Checklist } from "./Checklist";
+import type { Checklist } from "./Checklist.ts";
 
 export type Aircraft = {
   id: string,

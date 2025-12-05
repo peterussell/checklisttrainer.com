@@ -6,7 +6,7 @@ import PlaceIcon from '@mui/icons-material/Place';
 import Refresh from '@mui/icons-material/Refresh';
 import Remove from '@mui/icons-material/Remove';
 import { KeepScale, TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
-import type { AircraftControl, AircraftView } from "../../../../core/models/Aircraft";
+import type { AircraftControl, AircraftView } from "@ct/core/models/Aircraft";
 import { useEffect, useRef, useState } from "react";
 
 type FlightDeckViewerProps = {

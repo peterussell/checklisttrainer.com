@@ -1,11 +1,18 @@
 {
   "compilerOptions": {
-    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
+    "tsBuildInfoFile": "../packages/web/node_modules/.tmp/tsconfig.app.tsbuildinfo",
     "target": "ES2020",
     "useDefineForClassFields": true,
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "skipLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@*": ["src/*"],
+      "@features/*": ["src/features/*"],
+      "@shared/*": ["src/shared/*"],
+      "@ct/core/*": ["../core/src/*"],
+    },
 
     /* Bundler mode */
     "moduleResolution": "bundler",
@@ -23,5 +30,7 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["src", "../core/models/Aircraft.ts", "../core/models/ChecklistSummary.ts"]
+  // "include":../packages/web/node_modules/core/models/Aircraft.ts", "../core/models/ChecklistSummary.ts"]
+  "include": ["src"],
+  "exclude": ["node_modules"]
 }

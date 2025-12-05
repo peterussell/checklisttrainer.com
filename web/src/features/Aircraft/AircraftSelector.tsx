@@ -1,7 +1,7 @@
 import AircraftSelectorCard from "./AircraftSelectorCard";
 import { useQuery } from "@tanstack/react-query";
 import { Box, Stack, Typography } from "@mui/material";
-import type { AircraftSummary } from "../../../../core/models/AircraftSummary"; // TODO: move to @ct
+import type { AircraftSummary } from '@ct/core/models/AircraftSummary';
 
 function AircraftSelector() {
   const { isPending, error, data, isFetching } = useQuery({
