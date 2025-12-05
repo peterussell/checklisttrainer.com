@@ -16,20 +16,19 @@ import {
 import CancelOutlined from '@mui/icons-material/CancelOutlined';
 import CheckOutlined from '@mui/icons-material/CheckOutlined';
 import Close from '@mui/icons-material/Close';
-import InfoOutline from '@mui/icons-material/InfoOutline';
 import Refresh from '@mui/icons-material/Refresh';
 import ChecklistOutlined from '@mui/icons-material/ChecklistOutlined'
 import TimerOutlined from '@mui/icons-material/TimerOutlined'
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { createFileRoute, Link } from '@tanstack/react-router'
-import type { Aircraft } from '../../../../../../../core/models/Aircraft';
-import type { Checklist, ChecklistStep } from '../../../../../../../core/models/Checklist';
+import type { Aircraft } from '@ct/core/models/Aircraft';
+import type { Checklist, ChecklistStep } from '@ct/core/models/Checklist';
 import { aircraftDetailQuery } from '../../../../../queries/aircraftDetailQuery';
-import { LeftSidebarLayout } from '../../../../../shared/layout/LeftSidebarLayout';
-import { PageHeader } from '../../../../../shared/components/PageHeader';
-import { FlightDeckViewer } from '../../../../../features/FlightDeckViewer/FlightDeckViewer';
-import { formatChecklistStep } from '../../../../../shared/utils/formatChecklistStep';
-import { calculatePercentage } from '../../../../../shared/utils/calculatePercentage';
+import { LeftSidebarLayout } from '@shared/layout/LeftSidebarLayout';
+import { PageHeader } from '@shared/components/PageHeader';
+import { FlightDeckViewer } from '@features/FlightDeckViewer/FlightDeckViewer';
+import { formatChecklistStep } from '@shared/utils/formatChecklistStep';
+import { calculatePercentage } from '@shared/utils/calculatePercentage';
 
 export const Route = createFileRoute(
   '/_authenticated/aircraft/$aircraftId/$checklistSlug/test',

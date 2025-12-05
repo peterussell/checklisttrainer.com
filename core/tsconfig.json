@@ -1,7 +1,10 @@
 {
-  "extends": "@tsconfig/node22/tsconfig.json",
+  "extends": "@tsconfig/node24/tsconfig.json",
   "compilerOptions": {
     "module": "ESNext",
     "moduleResolution": "Bundler",
+    "noEmit": true,
+    "noCheck": true,
+    "outDir": "./dist"
   },
 }

@@ -6,13 +6,13 @@ import { useSuspenseQuery } from '@tanstack/react-query';
 import { createFileRoute, Link } from '@tanstack/react-router'
 
 import logo200 from '/logo-image-blue-200x200.png';
-import { PageHeader } from '../../../../../shared/components/PageHeader';
-import { formatChecklistStep } from '../../../../../shared/utils/formatChecklistStep';
-import { LeftSidebarLayout } from '../../../../../shared/layout/LeftSidebarLayout';
+import { PageHeader } from '@shared/components/PageHeader';
+import { formatChecklistStep } from '@shared/utils/formatChecklistStep';
+import { LeftSidebarLayout } from '@shared/layout/LeftSidebarLayout';
 import { aircraftDetailQuery } from '../../../../../queries/aircraftDetailQuery';
-import type { Aircraft } from '../../../../../../../core/models/Aircraft';
-import { FlightDeckViewer } from '../../../../../features/FlightDeckViewer/FlightDeckViewer';
-import type { Checklist } from '../../../../../../../core/models/Checklist';
+import type { Aircraft } from '@ct/core/models/Aircraft';
+import { FlightDeckViewer } from '@features/FlightDeckViewer/FlightDeckViewer';
+import type { Checklist } from '@ct/core/models/Checklist';
 
 export const Route = createFileRoute(
   '/_authenticated/aircraft/$aircraftId/$checklistSlug/learn',

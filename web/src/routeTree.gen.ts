@@ -8,152 +8,205 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-// Import Routes
+import { Route as rootRouteImport } from './routes/__root'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedAircraftIndexRouteImport } from './routes/_authenticated/aircraft/index'
+import { Route as AuthenticatedAircraftAddRouteImport } from './routes/_authenticated/aircraft/add'
+import { Route as AuthenticatedAircraftAircraftIdRouteRouteImport } from './routes/_authenticated/aircraft/$aircraftId/route'
+import { Route as AuthenticatedAircraftAircraftIdIndexRouteImport } from './routes/_authenticated/aircraft/$aircraftId/index'
+import { Route as AuthenticatedAircraftAircraftIdChecklistSlugTestRouteImport } from './routes/_authenticated/aircraft/$aircraftId/$checklistSlug/test'
+import { Route as AuthenticatedAircraftAircraftIdChecklistSlugPracticeRouteImport } from './routes/_authenticated/aircraft/$aircraftId/$checklistSlug/practice'
+import { Route as AuthenticatedAircraftAircraftIdChecklistSlugLearnRouteImport } from './routes/_authenticated/aircraft/$aircraftId/$checklistSlug/learn'
 
-import { Route as rootRoute } from './routes/__root'
-import { Route as AuthenticatedRouteImport } from './routes/_authenticated/route'
-import { Route as IndexImport } from './routes/index'
-import { Route as AuthenticatedAircraftIndexImport } from './routes/_authenticated/aircraft/index'
-import { Route as AuthenticatedAircraftAddImport } from './routes/_authenticated/aircraft/add'
-import { Route as AuthenticatedAircraftAircraftIdRouteImport } from './routes/_authenticated/aircraft/$aircraftId/route'
-import { Route as AuthenticatedAircraftAircraftIdIndexImport } from './routes/_authenticated/aircraft/$aircraftId/index'
-import { Route as AuthenticatedAircraftAircraftIdChecklistSlugTestImport } from './routes/_authenticated/aircraft/$aircraftId/$checklistSlug/test'
-import { Route as AuthenticatedAircraftAircraftIdChecklistSlugPracticeImport } from './routes/_authenticated/aircraft/$aircraftId/$checklistSlug/practice'
-import { Route as AuthenticatedAircraftAircraftIdChecklistSlugLearnImport } from './routes/_authenticated/aircraft/$aircraftId/$checklistSlug/learn'
-
-// Create/Update Routes
-
-const AuthenticatedRouteRoute = AuthenticatedRouteImport.update({
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
   id: '/_authenticated',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const IndexRoute = IndexImport.update({
+const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const AuthenticatedAircraftIndexRoute = AuthenticatedAircraftIndexImport.update(
-  {
+const AuthenticatedAircraftIndexRoute =
+  AuthenticatedAircraftIndexRouteImport.update({
     id: '/aircraft/',
     path: '/aircraft/',
     getParentRoute: () => AuthenticatedRouteRoute,
-  } as any,
-)
-
-const AuthenticatedAircraftAddRoute = AuthenticatedAircraftAddImport.update({
-  id: '/aircraft/add',
-  path: '/aircraft/add',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
-
+  } as any)
+const AuthenticatedAircraftAddRoute =
+  AuthenticatedAircraftAddRouteImport.update({
+    id: '/aircraft/add',
+    path: '/aircraft/add',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedAircraftAircraftIdRouteRoute =
-  AuthenticatedAircraftAircraftIdRouteImport.update({
+  AuthenticatedAircraftAircraftIdRouteRouteImport.update({
     id: '/aircraft/$aircraftId',
     path: '/aircraft/$aircraftId',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
-
 const AuthenticatedAircraftAircraftIdIndexRoute =
-  AuthenticatedAircraftAircraftIdIndexImport.update({
+  AuthenticatedAircraftAircraftIdIndexRouteImport.update({
     id: '/',
     path: '/',
     getParentRoute: () => AuthenticatedAircraftAircraftIdRouteRoute,
   } as any)
-
 const AuthenticatedAircraftAircraftIdChecklistSlugTestRoute =
-  AuthenticatedAircraftAircraftIdChecklistSlugTestImport.update({
+  AuthenticatedAircraftAircraftIdChecklistSlugTestRouteImport.update({
     id: '/$checklistSlug/test',
     path: '/$checklistSlug/test',
     getParentRoute: () => AuthenticatedAircraftAircraftIdRouteRoute,
   } as any)
-
 const AuthenticatedAircraftAircraftIdChecklistSlugPracticeRoute =
-  AuthenticatedAircraftAircraftIdChecklistSlugPracticeImport.update({
+  AuthenticatedAircraftAircraftIdChecklistSlugPracticeRouteImport.update({
     id: '/$checklistSlug/practice',
     path: '/$checklistSlug/practice',
     getParentRoute: () => AuthenticatedAircraftAircraftIdRouteRoute,
   } as any)
-
 const AuthenticatedAircraftAircraftIdChecklistSlugLearnRoute =
-  AuthenticatedAircraftAircraftIdChecklistSlugLearnImport.update({
+  AuthenticatedAircraftAircraftIdChecklistSlugLearnRouteImport.update({
     id: '/$checklistSlug/learn',
     path: '/$checklistSlug/learn',
     getParentRoute: () => AuthenticatedAircraftAircraftIdRouteRoute,
   } as any)
 
-// Populate the FileRoutesByPath interface
+export interface FileRoutesByFullPath {
+  '/': typeof IndexRoute
+  '/aircraft/$aircraftId': typeof AuthenticatedAircraftAircraftIdRouteRouteWithChildren
+  '/aircraft/add': typeof AuthenticatedAircraftAddRoute
+  '/aircraft': typeof AuthenticatedAircraftIndexRoute
+  '/aircraft/$aircraftId/': typeof AuthenticatedAircraftAircraftIdIndexRoute
+  '/aircraft/$aircraftId/$checklistSlug/learn': typeof AuthenticatedAircraftAircraftIdChecklistSlugLearnRoute
+  '/aircraft/$aircraftId/$checklistSlug/practice': typeof AuthenticatedAircraftAircraftIdChecklistSlugPracticeRoute
+  '/aircraft/$aircraftId/$checklistSlug/test': typeof AuthenticatedAircraftAircraftIdChecklistSlugTestRoute
+}
+export interface FileRoutesByTo {
+  '/': typeof IndexRoute
+  '/aircraft/add': typeof AuthenticatedAircraftAddRoute
+  '/aircraft': typeof AuthenticatedAircraftIndexRoute
+  '/aircraft/$aircraftId': typeof AuthenticatedAircraftAircraftIdIndexRoute
+  '/aircraft/$aircraftId/$checklistSlug/learn': typeof AuthenticatedAircraftAircraftIdChecklistSlugLearnRoute
+  '/aircraft/$aircraftId/$checklistSlug/practice': typeof AuthenticatedAircraftAircraftIdChecklistSlugPracticeRoute
+  '/aircraft/$aircraftId/$checklistSlug/test': typeof AuthenticatedAircraftAircraftIdChecklistSlugTestRoute
+}
+export interface FileRoutesById {
+  __root__: typeof rootRouteImport
+  '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/_authenticated/aircraft/$aircraftId': typeof AuthenticatedAircraftAircraftIdRouteRouteWithChildren
+  '/_authenticated/aircraft/add': typeof AuthenticatedAircraftAddRoute
+  '/_authenticated/aircraft/': typeof AuthenticatedAircraftIndexRoute
+  '/_authenticated/aircraft/$aircraftId/': typeof AuthenticatedAircraftAircraftIdIndexRoute
+  '/_authenticated/aircraft/$aircraftId/$checklistSlug/learn': typeof AuthenticatedAircraftAircraftIdChecklistSlugLearnRoute
+  '/_authenticated/aircraft/$aircraftId/$checklistSlug/practice': typeof AuthenticatedAircraftAircraftIdChecklistSlugPracticeRoute
+  '/_authenticated/aircraft/$aircraftId/$checklistSlug/test': typeof AuthenticatedAircraftAircraftIdChecklistSlugTestRoute
+}
+export interface FileRouteTypes {
+  fileRoutesByFullPath: FileRoutesByFullPath
+  fullPaths:
+    | '/'
+    | '/aircraft/$aircraftId'
+    | '/aircraft/add'
+    | '/aircraft'
+    | '/aircraft/$aircraftId/'
+    | '/aircraft/$aircraftId/$checklistSlug/learn'
+    | '/aircraft/$aircraftId/$checklistSlug/practice'
+    | '/aircraft/$aircraftId/$checklistSlug/test'
+  fileRoutesByTo: FileRoutesByTo
+  to:
+    | '/'
+    | '/aircraft/add'
+    | '/aircraft'
+    | '/aircraft/$aircraftId'
+    | '/aircraft/$aircraftId/$checklistSlug/learn'
+    | '/aircraft/$aircraftId/$checklistSlug/practice'
+    | '/aircraft/$aircraftId/$checklistSlug/test'
+  id:
+    | '__root__'
+    | '/'
+    | '/_authenticated'
+    | '/_authenticated/aircraft/$aircraftId'
+    | '/_authenticated/aircraft/add'
+    | '/_authenticated/aircraft/'
+    | '/_authenticated/aircraft/$aircraftId/'
+    | '/_authenticated/aircraft/$aircraftId/$checklistSlug/learn'
+    | '/_authenticated/aircraft/$aircraftId/$checklistSlug/practice'
+    | '/_authenticated/aircraft/$aircraftId/$checklistSlug/test'
+  fileRoutesById: FileRoutesById
+}
+export interface RootRouteChildren {
+  IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+}
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexImport
-      parentRoute: typeof rootRoute
-    }
     '/_authenticated': {
       id: '/_authenticated'
       path: ''
       fullPath: ''
-      preLoaderRoute: typeof AuthenticatedRouteImport
-      parentRoute: typeof rootRoute
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/aircraft/$aircraftId': {
-      id: '/_authenticated/aircraft/$aircraftId'
-      path: '/aircraft/$aircraftId'
-      fullPath: '/aircraft/$aircraftId'
-      preLoaderRoute: typeof AuthenticatedAircraftAircraftIdRouteImport
-      parentRoute: typeof AuthenticatedRouteImport
-    }
-    '/_authenticated/aircraft/add': {
-      id: '/_authenticated/aircraft/add'
-      path: '/aircraft/add'
-      fullPath: '/aircraft/add'
-      preLoaderRoute: typeof AuthenticatedAircraftAddImport
-      parentRoute: typeof AuthenticatedRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/_authenticated/aircraft/': {
       id: '/_authenticated/aircraft/'
       path: '/aircraft'
       fullPath: '/aircraft'
-      preLoaderRoute: typeof AuthenticatedAircraftIndexImport
-      parentRoute: typeof AuthenticatedRouteImport
+      preLoaderRoute: typeof AuthenticatedAircraftIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/aircraft/add': {
+      id: '/_authenticated/aircraft/add'
+      path: '/aircraft/add'
+      fullPath: '/aircraft/add'
+      preLoaderRoute: typeof AuthenticatedAircraftAddRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/aircraft/$aircraftId': {
+      id: '/_authenticated/aircraft/$aircraftId'
+      path: '/aircraft/$aircraftId'
+      fullPath: '/aircraft/$aircraftId'
+      preLoaderRoute: typeof AuthenticatedAircraftAircraftIdRouteRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/aircraft/$aircraftId/': {
       id: '/_authenticated/aircraft/$aircraftId/'
       path: '/'
       fullPath: '/aircraft/$aircraftId/'
-      preLoaderRoute: typeof AuthenticatedAircraftAircraftIdIndexImport
-      parentRoute: typeof AuthenticatedAircraftAircraftIdRouteImport
-    }
-    '/_authenticated/aircraft/$aircraftId/$checklistSlug/learn': {
-      id: '/_authenticated/aircraft/$aircraftId/$checklistSlug/learn'
-      path: '/$checklistSlug/learn'
-      fullPath: '/aircraft/$aircraftId/$checklistSlug/learn'
-      preLoaderRoute: typeof AuthenticatedAircraftAircraftIdChecklistSlugLearnImport
-      parentRoute: typeof AuthenticatedAircraftAircraftIdRouteImport
-    }
-    '/_authenticated/aircraft/$aircraftId/$checklistSlug/practice': {
-      id: '/_authenticated/aircraft/$aircraftId/$checklistSlug/practice'
-      path: '/$checklistSlug/practice'
-      fullPath: '/aircraft/$aircraftId/$checklistSlug/practice'
-      preLoaderRoute: typeof AuthenticatedAircraftAircraftIdChecklistSlugPracticeImport
-      parentRoute: typeof AuthenticatedAircraftAircraftIdRouteImport
+      preLoaderRoute: typeof AuthenticatedAircraftAircraftIdIndexRouteImport
+      parentRoute: typeof AuthenticatedAircraftAircraftIdRouteRoute
     }
     '/_authenticated/aircraft/$aircraftId/$checklistSlug/test': {
       id: '/_authenticated/aircraft/$aircraftId/$checklistSlug/test'
       path: '/$checklistSlug/test'
       fullPath: '/aircraft/$aircraftId/$checklistSlug/test'
-      preLoaderRoute: typeof AuthenticatedAircraftAircraftIdChecklistSlugTestImport
-      parentRoute: typeof AuthenticatedAircraftAircraftIdRouteImport
+      preLoaderRoute: typeof AuthenticatedAircraftAircraftIdChecklistSlugTestRouteImport
+      parentRoute: typeof AuthenticatedAircraftAircraftIdRouteRoute
+    }
+    '/_authenticated/aircraft/$aircraftId/$checklistSlug/practice': {
+      id: '/_authenticated/aircraft/$aircraftId/$checklistSlug/practice'
+      path: '/$checklistSlug/practice'
+      fullPath: '/aircraft/$aircraftId/$checklistSlug/practice'
+      preLoaderRoute: typeof AuthenticatedAircraftAircraftIdChecklistSlugPracticeRouteImport
+      parentRoute: typeof AuthenticatedAircraftAircraftIdRouteRoute
+    }
+    '/_authenticated/aircraft/$aircraftId/$checklistSlug/learn': {
+      id: '/_authenticated/aircraft/$aircraftId/$checklistSlug/learn'
+      path: '/$checklistSlug/learn'
+      fullPath: '/aircraft/$aircraftId/$checklistSlug/learn'
+      preLoaderRoute: typeof AuthenticatedAircraftAircraftIdChecklistSlugLearnRouteImport
+      parentRoute: typeof AuthenticatedAircraftAircraftIdRouteRoute
     }
   }
 }
-
-// Create and export the route tree
 
 interface AuthenticatedAircraftAircraftIdRouteRouteChildren {
   AuthenticatedAircraftAircraftIdIndexRoute: typeof AuthenticatedAircraftAircraftIdIndexRoute
@@ -195,147 +248,10 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
 const AuthenticatedRouteRouteWithChildren =
   AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
 
-export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '': typeof AuthenticatedRouteRouteWithChildren
-  '/aircraft/$aircraftId': typeof AuthenticatedAircraftAircraftIdRouteRouteWithChildren
-  '/aircraft/add': typeof AuthenticatedAircraftAddRoute
-  '/aircraft': typeof AuthenticatedAircraftIndexRoute
-  '/aircraft/$aircraftId/': typeof AuthenticatedAircraftAircraftIdIndexRoute
-  '/aircraft/$aircraftId/$checklistSlug/learn': typeof AuthenticatedAircraftAircraftIdChecklistSlugLearnRoute
-  '/aircraft/$aircraftId/$checklistSlug/practice': typeof AuthenticatedAircraftAircraftIdChecklistSlugPracticeRoute
-  '/aircraft/$aircraftId/$checklistSlug/test': typeof AuthenticatedAircraftAircraftIdChecklistSlugTestRoute
-}
-
-export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '': typeof AuthenticatedRouteRouteWithChildren
-  '/aircraft/add': typeof AuthenticatedAircraftAddRoute
-  '/aircraft': typeof AuthenticatedAircraftIndexRoute
-  '/aircraft/$aircraftId': typeof AuthenticatedAircraftAircraftIdIndexRoute
-  '/aircraft/$aircraftId/$checklistSlug/learn': typeof AuthenticatedAircraftAircraftIdChecklistSlugLearnRoute
-  '/aircraft/$aircraftId/$checklistSlug/practice': typeof AuthenticatedAircraftAircraftIdChecklistSlugPracticeRoute
-  '/aircraft/$aircraftId/$checklistSlug/test': typeof AuthenticatedAircraftAircraftIdChecklistSlugTestRoute
-}
-
-export interface FileRoutesById {
-  __root__: typeof rootRoute
-  '/': typeof IndexRoute
-  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
-  '/_authenticated/aircraft/$aircraftId': typeof AuthenticatedAircraftAircraftIdRouteRouteWithChildren
-  '/_authenticated/aircraft/add': typeof AuthenticatedAircraftAddRoute
-  '/_authenticated/aircraft/': typeof AuthenticatedAircraftIndexRoute
-  '/_authenticated/aircraft/$aircraftId/': typeof AuthenticatedAircraftAircraftIdIndexRoute
-  '/_authenticated/aircraft/$aircraftId/$checklistSlug/learn': typeof AuthenticatedAircraftAircraftIdChecklistSlugLearnRoute
-  '/_authenticated/aircraft/$aircraftId/$checklistSlug/practice': typeof AuthenticatedAircraftAircraftIdChecklistSlugPracticeRoute
-  '/_authenticated/aircraft/$aircraftId/$checklistSlug/test': typeof AuthenticatedAircraftAircraftIdChecklistSlugTestRoute
-}
-
-export interface FileRouteTypes {
-  fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths:
-    | '/'
-    | ''
-    | '/aircraft/$aircraftId'
-    | '/aircraft/add'
-    | '/aircraft'
-    | '/aircraft/$aircraftId/'
-    | '/aircraft/$aircraftId/$checklistSlug/learn'
-    | '/aircraft/$aircraftId/$checklistSlug/practice'
-    | '/aircraft/$aircraftId/$checklistSlug/test'
-  fileRoutesByTo: FileRoutesByTo
-  to:
-    | '/'
-    | ''
-    | '/aircraft/add'
-    | '/aircraft'
-    | '/aircraft/$aircraftId'
-    | '/aircraft/$aircraftId/$checklistSlug/learn'
-    | '/aircraft/$aircraftId/$checklistSlug/practice'
-    | '/aircraft/$aircraftId/$checklistSlug/test'
-  id:
-    | '__root__'
-    | '/'
-    | '/_authenticated'
-    | '/_authenticated/aircraft/$aircraftId'
-    | '/_authenticated/aircraft/add'
-    | '/_authenticated/aircraft/'
-    | '/_authenticated/aircraft/$aircraftId/'
-    | '/_authenticated/aircraft/$aircraftId/$checklistSlug/learn'
-    | '/_authenticated/aircraft/$aircraftId/$checklistSlug/practice'
-    | '/_authenticated/aircraft/$aircraftId/$checklistSlug/test'
-  fileRoutesById: FileRoutesById
-}
-
-export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
-}
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
 }
-
-export const routeTree = rootRoute
+export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-/* ROUTE_MANIFEST_START
-{
-  "routes": {
-    "__root__": {
-      "filePath": "__root.tsx",
-      "children": [
-        "/",
-        "/_authenticated"
-      ]
-    },
-    "/": {
-      "filePath": "index.tsx"
-    },
-    "/_authenticated": {
-      "filePath": "_authenticated/route.tsx",
-      "children": [
-        "/_authenticated/aircraft/$aircraftId",
-        "/_authenticated/aircraft/add",
-        "/_authenticated/aircraft/"
-      ]
-    },
-    "/_authenticated/aircraft/$aircraftId": {
-      "filePath": "_authenticated/aircraft/$aircraftId/route.tsx",
-      "parent": "/_authenticated",
-      "children": [
-        "/_authenticated/aircraft/$aircraftId/",
-        "/_authenticated/aircraft/$aircraftId/$checklistSlug/learn",
-        "/_authenticated/aircraft/$aircraftId/$checklistSlug/practice",
-        "/_authenticated/aircraft/$aircraftId/$checklistSlug/test"
-      ]
-    },
-    "/_authenticated/aircraft/add": {
-      "filePath": "_authenticated/aircraft/add.tsx",
-      "parent": "/_authenticated"
-    },
-    "/_authenticated/aircraft/": {
-      "filePath": "_authenticated/aircraft/index.tsx",
-      "parent": "/_authenticated"
-    },
-    "/_authenticated/aircraft/$aircraftId/": {
-      "filePath": "_authenticated/aircraft/$aircraftId/index.tsx",
-      "parent": "/_authenticated/aircraft/$aircraftId"
-    },
-    "/_authenticated/aircraft/$aircraftId/$checklistSlug/learn": {
-      "filePath": "_authenticated/aircraft/$aircraftId/$checklistSlug/learn.tsx",
-      "parent": "/_authenticated/aircraft/$aircraftId"
-    },
-    "/_authenticated/aircraft/$aircraftId/$checklistSlug/practice": {
-      "filePath": "_authenticated/aircraft/$aircraftId/$checklistSlug/practice.tsx",
-      "parent": "/_authenticated/aircraft/$aircraftId"
-    },
-    "/_authenticated/aircraft/$aircraftId/$checklistSlug/test": {
-      "filePath": "_authenticated/aircraft/$aircraftId/$checklistSlug/test.tsx",
-      "parent": "/_authenticated/aircraft/$aircraftId"
-    }
-  }
-}
-ROUTE_MANIFEST_END */

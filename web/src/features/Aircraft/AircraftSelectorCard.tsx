@@ -1,6 +1,6 @@
 import { Card, CardActionArea, CardContent, CardMedia, Chip, Stack, Typography } from "@mui/material";
 
-import type { AircraftSummary } from "../../../../core/models/AircraftSummary"; // TODO: import from @ct
+import type { AircraftSummary } from "@ct/core/models/AircraftSummary";
 
 function AircraftSelectorCard ({aircraft}: {aircraft: AircraftSummary}) {
   return (

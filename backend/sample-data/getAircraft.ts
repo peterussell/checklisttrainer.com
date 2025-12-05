@@ -1,4 +1,4 @@
-import type { AircraftSummary } from '../../core/src/models/AircraftSummary.js'
+import type { AircraftSummary } from '@ct/core/models/AircraftSummary.ts'
 
 export const aircraft: AircraftSummary[] = [
   {

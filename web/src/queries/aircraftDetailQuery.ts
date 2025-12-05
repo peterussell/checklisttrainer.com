@@ -1,4 +1,4 @@
-import type { Aircraft } from "../../../core/models/Aircraft"; // FIXME: update to use package (@ct/core/models/Aircraft)
+import type { Aircraft } from "@ct/core/models/Aircraft";
 
 export async function aircraftDetailQuery(aircraftId: string): Promise<Aircraft | null> {
   if (!aircraftId) return null;

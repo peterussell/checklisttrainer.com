@@ -1,17 +1,13 @@
 {
-  "name": "@checklisttrainer/core",
+  "name": "@ct/core",
   "type": "module",
-  "version": "0.0.0",
+  "version": "0.0.1",
+  "private": true,
   "scripts": {
     "test": "sst shell vitest"
   },
-  "exports": {
-    "./*": [
-      "./src/*/index.ts",
-      "./src/*.ts"
-    ]
-  },
   "dependencies": {
+    "@tsconfig/node24": "^24.0.3",
     "sst": "*"
   },
   "devDependencies": {

@@ -7,11 +7,11 @@ export default $config({
       home: "aws",
       providers: {
         aws: {
-          profile: input.stage === "production" ? "checklisttrainer-prod" : "checklisttrainer-dev"
+          profile: input.stage === "prod" ? "checklisttrainer-prod" : "checklisttrainer-dev"
         } 
       },
-      removal: input?.stage === "production" ? "retain" : "remove",
-      protect: ["production"].includes(input?.stage),
+      removal: input?.stage === "prod" ? "retain" : "remove",
+      protect: ["prod"].includes(input?.stage),
     };
   },
   async run() {

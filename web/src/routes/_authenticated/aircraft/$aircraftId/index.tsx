@@ -2,8 +2,8 @@ import { Card, CardContent, Chip, Stack, Typography } from '@mui/material';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
-import type { Aircraft } from '../../../../../../core/models/Aircraft'; // TODO: move to @ct
-import type { Checklist } from '../../../../../../core/models/Checklist'; // TODO: move to @ct
+import type { Aircraft } from '@ct/core/models/Aircraft';
+import type { Checklist } from '@ct/core/models/Checklist';
 import { aircraftDetailQuery } from '../../../../queries/aircraftDetailQuery';
 
 export const Route = createFileRoute('/_authenticated/aircraft/$aircraftId/')({

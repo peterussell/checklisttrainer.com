@@ -1,14 +1,19 @@
 {
-  "name": "backend",
+  "name": "@ct/backend",
   "type": "module",
+  "version": "0.0.1",
+  "main": "src/index.ts",
+  "private": true,
   "scripts": {
     "dev": "tsx watch src/index.ts",
     "build": "tsc",
     "start": "node dist/index.js"
   },
   "dependencies": {
+    "@ct/core": "^0.0.1",
     "@hono/node-server": "^1.14.3",
-    "hono": "^4.7.11"
+    "@tsconfig/node24": "^24.0.3",
+    "hono": "^4.10.7"
   },
   "devDependencies": {
     "@types/node": "^20.11.17",

@@ -1,4 +1,4 @@
-import type { ChecklistStep } from "../../../../core/models/Checklist";
+import type { ChecklistStep } from '@ct/core/models/Checklist';
 
 // TODO: tests
 export function formatChecklistStep(step: ChecklistStep, includeCondition = true): string {
