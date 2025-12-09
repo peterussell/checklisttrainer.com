@@ -41,7 +41,7 @@ function TestMode() {
 
   const { data } = useSuspenseQuery<Aircraft | null>({
     queryKey: ['aircraft', aircraftId],
-    queryFn: () => aircraftDetailQuery(aircraftId),
+    queryFn: async () => aircraftDetailQuery(aircraftId),
   });
 
   const [isTestRunning, setIsTestRunning] = useState(false);

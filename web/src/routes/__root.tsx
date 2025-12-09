@@ -6,7 +6,7 @@ export type RouterContext = {
   auth: {
     isLoading: boolean,
     isAuthenticated: boolean,
-    loginWithRedirect: () => void
+    loginWithRedirect: () => void,
   },
   queryClient: QueryClient
 };

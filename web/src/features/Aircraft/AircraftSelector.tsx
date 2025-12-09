@@ -1,14 +1,16 @@
-import AircraftSelectorCard from "./AircraftSelectorCard";
-import { useQuery } from "@tanstack/react-query";
-import { Box, Stack, Typography } from "@mui/material";
+import AircraftSelectorCard from './AircraftSelectorCard';
+import { useQuery } from '@tanstack/react-query';
+import { Box, Stack, Typography } from '@mui/material';
 import type { AircraftSummary } from '@ct/core/models/AircraftSummary';
+import apiClient from '../../../api/apiClient';
 
 function AircraftSelector() {
   const { isPending, error, data, isFetching } = useQuery({
     queryKey: ['aircraft'],
     queryFn: async () => {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/aircraft`);
-      return await response.json();
+      // TODO: move to query helper, eg. getAircraft, similar to aircraftDetailQuery. Also, rename aircraftDetailQuery.
+      const response = await apiClient.get(`${import.meta.env.VITE_API_URL}/aircraft`);
+      return await response.data;
     }
   });
 

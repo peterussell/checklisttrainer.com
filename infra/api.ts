@@ -1,12 +1,10 @@
 // URL
-let API_DOMAIN = '';
-if ($dev) {
-  API_DOMAIN = 'localhost:3000';
-} else {
+let API_DOMAIN;
+
+if (!$dev) {
   API_DOMAIN = $app.stage === "prod" ? "api.checklisttrainer.com" : "dev.api.checklisttrainer.com";
 }
 
-// API
 export const api = new sst.aws.ApiGatewayV2("ct-api", {
   domain: API_DOMAIN
 });
