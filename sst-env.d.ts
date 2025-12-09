@@ -5,6 +5,10 @@
 
 declare module "sst" {
   export interface Resource {
+    "aircraft": {
+      "name": string
+      "type": "sst.aws.Dynamo"
+    }
     "ct-api": {
       "type": "sst.aws.ApiGatewayV2"
       "url": string
