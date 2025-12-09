@@ -15,6 +15,7 @@ function Index() {
   if (isAuthenticated) {
     navigate({ to: '/aircraft'});
   }
+
   return (
     <Container maxWidth={false} className="
       flex

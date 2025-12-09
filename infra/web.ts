@@ -10,7 +10,7 @@ if ($dev) {
 
 export const site = new sst.aws.StaticSite("ct-web", {
   path: "web",
-  domain: DOMAIN,
+  domain: 'checklisttrainer.com',
   build: {
     command: "npm run build",
     output: "dist"

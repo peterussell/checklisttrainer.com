@@ -11,10 +11,11 @@ export const Route = createFileRoute('/_authenticated/aircraft/$aircraftId/')({
 })
 
 function AircraftDetail() {
-  const { aircraftId } = Route.useParams()
+  const { aircraftId } = Route.useParams();
+
   const { data } = useSuspenseQuery<Aircraft | null>({
     queryKey: ['aircraft', aircraftId],
-    queryFn: () => aircraftDetailQuery(aircraftId)
+    queryFn: async () => aircraftDetailQuery(aircraftId)
   });
 
   // Also handled at parent, but repeat here to be safe

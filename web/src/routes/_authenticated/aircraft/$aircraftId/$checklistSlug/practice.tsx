@@ -26,7 +26,7 @@ function PracticeMode() {
 
   const { data } = useSuspenseQuery<Aircraft | null>({
     queryKey: ['aircraft', aircraftId],
-    queryFn: () => aircraftDetailQuery(aircraftId),
+    queryFn: async () => aircraftDetailQuery(aircraftId),
   });
 
   const [stepIndex, setStepIndex] = useState(0);
