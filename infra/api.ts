@@ -1,3 +1,5 @@
+import { accounts } from './db';
+
 // URL
 let API_DOMAIN;
 
@@ -6,7 +8,14 @@ if (!$dev) {
 }
 
 export const api = new sst.aws.ApiGatewayV2("ct-api", {
-  domain: API_DOMAIN
+  domain: API_DOMAIN,
+  transform: {
+    route: {
+      handler: {
+        link: [accounts]
+      }
+    }
+  }
 });
 
 // Proxy all routes to backend for Hono to handle

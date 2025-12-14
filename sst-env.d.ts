@@ -5,7 +5,7 @@
 
 declare module "sst" {
   export interface Resource {
-    "aircraft": {
+    "accounts": {
       "name": string
       "type": "sst.aws.Dynamo"
     }

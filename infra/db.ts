@@ -1,6 +1,7 @@
-export const aircraft = new sst.aws.Dynamo("aircraft", {
+export const accounts = new sst.aws.Dynamo("accounts", {
   fields: {
-    id: 'string',
+    PK: 'string',
+    SK: 'string',
   },
-  primaryIndex: { hashKey: 'id' }
+  primaryIndex: { hashKey: 'PK', rangeKey: 'SK' }
 });

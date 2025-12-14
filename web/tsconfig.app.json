@@ -30,7 +30,6 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  // "include":../packages/web/node_modules/core/models/Aircraft.ts", "../core/models/ChecklistSummary.ts"]
   "include": ["src"],
   "exclude": ["node_modules"]
 }
