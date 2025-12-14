@@ -3,8 +3,9 @@ import { handle } from 'hono/aws-lambda';
 
 import { aircraft } from '../sample-data/getAircraft.js';
 import { aircraftDetail } from '../sample-data/getAircraftDetail.js';
-import { jwtMiddleware } from './middleware/jwt.js';
+import { jwkMiddleware } from './middleware/jwk.js';
 import { corsMiddleware } from './middleware/cors.js';
+import { userMiddleware } from './middleware/user.js';
 
 const app = new Hono();
 
@@ -12,7 +13,8 @@ export const handler = handle(app);
 
 // MARK: Middleware
 app.use(corsMiddleware);
-app.use(jwtMiddleware);
+app.use(jwkMiddleware);
+app.use(userMiddleware);
 
 // MARK: Handlers
 app.get('/aircraft', (c) => {

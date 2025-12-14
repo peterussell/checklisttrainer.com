@@ -15,8 +15,9 @@ export default $config({
     };
   },
   async run() {
-    const web = await import("./infra/web");
-    const backend = await import ("./infra/backend");
-    const api = await import ("./infra/api");
+    const db = await import ('./infra/db');
+    const api = await import ('./infra/api');
+    const backend = await import ('./infra/backend');
+    const web = await import('./infra/web');
   },
 });
