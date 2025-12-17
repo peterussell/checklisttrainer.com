@@ -6,8 +6,9 @@ import { aircraftDetail } from '../sample-data/getAircraftDetail.js';
 import { jwkMiddleware } from './middleware/jwk.js';
 import { corsMiddleware } from './middleware/cors.js';
 import { userMiddleware } from './middleware/user.js';
-import { getAircraftForUser } from '@persistence/aircraft.js';
+import { getAircraft, getAllAircraftForUser } from '@persistence/aircraft.js';
 import type { User } from '@ct/core/models/accounts/user.js';
+import { HTTPException } from 'hono/http-exception';
 
 type Variables = {
   user: User
@@ -24,11 +25,17 @@ app.use(userMiddleware);
 // MARK: Handlers
 app.get('/aircraft', async (c) => {
   const user = c.var.user;
-  const aircraft = await getAircraftForUser(user.auth0Id);
-  return c.json(aircraft);
+  const allAircraft = await getAllAircraftForUser(user.auth0Id);
+  return c.json(allAircraft);
 });
 
-app.get('/aircraft/:id', (c) => {
+app.get('/aircraft/:id', async (c) => {
   const id = c.req.param('id');
-  return c.json(aircraftDetail.filter(a => a.id === id)[0]); // TODO: better error checking
+  const aircraft = await getAircraft(id);
+
+  if (!aircraft) {
+    throw new HTTPException(404, { message: 'Aircraft not found' });
+  }
+
+  return c.json(aircraft);
 });

@@ -8,7 +8,7 @@ export const aircraftDetail: Aircraft[] = [
     views: [
       {
         isDefault: true,
-        src: 'c172s.jpg',
+        imgSrc: 'c172s.jpg',
         description: "Forward view",
         controls: [
           {
@@ -107,7 +107,7 @@ export const aircraftDetail: Aircraft[] = [
         ]
       },
       {
-        src: 'c172s-pedestal.jpg',
+        imgSrc: 'c172s-pedestal.jpg',
         description: "Pedestal",
         controls: []
       },
@@ -279,7 +279,7 @@ export const aircraftDetail: Aircraft[] = [
     registration: 'N2481T',
     description: 'Piper Warrior II',
     views: [
-      { src: 'pa28-161.jpg', isDefault: true, description: "Forward view", controls: [] }
+      { imgSrc: 'pa28-161.jpg', isDefault: true, description: "Forward view", controls: [] }
     ],
     checklists: [
       // Emergency

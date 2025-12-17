@@ -1,6 +1,6 @@
 import type { AircraftControl } from "@ct/core/models/Aircraft.js";
 
-export type DBAircraft = {
+export type DBAircraftMetadata = {
   PK: string,
   SK: string,
   description: string,
@@ -11,7 +11,7 @@ export type DBAircraft = {
 export type DBAircraftView = {
   PK: string,
   SK: string,
-  title: string,
+  description: string,
   image_path: string,
   is_default: boolean,
   controls: AircraftControl[]

@@ -9,7 +9,7 @@ export type Aircraft = {
 };
 
 export type AircraftView = {
-  src: string,
+  imgSrc: string,
   isDefault?: boolean,
   description: string,
   controls: AircraftControl[]
