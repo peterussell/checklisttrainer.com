@@ -4,19 +4,20 @@ import { HTTPException } from "hono/http-exception";
 
 
 export const userMiddleware = createMiddleware(async (c, next) => {
-  // Look up user and add to context
+  // Look up user
   const payload = c.get('jwtPayload');
   const auth0Id = payload.sub;
 
   const user = await getUser(auth0Id);
 
   if (user) {
+     // User found, add to context
     c.set('user', user);
   } else {
+    // User not found, create and add new user to context
     await addUser(auth0Id);
-    
-    // User created, now try and get the user again
     const createdUser = await getUser(auth0Id);
+
     if (createdUser) {
       c.set('user', createdUser);
     } else {
