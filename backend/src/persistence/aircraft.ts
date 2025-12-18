@@ -4,9 +4,10 @@ import { Resource } from 'sst';
 import { ddb, KEY_DELIM } from './ddbClient.js';
 import { getAircraftKey, getUserKey } from './utils.js';
 import type { AircraftSummary } from '@ct/core/models/AircraftSummary.js';
-import type { DBAircraftMetadata, DBAircraftView } from './types/dbAircraft.js';
+import type { DBAircraftChecklist, DBAircraftMetadata, DBAircraftView } from './types/dbAircraft.js';
 import type { Aircraft, AircraftView } from '@ct/core/models/Aircraft.js';
 import { GetCommand } from '@aws-sdk/client-dynamodb';
+import type { Checklist } from '@ct/core/models/Checklist.js';
 
 export async function getAllAircraftForUser(auth0Id: string): Promise<AircraftSummary[]> {
   const cmd = new QueryCommand({
@@ -55,7 +56,7 @@ function parseAircraftSummary(row: DBAircraftMetadata): AircraftSummary | null {
     };
 }
 
-type DBAircraftRow = DBAircraftMetadata | DBAircraftView;
+type DBAircraftRow = DBAircraftMetadata | DBAircraftView | DBAircraftChecklist;
 
 /**
  * Parses and combines all aircraft rows, eg. metadata, views, checklists,
@@ -88,17 +89,28 @@ function parseAircraftDetail(rows: DBAircraftRow[] | undefined): Aircraft | null
     if (!row.SK) return;
 
     if (row.SK.startsWith('VIEW')) {
-      const view = parseView(row as DBAircraftView);
+      const view = AircraftView_to_Domain(row as DBAircraftView);
       if (view) aircraft.views.push(view);
+    } else if (row.SK.startsWith('CHECKLIST')) {
+      const checklist = Checklist_to_Domain(row as DBAircraftChecklist);
+      if (checklist) aircraft.checklists.push(checklist);
     }
   });
 
   return aircraft;
 }
 
-const parseView = (row: DBAircraftView): AircraftView => ({
+const AircraftView_to_Domain = (row: DBAircraftView): AircraftView => ({
   imgSrc: row.image_path,
   isDefault: row.is_default ?? false,
   description: row.description,
   controls: row.controls
+});
+
+const Checklist_to_Domain = (row: DBAircraftChecklist): Checklist => ({
+  id: row.SK,
+  name: row.name,
+  slug: row.slug,
+  type: row.type,
+  steps: row.steps
 });

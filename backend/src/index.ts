@@ -1,8 +1,6 @@
 import { Hono } from 'hono';
 import { handle } from 'hono/aws-lambda';
 
-import { aircraft } from '../sample-data/getAircraft.js';
-import { aircraftDetail } from '../sample-data/getAircraftDetail.js';
 import { jwkMiddleware } from './middleware/jwk.js';
 import { corsMiddleware } from './middleware/cors.js';
 import { userMiddleware } from './middleware/user.js';
