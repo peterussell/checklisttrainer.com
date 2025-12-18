@@ -2,7 +2,7 @@ import { QueryCommand } from '@aws-sdk/lib-dynamodb';
 import { Resource } from 'sst';
 
 import { ddb, KEY_DELIM } from './ddbClient.js';
-import { getAircraftKey, getUserKey } from './utils.js';
+import { getAircraftKey, getUserKey, stripAircraftKey, stripChecklistKey } from './utils.js';
 import type { AircraftSummary } from '@ct/core/models/AircraftSummary.js';
 import type { DBAircraftChecklist, DBAircraftMetadata, DBAircraftView } from './types/dbAircraft.js';
 import type { Aircraft, AircraftView } from '@ct/core/models/Aircraft.js';
@@ -48,7 +48,7 @@ function parseAircraftSummary(row: DBAircraftMetadata): AircraftSummary | null {
     if (parts.length !== 2 || parts[0].toUpperCase() !== 'AIRCRAFT') return null;
 
     return {
-      id: parts[1],
+      id: stripAircraftKey(row.SK),
       description: row.description,
       registration: row.registration,
       img: row.image_path
@@ -76,7 +76,7 @@ function parseAircraftDetail(rows: DBAircraftRow[] | undefined): Aircraft | null
   const { PK, registration, description } = m as DBAircraftMetadata;
 
   const aircraft: Aircraft = {
-    id: PK, // Fail loudly if we don't have a PK for some reason
+    id: stripAircraftKey(PK), // Fail loudly if we don't have a PK for some reason
     registration: registration,
     description: description,
     views: [],
@@ -107,7 +107,7 @@ const AircraftView_to_Domain = (row: DBAircraftView): AircraftView => ({
 });
 
 const Checklist_to_Domain = (row: DBAircraftChecklist): Checklist => ({
-  id: row.SK,
+  id: stripChecklistKey(row.SK),
   name: row.name,
   slug: row.slug,
   type: row.type,
