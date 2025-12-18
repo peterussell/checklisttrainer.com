@@ -6,7 +6,6 @@ import { getAircraftKey, getUserKey } from './utils.js';
 import type { AircraftSummary } from '@ct/core/models/AircraftSummary.js';
 import type { DBAircraftChecklist, DBAircraftMetadata, DBAircraftView } from './types/dbAircraft.js';
 import type { Aircraft, AircraftView } from '@ct/core/models/Aircraft.js';
-import { GetCommand } from '@aws-sdk/client-dynamodb';
 import type { Checklist } from '@ct/core/models/Checklist.js';
 
 export async function getAllAircraftForUser(auth0Id: string): Promise<AircraftSummary[]> {
