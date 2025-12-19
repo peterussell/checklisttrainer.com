@@ -18,5 +18,5 @@ export const site = new sst.aws.StaticSite("ct-web", {
   environment: {
     VITE_API_URL: api.url,
     VITE_WEB_URL: `${$dev ? 'http://' : 'https://'}${DOMAIN}`
-  }
+  },
 });

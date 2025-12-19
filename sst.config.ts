@@ -15,6 +15,7 @@ export default $config({
     };
   },
   async run() {
+    const storage = await import ('./infra/storage');
     const db = await import ('./infra/db');
     const api = await import ('./infra/api');
     const backend = await import ('./infra/backend');

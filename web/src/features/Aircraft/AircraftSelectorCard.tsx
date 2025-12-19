@@ -6,7 +6,7 @@ function AircraftSelectorCard ({aircraft}: {aircraft: AircraftSummary}) {
   return (
     <Card className="p0 m0">
       <CardActionArea href={`/aircraft/${aircraft.id}`}>
-        <CardMedia component="img" image={`/${aircraft.img}`} sx={{width: '360px', height: '280px'}}/>
+        <CardMedia component="img" image={aircraft.img} sx={{width: '360px', height: '280px'}}/>
 
         <CardContent>
 

@@ -1,4 +1,5 @@
-import { accounts, aircraft } from './db';
+import { accounts as accountsTable, aircraft as aircraftTable } from './db';
+import { aircraftBucket } from './storage';
 
 // URL
 let API_DOMAIN;
@@ -12,7 +13,7 @@ export const api = new sst.aws.ApiGatewayV2("ct-api", {
   transform: {
     route: {
       handler: {
-        link: [accounts, aircraft]
+        link: [accountsTable, aircraftTable, aircraftBucket]
       }
     }
   }
