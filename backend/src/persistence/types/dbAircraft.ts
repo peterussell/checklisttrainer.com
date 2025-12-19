@@ -1,28 +1,34 @@
-import type { AircraftControl } from "@ct/core/models/Aircraft.js";
-import type { ChecklistStep, ChecklistType } from "@ct/core/models/Checklist.js";
+import * as z from 'zod';
 
-export type DBAircraftMetadata = {
-  PK: string,
-  SK: string,
-  description: string,
-  registration: string,
-  image_path: string
-};
+import { AircraftControlSchema } from "@ct/core/models/Aircraft.js";
+import { ChecklistStepSchema, ChecklistTypeSchema } from "@ct/core/models/Checklist.js";
 
-export type DBAircraftView = {
-  PK: string,
-  SK: string,
-  description: string,
-  image_path: string,
-  is_default: boolean,
-  controls: AircraftControl[]
-};
+export const DBAircraftMetadataSchema = z.object({
+  PK: z.string(),
+  SK: z.string(),
+  description: z.string(),
+  registration: z.string(),
+  image_path: z.string()
+});
 
-export type DBAircraftChecklist = {
-  PK: string,
-  SK: string,
-  name: string,
-  slug: string,
-  type: ChecklistType,
-  steps: ChecklistStep[]
-};
+export const DBAircraftViewSchema = z.object({
+  PK: z.string(),
+  SK: z.string(),
+  description: z.string(),
+  image_path: z.string(),
+  is_default: z.boolean(),
+  controls: z.array(AircraftControlSchema)
+});
+
+export const DBAircraftChecklistSchema = z.object({
+  PK: z.string(),
+  SK: z.string(),
+  name: z.string(),
+  slug: z.string(),
+  type: ChecklistTypeSchema,
+  steps: z.array(ChecklistStepSchema)
+});
+
+export type DBAircraftMetadata = z.infer<typeof DBAircraftMetadataSchema>;
+export type DBAircraftView = z.infer<typeof DBAircraftViewSchema>;
+export type DBAircraftChecklist = z.infer<typeof DBAircraftChecklistSchema>;

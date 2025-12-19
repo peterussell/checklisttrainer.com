@@ -24,10 +24,10 @@ function NavBar() {
         </Box>
 
         <Box sx={{ marginLeft: 'auto' }}>
-        {isLoading ? null : 
-          !isAuthenticated ?
-            <LoginButton slotProps={{button: {...loginButtonProps}}} /> :
-            <LogoutButton slotProps={{button: {...loginButtonProps}}} />}
+          {isLoading ? null : 
+            !isAuthenticated ?
+              <LoginButton slotProps={{button: {...loginButtonProps}}} /> :
+              <LogoutButton slotProps={{button: {...loginButtonProps}}} />}
         </Box>
       </Stack>
       <Divider />

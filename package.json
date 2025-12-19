@@ -15,6 +15,7 @@
     "typescript": "^5"
   },
   "dependencies": {
-    "sst": "^3"
+    "sst": "^3",
+    "zod": "^4.2.1"
   }
 }

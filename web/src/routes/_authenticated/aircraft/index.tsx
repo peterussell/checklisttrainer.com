@@ -1,5 +1,5 @@
 import { useAuth0 } from '@auth0/auth0-react';
-import { Box, Stack, Typography } from '@mui/material';
+import { Box, Button, Stack, Typography } from '@mui/material';
 import { createFileRoute, Outlet } from '@tanstack/react-router'
 import AircraftSelector from '@features/Aircraft/AircraftSelector';
 
@@ -14,7 +14,12 @@ function Aircraft() {
 
   return (
     <Stack>
-      <Typography variant="h4">Aircraft</Typography>
+      <Stack direction="row" className="items-center">
+        <Typography variant="h4">Aircraft</Typography>
+        <Box className="ml-auto">
+          <Button variant="contained" href="/aircraft/add">Add Aircraft</Button>
+        </Box>
+      </Stack>
       <AircraftSelector />
       <Outlet />
     </Stack>

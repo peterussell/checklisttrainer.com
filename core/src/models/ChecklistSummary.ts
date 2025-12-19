@@ -1,9 +1,12 @@
-import { ChecklistType } from "./Checklist";
+import * as z from 'zod';
 
-export type ChecklistSummary = {
-  type: ChecklistType
-  name: string,
-  category: string,
-  slug: string,
-};
+import { ChecklistTypeSchema } from "./Checklist";
 
+export const ChecklistSummarySchema = z.object({
+  type: ChecklistTypeSchema,
+  name: z.string(),
+  category: z.string(),
+  slug: z.string()
+})
+
+export type ChecklistSummary = z.infer<typeof ChecklistSummarySchema>;
