@@ -1,5 +1,6 @@
 import { Card, CardContent, Chip, Stack, Typography } from '@mui/material';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import AssignmentLate from '@mui/icons-material/AssignmentLate';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import type { Aircraft } from '@ct/core/models/Aircraft';
@@ -26,7 +27,7 @@ function AircraftDetail() {
     <>
       <Stack direction="row" gap={2} className="flex items-center">
         <img
-          src={`/${aircraft.views.find(v => v.isDefault)?.src ?? aircraft.views[0]?.src}`}
+          src={`/${aircraft.views.find(v => v.isDefault)?.imgSrc ?? aircraft.views[0]?.imgSrc}`}
           className="w-32 h-32 rounded-full object-cover"
         />
         <Stack>
@@ -59,39 +60,46 @@ function ChecklistsCard({checklists, title, aircraftId}: ChecklistsCardProps) {
     <Card className="my-4">
         <CardContent>
           <Typography variant="h5" className="pt-0">{title}</Typography>
-          {checklists.map((c: Checklist, i: number) => (
-            <Stack key={i} direction="row" gap={1} className="flex items-center py-4 border-b border-b-gray-200">
-              {/* Chips stack */}
-              <Stack
-                className="align-self-right"
-                direction="row"
-                gap={1}
-                divider={<Typography className="text-gray-200">|</Typography>}>
-                  {/* Learn */}
-                  <Chip
-                    label="Learn"
-                    size="small"
-                    className="bg-blue-100 hover:bg-blue-200 text-blue-800 px-2"
-                    onClick={() => navigate({to: `/aircraft/${aircraftId}/${c.slug}/learn`})} />
+          {!checklists.length ? (
+            <Stack direction="row" gap={1} className="py-2 w-full justify-center">
+              <AssignmentLate color="disabled" />
+              <Typography variant="button" color="textDisabled">No checklists found</Typography>
+            </Stack>
+            ) :
+            (checklists.map((c: Checklist, i: number) => (
+              <Stack key={i} direction="row" gap={1} className="flex items-center py-4 border-b border-b-gray-200">
+                {/* Chips stack */}
+                <Stack
+                  className="align-self-right"
+                  direction="row"
+                  gap={1}
+                  divider={<Typography className="text-gray-200">|</Typography>}>
+                    {/* Learn */}
+                    <Chip
+                      label="Learn"
+                      size="small"
+                      className="bg-blue-100 hover:bg-blue-200 text-blue-800 px-2"
+                      onClick={() => navigate({to: `/aircraft/${aircraftId}/${c.slug}/learn`})} />
 
-                  {/* Practice */}
-                  <Chip
-                    label="Practice"
-                    size="small"
-                    className="bg-green-600/30 hover:bg-green-600/50 text-green-800 px-2"
-                    onClick={() => navigate({to: `/aircraft/${aircraftId}/${c.slug}/practice`})} />
+                    {/* Practice */}
+                    <Chip
+                      label="Practice"
+                      size="small"
+                      className="bg-green-600/30 hover:bg-green-600/50 text-green-800 px-2"
+                      onClick={() => navigate({to: `/aircraft/${aircraftId}/${c.slug}/practice`})} />
 
-                  {/* Test */}
-                  <Chip
-                    label="Test"
-                    size="small"
-                    className="bg-amber-100 hover:bg-amber-200 text-amber-800 px-2"
-                    onClick={() => navigate({to: `/aircraft/${aircraftId}/${c.slug}/test`})} />
+                    {/* Test */}
+                    <Chip
+                      label="Test"
+                      size="small"
+                      className="bg-amber-100 hover:bg-amber-200 text-amber-800 px-2"
+                      onClick={() => navigate({to: `/aircraft/${aircraftId}/${c.slug}/test`})} />
+                  </Stack>
+
+                  <ChevronRightIcon className="text-lg" />
+                  <Typography>{c.name}</Typography>
                 </Stack>
-
-                <ChevronRightIcon className="text-lg" />
-                <Typography>{c.name}</Typography>
-              </Stack>
+            )
           ))}
         </CardContent>
       </Card>

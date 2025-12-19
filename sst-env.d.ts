@@ -9,6 +9,10 @@ declare module "sst" {
       "name": string
       "type": "sst.aws.Dynamo"
     }
+    "aircraft": {
+      "name": string
+      "type": "sst.aws.Dynamo"
+    }
     "ct-api": {
       "type": "sst.aws.ApiGatewayV2"
       "url": string

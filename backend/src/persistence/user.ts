@@ -1,14 +1,10 @@
 import { Resource } from 'sst';
-import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
-import { PutCommand, DynamoDBDocumentClient, QueryCommand } from '@aws-sdk/lib-dynamodb';
+import { PutCommand, QueryCommand } from '@aws-sdk/lib-dynamodb';
 
+import { ddb, KEY_DELIM } from './ddbClient.js';
 import type { User } from '@ct/core/models/accounts/user.js';
-import type { DBAccount } from './db-types.js';
-
-const ddbClient = new DynamoDBClient({});
-const ddb = DynamoDBDocumentClient.from(ddbClient);
-
-const DELIM = '#';
+import type { DBAccount } from './types/dbAccount.js';
+import { getOrgKey, getUserKey } from './utils.js';
 
 export async function getUser(auth0Id: string): Promise<User | null> {
   const cmd = new QueryCommand({
@@ -46,12 +42,9 @@ export async function addUser(auth0Id: string,  orgId?: string) {
 }
 
 // MARK: Helpers
-const getUserKey = (auth0Id: string) => `USER${DELIM}${auth0Id}`;
-const getOrgKey = (orgId: string | null) => `ORG${DELIM}${orgId ?? 'NONE'}`;
-
 function parseOrg(row: DBAccount): string | null {
   if (!row?.SK) return null;
-  const parts = row.SK.split(DELIM);
+  const parts = row.SK.split(KEY_DELIM);
   if (parts.length !== 2 || parts[0].toUpperCase() !== 'ORG') return null;
   return parts[1];
 }

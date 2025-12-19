@@ -1,6 +1,9 @@
+import { ChecklistType } from "./Checklist";
+
 export type ChecklistSummary = {
-  type: 'normal' | 'emergency',
+  type: ChecklistType
   name: string,
   category: string,
   slug: string,
 };
+

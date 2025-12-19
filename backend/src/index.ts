@@ -1,13 +1,17 @@
 import { Hono } from 'hono';
 import { handle } from 'hono/aws-lambda';
 
-import { aircraft } from '../sample-data/getAircraft.js';
-import { aircraftDetail } from '../sample-data/getAircraftDetail.js';
 import { jwkMiddleware } from './middleware/jwk.js';
 import { corsMiddleware } from './middleware/cors.js';
 import { userMiddleware } from './middleware/user.js';
+import { getAircraft, getAllAircraftForUser } from '@persistence/aircraft.js';
+import type { User } from '@ct/core/models/accounts/user.js';
+import { HTTPException } from 'hono/http-exception';
 
-const app = new Hono();
+type Variables = {
+  user: User
+}
+const app = new Hono<{ Variables: Variables }>();
 
 export const handler = handle(app);
 
@@ -17,11 +21,19 @@ app.use(jwkMiddleware);
 app.use(userMiddleware);
 
 // MARK: Handlers
-app.get('/aircraft', (c) => {
-  return c.json(aircraft);
+app.get('/aircraft', async (c) => {
+  const user = c.var.user;
+  const allAircraft = await getAllAircraftForUser(user.auth0Id);
+  return c.json(allAircraft);
 });
 
-app.get('/aircraft/:id', (c) => {
+app.get('/aircraft/:id', async (c) => {
   const id = c.req.param('id');
-  return c.json(aircraftDetail.filter(a => a.id === id)[0]); // TODO: better error checking
+  const aircraft = await getAircraft(id);
+
+  if (!aircraft) {
+    throw new HTTPException(404, { message: 'Aircraft not found' });
+  }
+
+  return c.json(aircraft);
 });
