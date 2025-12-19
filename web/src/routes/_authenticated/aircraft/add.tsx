@@ -1,4 +1,4 @@
-import { Stack, TextField, Typography } from '@mui/material';
+import { Button, Stack, TextField, Typography } from '@mui/material';
 import { createFileRoute } from '@tanstack/react-router'
 import { useForm, Controller } from 'react-hook-form';
 
@@ -12,10 +12,8 @@ const defaultValues = {
 }
 
 function AddAircraft() {
-   const { handleSubmit, reset, watch, control } = useForm({ defaultValues });
+   const { handleSubmit, reset, control } = useForm({ defaultValues });
   const onSubmit = data => console.log(data);
-
-  console.log(watch("registration")) // watch input value by passing the name of it
 
   return (
     <Stack>
@@ -44,8 +42,8 @@ function AddAircraft() {
               name="description"
             />
 
-            <button type="button" onClick={() => reset({ ...defaultValues })}>Reset</button>
-            <input type="submit" />
+            <Button variant="outlined" onClick={() => reset({ ...defaultValues })}>Reset</Button>
+            <Button variant="contained" type="submit">Submit</Button>
           </Stack>
         </form>
     </Stack>
