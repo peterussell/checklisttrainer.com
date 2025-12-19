@@ -61,7 +61,7 @@ export function FlightDeckViewer({ disabled = false, views, onActionSelected }: 
             <>
               <TransformComponent>
                 <div className="relative">
-                  <img src={`/${views[selectedIdx].imgSrc}`}/>
+                  <img src={`${views[selectedIdx].imgSrc}`}/>
 
                   {views[selectedIdx].controls.map((control, i) => {
                     const yPosFromBottom = 100 - control.yPos;
@@ -140,7 +140,7 @@ export function FlightDeckViewer({ disabled = false, views, onActionSelected }: 
           {views.map((view, i) => (
             <Stack className="items-center" key={i}>
               <img
-                src={`/${view.imgSrc}`}
+                src={`${view.imgSrc}`}
                 className={`
                   cursor-pointer
                   rounded-md

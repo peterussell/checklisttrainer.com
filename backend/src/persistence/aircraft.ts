@@ -7,26 +7,30 @@ import type { AircraftSummary } from '@ct/core/models/AircraftSummary.js';
 import type { DBAircraftChecklist, DBAircraftMetadata, DBAircraftView } from './types/dbAircraft.js';
 import type { Aircraft, AircraftView } from '@ct/core/models/Aircraft.js';
 import type { Checklist } from '@ct/core/models/Checklist.js';
+import { getAircraftImgSignedUrl } from '../storage/utils.js';
 
 export async function getAllAircraftForUser(auth0Id: string): Promise<AircraftSummary[]> {
+  const userKey = getUserKey(auth0Id);
   const cmd = new QueryCommand({
     TableName: Resource.aircraft.name,
     ExpressionAttributeValues: {
-      ':userId': getUserKey(auth0Id)
+      ':userId': userKey,
     },
     KeyConditionExpression: 'PK = :userId'
   });
 
   const response = await ddb.send(cmd);
 
-  return response.Items?.reduce<AircraftSummary[]>((acc, row) => {
-    const aircraft: AircraftSummary | null = parseAircraftSummary(row as DBAircraftMetadata);
-    if (aircraft) acc.push(aircraft);
-    return acc;
-  }, []) ?? [];
+  const parsedAircraft = [];
+  for (const row of response.Items ?? []) {
+    const aircraft = await parseAircraftSummary(row as DBAircraftMetadata, userKey);
+    if (aircraft) parsedAircraft.push(aircraft);
+  }
+
+  return parsedAircraft;
 }
 
-export async function getAircraft(aircraftId: string): Promise<Aircraft | null> {
+export async function getAircraftById(aircraftId: string, ownerId: string): Promise<Aircraft | null> {
   if (!aircraftId) return null;
 
   const cmd = new QueryCommand({
@@ -38,11 +42,13 @@ export async function getAircraft(aircraftId: string): Promise<Aircraft | null> 
   });
 
   const response = await ddb.send(cmd);
-  return parseAircraftDetail(response.Items as (DBAircraftMetadata | DBAircraftView)[] | undefined);
+  if (!response.Items?.length) return null;
+  const rows = response.Items as (DBAircraftMetadata | DBAircraftView)[];
+  return parseAircraftDetail(rows, getUserKey(ownerId));
 }
 
 // MARK: Helpers
-function parseAircraftSummary(row: DBAircraftMetadata): AircraftSummary | null {
+async function parseAircraftSummary(row: DBAircraftMetadata, ownerKey: string): Promise<AircraftSummary | null> {
   if (!row?.SK) return null;
     const parts = row.SK.split(KEY_DELIM);
     if (parts.length !== 2 || parts[0].toUpperCase() !== 'AIRCRAFT') return null;
@@ -51,7 +57,7 @@ function parseAircraftSummary(row: DBAircraftMetadata): AircraftSummary | null {
       id: stripAircraftKey(row.SK),
       description: row.description,
       registration: row.registration,
-      img: row.image_path
+      img: await getAircraftImgSignedUrl(ownerKey, row.image_path)
     };
 }
 
@@ -63,7 +69,7 @@ type DBAircraftRow = DBAircraftMetadata | DBAircraftView | DBAircraftChecklist;
  * @param rows all rows for a single aircraft (ie. with matching aircraft ID)
  * @returns Aircraft domain object if one could be constructed, otherwise null.
  */
-function parseAircraftDetail(rows: DBAircraftRow[] | undefined): Aircraft | null {
+async function parseAircraftDetail(rows: DBAircraftRow[] | undefined, ownerKey: string): Promise<Aircraft | null> {
   if (!rows?.length) return null;
 
   // Ensure we have metadata
@@ -82,25 +88,26 @@ function parseAircraftDetail(rows: DBAircraftRow[] | undefined): Aircraft | null
     views: [],
     checklists: []
   }
-
+  
   // Parse remaining rows (views, checklists, etc.)
-  rows.forEach((row: DBAircraftRow) => {
-    if (!row.SK) return;
+  for (const row of rows) {
+    if (!row.SK) continue;
 
     if (row.SK.startsWith('VIEW')) {
-      const view = AircraftView_to_Domain(row as DBAircraftView);
+      const view = await AircraftView_to_Domain(row as DBAircraftView, ownerKey);
       if (view) aircraft.views.push(view);
+
     } else if (row.SK.startsWith('CHECKLIST')) {
       const checklist = Checklist_to_Domain(row as DBAircraftChecklist);
       if (checklist) aircraft.checklists.push(checklist);
     }
-  });
+  }
 
   return aircraft;
 }
 
-const AircraftView_to_Domain = (row: DBAircraftView): AircraftView => ({
-  imgSrc: row.image_path,
+const AircraftView_to_Domain = async (row: DBAircraftView, ownerKey: string): Promise<AircraftView> => ({
+  imgSrc: await getAircraftImgSignedUrl(ownerKey, row.image_path),
   isDefault: row.is_default ?? false,
   description: row.description,
   controls: row.controls

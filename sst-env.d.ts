@@ -13,6 +13,10 @@ declare module "sst" {
       "name": string
       "type": "sst.aws.Dynamo"
     }
+    "aircraftImages": {
+      "name": string
+      "type": "sst.aws.Bucket"
+    }
     "ct-api": {
       "type": "sst.aws.ApiGatewayV2"
       "url": string

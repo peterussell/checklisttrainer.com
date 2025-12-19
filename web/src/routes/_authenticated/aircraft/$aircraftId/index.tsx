@@ -27,7 +27,7 @@ function AircraftDetail() {
     <>
       <Stack direction="row" gap={2} className="flex items-center">
         <img
-          src={`/${aircraft.views.find(v => v.isDefault)?.imgSrc ?? aircraft.views[0]?.imgSrc}`}
+          src={`${aircraft.views.find(v => v.isDefault)?.imgSrc ?? aircraft.views[0]?.imgSrc}`}
           className="w-32 h-32 rounded-full object-cover"
         />
         <Stack>
