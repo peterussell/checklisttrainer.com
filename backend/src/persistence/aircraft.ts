@@ -1,5 +1,6 @@
-import { QueryCommand } from '@aws-sdk/lib-dynamodb';
+import { PutCommand, QueryCommand } from '@aws-sdk/lib-dynamodb';
 import { Resource } from 'sst';
+import { v7 as uuidv7 } from 'uuid';
 
 import { ddb, KEY_DELIM } from './ddbClient.js';
 import { getAircraftKey, getUserKey, stripAircraftKey, stripChecklistKey } from './utils.js';
@@ -8,6 +9,8 @@ import type { DBAircraftChecklist, DBAircraftMetadata, DBAircraftView } from './
 import type { Aircraft, AircraftView } from '@ct/core/models/Aircraft.js';
 import type { Checklist } from '@ct/core/models/Checklist.js';
 import { getAircraftImgSignedUrl } from '../storage/utils.js';
+import type { AddAircraftDetailRequest } from '@ct/core/api/AddAircraftDetailRequest.js';
+import { AIRCRAFT_KEY, CHECKLIST_KEY, METADATA_KEY, VIEW_KEY } from './constants.js';
 
 export async function getAllAircraftForUser(auth0Id: string): Promise<AircraftSummary[]> {
   const userKey = getUserKey(auth0Id);
@@ -47,11 +50,32 @@ export async function getAircraftById(aircraftId: string, ownerId: string): Prom
   return parseAircraftDetail(rows, getUserKey(ownerId));
 }
 
+export async function createAircraft(aircraftDetail: AddAircraftDetailRequest) {
+  if (!aircraftDetail) return null;
+
+  const {registration, description} = aircraftDetail;
+  const id = uuidv7();
+  const key = getAircraftKey(id);
+  const cmd = new PutCommand({
+    TableName: Resource.aircraft.name,
+    Item: {
+      PK: key,
+      SK: METADATA_KEY,
+      registration,
+      description,
+      createdAt: new Date().toISOString()
+    }
+  });
+
+  await ddb.send(cmd);
+  return id;
+}
+
 // MARK: Helpers
 async function parseAircraftSummary(row: DBAircraftMetadata, ownerKey: string): Promise<AircraftSummary | null> {
   if (!row?.SK) return null;
     const parts = row.SK.split(KEY_DELIM);
-    if (parts.length !== 2 || parts[0].toUpperCase() !== 'AIRCRAFT') return null;
+    if (parts.length !== 2 || parts[0].toUpperCase() !== AIRCRAFT_KEY) return null;
 
     return {
       id: stripAircraftKey(row.SK),
@@ -73,7 +97,7 @@ async function parseAircraftDetail(rows: DBAircraftRow[] | undefined, ownerKey: 
   if (!rows?.length) return null;
 
   // Ensure we have metadata
-  const m = rows.find((row: DBAircraftRow) => row.SK && row.SK.startsWith('METADATA'));
+  const m = rows.find((row: DBAircraftRow) => row.SK && row.SK.startsWith(METADATA_KEY));
   if (!m) {
     console.error(`No metadata found for aircraft ID ${rows[0].PK ?? '(unknown)'}`); // TODO: logger
     return null;
@@ -93,11 +117,11 @@ async function parseAircraftDetail(rows: DBAircraftRow[] | undefined, ownerKey: 
   for (const row of rows) {
     if (!row.SK) continue;
 
-    if (row.SK.startsWith('VIEW')) {
+    if (row.SK.startsWith(VIEW_KEY)) {
       const view = await AircraftView_to_Domain(row as DBAircraftView, ownerKey);
       if (view) aircraft.views.push(view);
 
-    } else if (row.SK.startsWith('CHECKLIST')) {
+    } else if (row.SK.startsWith(CHECKLIST_KEY)) {
       const checklist = Checklist_to_Domain(row as DBAircraftChecklist);
       if (checklist) aircraft.checklists.push(checklist);
     }

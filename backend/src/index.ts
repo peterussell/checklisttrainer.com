@@ -1,12 +1,14 @@
 import { Hono } from 'hono';
 import { handle } from 'hono/aws-lambda';
+import { HTTPException } from 'hono/http-exception';
 
 import { jwkMiddleware } from './middleware/jwk.js';
 import { corsMiddleware } from './middleware/cors.js';
 import { userMiddleware } from './middleware/user.js';
-import { getAircraftById, getAllAircraftForUser } from '@persistence/aircraft.js';
+import { createAircraft, getAircraftById, getAllAircraftForUser } from '@persistence/aircraft.js';
 import type { User } from '@ct/core/models/accounts/user.js';
-import { HTTPException } from 'hono/http-exception';
+import { AddAircraftDetailRequestSchema, type AddAircraftDetailRequest } from '@ct/core/api/AddAircraftDetailRequest.js';
+import z from 'zod';
 
 type Variables = {
   user: User
@@ -20,24 +22,35 @@ app.use(corsMiddleware);
 app.use(jwkMiddleware);
 app.use(userMiddleware);
 
-// === HANDLERS ===
-// MARK: single aircraft
+// MARK: Handlers
+
+// Get all aircraft for user
 app.get('/aircraft', async (c) => {
   const allAircraft = await getAllAircraftForUser(c.var.user.auth0Id);
   return c.json(allAircraft);
 });
 
+// Create aircraft
 app.post('/aircraft', async (c) => {
   const data = await c.req.json();
 
-  console.log('creating aircraft');
-  console.log(data);
+  try {
+    const aircraftDetail: AddAircraftDetailRequest = AddAircraftDetailRequestSchema.parse(data);
+    const id = await createAircraft(aircraftDetail);
+    return c.json({ success: true, data: {...data,  id}}, 201)
+  } catch(error) {
+    if (error instanceof z.ZodError) {
+      console.error(error.issues); // TODO: logger
+      return c.json({ success: false }, 400);
+    }
 
-  return c.json({ success: true, data }, 201)
-
+    // Non-Zod error
+    console.error('Failed to create aircraft', error); // TODO: logger
+    return c.json({ success: false }, 500);
+  }
 })
 
-// MARK: multiple aircraft
+// Get aircraft by ID
 app.get('/aircraft/:id', async (c) => {
   const id = c.req.param('id');
   const aircraft = await getAircraftById(id, c.var.user.auth0Id);
