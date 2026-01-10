@@ -9,7 +9,7 @@ import logo200 from '/logo-image-blue-200x200.png';
 import { PageHeader } from '@shared/components/PageHeader';
 import { formatChecklistStep } from '@shared/utils/formatChecklistStep';
 import { LeftSidebarLayout } from '@shared/layout/LeftSidebarLayout';
-import { aircraftDetailQuery } from '../../../../../queries/aircraftDetailQuery';
+import { aircraftDetailQuery } from '@queries/aircraftDetailQuery';
 import type { Aircraft } from '@ct/core/models/Aircraft';
 import { FlightDeckViewer } from '@features/FlightDeckViewer/FlightDeckViewer';
 import type { Checklist } from '@ct/core/models/Checklist';

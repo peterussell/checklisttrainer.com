@@ -5,7 +5,7 @@ import { useSuspenseQuery } from '@tanstack/react-query';
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import type { Aircraft } from '@ct/core/models/Aircraft';
 import type { Checklist } from '@ct/core/models/Checklist';
-import { aircraftDetailQuery } from '../../../../queries/aircraftDetailQuery';
+import { aircraftDetailQuery } from '@queries/aircraftDetailQuery';
 
 export const Route = createFileRoute('/_authenticated/aircraft/$aircraftId/')({
   component: AircraftDetail,

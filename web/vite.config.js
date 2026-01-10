@@ -11,6 +11,7 @@ export default defineConfig({
             '@features': path.resolve(__dirname, './src/features'),
             '@models': path.resolve(__dirname, './src/models'),
             '@shared': path.resolve(__dirname, './src/shared'),
+            '@queries': path.resolve(__dirname, './src/queries'),
             '@ct/core': path.resolve(__dirname, '../core/src'),
         }
     },

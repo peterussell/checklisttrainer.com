@@ -20,12 +20,24 @@ app.use(corsMiddleware);
 app.use(jwkMiddleware);
 app.use(userMiddleware);
 
-// MARK: Handlers
+// === HANDLERS ===
+// MARK: single aircraft
 app.get('/aircraft', async (c) => {
   const allAircraft = await getAllAircraftForUser(c.var.user.auth0Id);
   return c.json(allAircraft);
 });
 
+app.post('/aircraft', async (c) => {
+  const data = await c.req.json();
+
+  console.log('creating aircraft');
+  console.log(data);
+
+  return c.json({ success: true, data }, 201)
+
+})
+
+// MARK: multiple aircraft
 app.get('/aircraft/:id', async (c) => {
   const id = c.req.param('id');
   const aircraft = await getAircraftById(id, c.var.user.auth0Id);

@@ -23,7 +23,7 @@ import { useSuspenseQuery } from '@tanstack/react-query';
 import { createFileRoute, Link } from '@tanstack/react-router'
 import type { Aircraft } from '@ct/core/models/Aircraft';
 import type { Checklist, ChecklistStep } from '@ct/core/models/Checklist';
-import { aircraftDetailQuery } from '../../../../../queries/aircraftDetailQuery';
+import { aircraftDetailQuery } from '@queries/aircraftDetailQuery';
 import { LeftSidebarLayout } from '@shared/layout/LeftSidebarLayout';
 import { PageHeader } from '@shared/components/PageHeader';
 import { FlightDeckViewer } from '@features/FlightDeckViewer/FlightDeckViewer';

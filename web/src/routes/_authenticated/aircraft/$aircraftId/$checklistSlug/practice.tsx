@@ -10,7 +10,7 @@ import logo200 from '/logo-image-blue-200x200.png';
 import type { Aircraft } from '@ct/core/models/Aircraft';
 import type { Checklist } from '@ct/core/models/Checklist';
 import { PageHeader } from '@shared/components/PageHeader';
-import { aircraftDetailQuery } from '../../../../../queries/aircraftDetailQuery';
+import { aircraftDetailQuery } from '@queries/aircraftDetailQuery';
 import { LeftSidebarLayout } from '@shared/layout/LeftSidebarLayout';
 import { FlightDeckViewer } from '@features/FlightDeckViewer/FlightDeckViewer';
 import { formatChecklistStep } from '@shared/utils/formatChecklistStep';

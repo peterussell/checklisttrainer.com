@@ -11,6 +11,7 @@
       "@*": ["src/*"],
       "@features/*": ["src/features/*"],
       "@shared/*": ["src/shared/*"],
+      "@queries/*": ["src/queries/*"],
       "@ct/core/*": ["../core/src/*"],
     },
 
