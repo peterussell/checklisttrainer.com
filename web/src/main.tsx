@@ -7,6 +7,7 @@ import GlobalStyles from '@mui/material/GlobalStyles';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { ThemeProvider } from '@mui/material/styles';
 import { theme } from './mui-theme'
+import { SnackbarProvider } from 'notistack';
 
 import './index.css'; // Loads tailwind
 
@@ -66,7 +67,9 @@ export function App() {
     >
       <QueryClientProvider client={queryClient}>
         <ThemeProvider theme={theme}>
-          <InnerApp />
+          <SnackbarProvider maxSnack={3} anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}>
+            <InnerApp />
+          </SnackbarProvider>
         </ThemeProvider>
       </QueryClientProvider>
     </Auth0Provider>

@@ -15,6 +15,8 @@
     "typescript": "^5"
   },
   "dependencies": {
+    "@hookform/resolvers": "^5.2.2",
+    "notistack": "^3.0.2",
     "sst": "^3",
     "uuid": "^13.0.0",
     "zod": "^4.2.1"

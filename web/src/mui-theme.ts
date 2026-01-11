@@ -25,6 +25,13 @@ export const theme = createTheme({
     caption: {
       ...bodyBase,
       textTransform: 'uppercase'
-    }
+    },
   },
+  components: {
+    MuiTextField: {
+      defaultProps: {
+        size: "small",
+      }
+    },
+  }
 });

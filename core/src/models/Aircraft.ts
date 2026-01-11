@@ -2,12 +2,12 @@ import * as z from 'zod';
 
 import type { ChecklistSchema } from "./Checklist.ts";
 
-export const AircraftSchema = z.object({
-  id: z.string(),
-  registration: z.string(),
-  description: z.string(),
-  views: z.array(AircraftViewSchema),
-  checklists: z.array(z.ChecklistSchema)
+export const AircraftControlSchema = z.object({
+  title: z.string(),
+  xPos: z.number(), // Percent of image width
+  yPos: z.number(), // Percent of image height
+  markerRotation: z.number().optional(),
+  actions: z.array(z.string())
 });
 
 export const AircraftViewSchema = z.object({
@@ -17,12 +17,12 @@ export const AircraftViewSchema = z.object({
   controls: z.array(AircraftControlSchema)
 });
 
-export const AircraftControlSchema = z.object({
-  title: z.string(),
-  xPos: z.number(), // Percent of image width
-  yPos: z.number(), // Percent of image height
-  markerRotation: z.number().optional(),
-  actions: z.array(z.string())
+export const AircraftSchema = z.object({
+  id: z.string(),
+  registration: z.string(),
+  description: z.string(),
+  views: z.array(AircraftViewSchema),
+  checklists: z.array(z.ChecklistSchema)
 });
 
 export type Aircraft = z.infer<typeof AircraftSchema>;

@@ -37,7 +37,7 @@ app.post('/aircraft', async (c) => {
   try {
     const aircraftDetail: AddAircraftDetailRequest = AddAircraftDetailRequestSchema.parse(data);
     const id = await createAircraft(aircraftDetail);
-    return c.json({ success: true, data: {...data,  id}}, 201)
+    return c.json({ success: true, data: {...data,  id}}, 400) // Success
   } catch(error) {
     if (error instanceof z.ZodError) {
       console.error(error.issues); // TODO: logger
